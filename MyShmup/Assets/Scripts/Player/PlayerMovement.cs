@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _fastSpeed;
     [SerializeField] private float _slowSpeed;
-    private bool _slowMovement = true;
+    private bool _slowMovement = false;
     private bool _fire = false;
 
     private Vector2 _movement;
