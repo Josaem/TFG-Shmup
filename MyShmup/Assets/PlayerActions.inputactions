@@ -178,7 +178,18 @@
                 {
                     "name": "",
                     "id": "fdc20343-6489-4b71-a471-0635a48899b6",
-                    "path": "",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13be7dad-cc14-43af-9836-85431665b3a8",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -189,7 +200,18 @@
                 {
                     "name": "",
                     "id": "99525938-7fee-47cb-a711-6a9959a5a052",
-                    "path": "",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50a4804b-4479-4595-87db-65ff1d4f2c7b",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

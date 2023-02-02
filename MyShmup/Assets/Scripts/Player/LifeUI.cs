@@ -16,6 +16,11 @@ public class LifeUI : MonoBehaviour
 
     public void SetUpLifebar()
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < GameProperties._life; i++)
         {
             Instantiate(_lifeSprite,
