@@ -518,7 +518,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeSprite: {fileID: 3327941611095717112, guid: f794e03d11626554589455b05456bf95, type: 3}
-  _lifeArray: []
 --- !u!1 &678379535
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +836,7 @@ GameObject:
   - component: {fileID: 1598544724}
   - component: {fileID: 1598544726}
   - component: {fileID: 1598544725}
+  - component: {fileID: 1598544727}
   m_Layer: 5
   m_Name: Credits UI
   m_TagString: Untagged
@@ -884,7 +884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CREDITS: 01'
+  m_text: 'CREDITS: 00'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -961,6 +961,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598544723}
   m_CullTransparentMesh: 1
+--- !u!114 &1598544727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598544723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721955c66bb13644687e04fecaa21c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creditsText: {fileID: 1598544725}
 --- !u!1 &1659416880
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,6 +985,7 @@ GameObject:
   - component: {fileID: 1659416881}
   - component: {fileID: 1659416883}
   - component: {fileID: 1659416882}
+  - component: {fileID: 1659416884}
   m_Layer: 5
   m_Name: Score UI
   m_TagString: Untagged
@@ -1096,6 +1110,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659416880}
   m_CullTransparentMesh: 1
+--- !u!114 &1659416884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659416880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd0e3e03b838a6d48ac40749220c21de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 1659416882}
 --- !u!1 &1667454500
 GameObject:
   m_ObjectHideFlags: 0
