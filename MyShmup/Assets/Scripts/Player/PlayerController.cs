@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _deathTime;
     [SerializeField] private Color _shieldOnCooldownColor;
     [SerializeField] private Color _shieldNotOnCooldownColor;
+    private bool _dead = false;
 
     private Vector2 _movement;
 
@@ -79,24 +80,30 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //Decrease shield cooldown
-        if(_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
+        if(!_dead)
+        {
+            //Decrease shield cooldown
+            if (_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
 
-        //Change hitbox color depending on shield cooldown
-        if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor) _hitboxRenderer.color = _shieldNotOnCooldownColor;
+            //Change hitbox color depending on shield cooldown
+            if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor) _hitboxRenderer.color = _shieldNotOnCooldownColor;
 
-        //Decrease time where fire is active 
-        if (_fireRemainingCooldown > 0) _fireRemainingCooldown = Mathf.Max(_fireRemainingCooldown - Time.deltaTime, 0f);
-        if (_fireRemainingCooldown > 0 && _timeUntilLaser > 0) Fire();
+            //Decrease time where fire is active 
+            if (_fireRemainingCooldown > 0) _fireRemainingCooldown = Mathf.Max(_fireRemainingCooldown - Time.deltaTime, 0f);
+            if (_fireRemainingCooldown > 0 && _timeUntilLaser > 0) Fire();
 
-        //Decrease time where fire is active 
-        if (_timeUntilLaser > 0 && _fireButtonPressed) _timeUntilLaser = Mathf.Max(_timeUntilLaser - Time.deltaTime, 0f);
-        if (_timeUntilLaser == 0 && _fireButtonPressed) FireLaser();
+            //Decrease time where fire is active 
+            if (_timeUntilLaser > 0 && _fireButtonPressed) _timeUntilLaser = Mathf.Max(_timeUntilLaser - Time.deltaTime, 0f);
+            if (_timeUntilLaser == 0 && _fireButtonPressed) FireLaser();
+        }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (!_dead)
+        {
+            Move();
+        }
     }
 
     private void Move()
@@ -145,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
     private void Block()
     {
-        if (!_invincible && (_shieldRemainingCooldown == 0))
+        if (!_invincible && (_shieldRemainingCooldown == 0) && !_dead)
         {
             _shieldRemainingCooldown = _blockCoolDown;
             _hitboxRenderer.color = _shieldOnCooldownColor;
@@ -171,11 +178,12 @@ public class PlayerController : MonoBehaviour
 
             //Animate ship death
             HideShip();
-            StartCoroutine(StopHiding(_deathTime));
+            StartCoroutine(Respawn(_deathTime));
 
             if(GameProperties._life <= 0)
             {
                 //TODO Use Credit screen
+                _dead = true;
             }
         }
     }
@@ -191,10 +199,11 @@ public class PlayerController : MonoBehaviour
         _invincible = false;
     }
 
-    private IEnumerator StopHiding(float time)
+    private IEnumerator Respawn(float time)
     {
         yield return new WaitForSeconds(time);
 
+        _dead = false;
         ShowShip();
     }
 
