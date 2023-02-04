@@ -263,7 +263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340989852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -796,7 +796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495750145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -982,10 +982,11 @@ MonoBehaviour:
   _1stShotEnabled: 1
   _fireTime: 0.4
   _fireRate: 0.1
+  _fireRate2nd: 0.5
   _playerShotVulcan: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
   _2ndShotEnabled: 0
   _timeTo2ndShot: 0.5
-  _secondaryShot: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
+  _secondaryShot: {fileID: 4409051570943762180, guid: c7abeb25ef5c6234788727ba4a317c32, type: 3}
   _base2ndOptionsLocation:
   - {fileID: 340989853}
   - {fileID: 759313079}
@@ -998,10 +999,17 @@ MonoBehaviour:
   - {fileID: 690342572}
   _playerBulletPool: {fileID: 2092770887}
   _currentOptionsLocation:
-  - {fileID: 44115855}
-  - {fileID: 578146130}
-  - {fileID: 505167784}
-  - {fileID: 578146130}
+  - {fileID: 44115854}
+  - {fileID: 578146129}
+  - {fileID: 505167783}
+  - {fileID: 1346855209}
+  speed: 5
+  amplitude: 0.5
+  amplitudeOffset: 0.5
+  _gunRotTimer: 0
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!50 &678379538
 Rigidbody2D:
   serializedVersion: 4

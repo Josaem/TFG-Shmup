@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _fireTime;
     private float _fireRemainingCooldown;
     [SerializeField] private float _fireRate;
+    [SerializeField] private float _fireRate2nd;
     private float _timeToShoot = 0;
+    private float _timeToShoot2nd = 0;
     private bool _fireButtonPressed = false;
     [SerializeField] private GameObject _playerShotVulcan;
 
@@ -178,23 +180,19 @@ public class PlayerController : MonoBehaviour
         if(_slowMovement == false) _slowMovement = true;
         _2ndShotEnabled = true;
 
-        if (Time.time > _timeToShoot)
+        if (Time.time > _timeToShoot2nd)
         {
-            _timeToShoot = Time.time + _fireRate;
+            _timeToShoot2nd = Time.time + _fireRate2nd;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
 
-            for(int i = 0; i < _currentOptionsLocation.Length; i++)
+            for (int i = 0; i < _currentOptionsLocation.Length; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
 
                 if (_currentEnemy == null)
                 {
                     if (hit.collider == null)
-                    {
+                    {                   
                         _currentOptionsLocation[i].transform.right = new Vector3(transform.position.x + 10, transform.position.y, 0) - _currentOptionsLocation[i].transform.position;
-                    }
-                    else if(hit.distance < 3)
-                    {
-                        _currentOptionsLocation[i].transform.right = new Vector3(transform.position.x + 3, transform.position.y, 0) - _currentOptionsLocation[i].transform.position;
                     }
                     else
                     {
@@ -206,7 +204,7 @@ public class PlayerController : MonoBehaviour
                     _currentOptionsLocation[i].transform.right = _currentEnemy.transform.position - _currentOptionsLocation[i].transform.position;
                 }
                 
-                Instantiate(_playerShotVulcan,
+                Instantiate(_secondaryShot,
                     _currentOptionsLocation[i].transform.position, _currentOptionsLocation[i].transform.rotation,
                     _playerBulletPool);
             }
@@ -293,11 +291,9 @@ public class PlayerController : MonoBehaviour
             HideShip();
             StartCoroutine(Respawn(_deathTime));
 
-            if(GameProperties._life <= 0)
-            {
-                //TODO Use Credit screen
-                _dead = true;
-            }
+            _dead = true;
+            CancelShooting();
+            //TODO Use Credit screen
         }
     }
 
