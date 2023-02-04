@@ -35,17 +35,36 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _hitboxRenderer;
     [SerializeField] private Transform _playerRespawnLocation;
 
+    [SerializeField] private bool _1stShotEnabled = false;
     [SerializeField] private float _fireTime;
     private float _fireRemainingCooldown;
     [SerializeField] private float _fireRate;
     private float _timeToShoot = 0;
     private bool _fireButtonPressed = false;
-    [SerializeField] private float _timeToLaser;
-    private float _timeUntilLaser;
-
-    [SerializeField] private Transform _playerBulletPool;
     [SerializeField] private GameObject _playerShotVulcan;
-    [SerializeField] private Transform[] _bulletSpawnLocation;
+
+    [Header("SecondaryShot")]
+    [SerializeField]  private bool _2ndShotEnabled = false;
+    [SerializeField] private float _timeTo2ndShot;
+    private float _timeUntil2ndShot;
+    [SerializeField] private GameObject _secondaryShot;
+    [SerializeField] private Transform[] _base2ndOptionsLocation;
+
+    [SerializeField] private Transform[] _base1stOptionsLocation;
+    [SerializeField] private Transform _playerBulletPool;
+
+    [SerializeField] private GameObject[] _currentOptionsLocation;
+
+
+    public float speed = 5f;
+    public float amplitude = 0.5f;
+    public float amplitudeOffset = 0.5f;
+
+    [SerializeField] private float _gunRotTimer = 0;
+
+    [SerializeField] private LayerMask _enemyLayerMask;
+
+    private GameObject _currentEnemy;
 
     private void Awake()
     {
@@ -64,7 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _timeUntilLaser = _timeToLaser;
+        _timeUntil2ndShot = _timeTo2ndShot;
+        ResetGunPositions();
 
         fireAction.started += ctx => {
             StartShooting();
@@ -90,11 +110,25 @@ public class PlayerController : MonoBehaviour
 
             //Decrease time where fire is active 
             if (_fireRemainingCooldown > 0) _fireRemainingCooldown = Mathf.Max(_fireRemainingCooldown - Time.deltaTime, 0f);
-            if (_fireRemainingCooldown > 0 && _timeUntilLaser > 0) Fire();
+            if (_fireRemainingCooldown > 0 && _timeUntil2ndShot > 0) Fire();
 
             //Decrease time where fire is active 
-            if (_timeUntilLaser > 0 && _fireButtonPressed) _timeUntilLaser = Mathf.Max(_timeUntilLaser - Time.deltaTime, 0f);
-            if (_timeUntilLaser == 0 && _fireButtonPressed) FireLaser();
+            if (_timeUntil2ndShot > 0 && _fireButtonPressed) _timeUntil2ndShot = Mathf.Max(_timeUntil2ndShot - Time.deltaTime, 0f);
+            if (_timeUntil2ndShot == 0 && _fireButtonPressed) Fire2nd();
+
+            if (_fireRemainingCooldown == 0 && _1stShotEnabled)
+                _1stShotEnabled = false;
+
+            //If not shooting
+            if (!_1stShotEnabled && !_2ndShotEnabled)
+            {
+                ResetGunPositions();
+                _gunRotTimer = 0;
+            }
+            else
+            {
+                RotateGuns();
+            }
         }
     }
 
@@ -108,7 +142,6 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        //Slow ship if shooting
         if (_slowMovement)
             _rb.velocity = _movement * _slowSpeed * Time.deltaTime;
         else
@@ -119,35 +152,115 @@ public class PlayerController : MonoBehaviour
     {
         _fireRemainingCooldown = _fireTime;
         _fireButtonPressed = true;
-        _timeUntilLaser = _timeToLaser;
+        _timeUntil2ndShot = _timeTo2ndShot;
+        _1stShotEnabled = true;
     }
 
     private void Fire()
     {
-        //We have a cooldown for each keypress, which in turn shoots shots in a burst
-        //TODO add burst limit to 1 per keypress
+        _1stShotEnabled = true;
         if(Time.time > _timeToShoot)
         {
             _timeToShoot = Time.time + _fireRate;
 
-            foreach (Transform gun in _bulletSpawnLocation)
+            for (int i = 0; i < _currentOptionsLocation.Length; i++) //GameObject gun in _currentOptionsLocation)
             {
+                //TODO Change to 2nd shot, set rotation to face the raycast hit
                 Instantiate(_playerShotVulcan,
-                    gun.position, gun.rotation,
+                    _currentOptionsLocation[i].transform.position, _currentOptionsLocation[i].transform.rotation,
                     _playerBulletPool);
             }
         }
     }
 
-    private void FireLaser()
+    private void Fire2nd()
     {
         if(_slowMovement == false) _slowMovement = true;
+        _2ndShotEnabled = true;
+
+        if (Time.time > _timeToShoot)
+        {
+            _timeToShoot = Time.time + _fireRate;
+
+            for(int i = 0; i < _currentOptionsLocation.Length; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
+
+                if (_currentEnemy == null)
+                {
+                    if (hit.collider == null)
+                    {
+                        _currentOptionsLocation[i].transform.right = new Vector3(transform.position.x + 10, transform.position.y, 0) - _currentOptionsLocation[i].transform.position;
+                    }
+                    else if(hit.distance < 3)
+                    {
+                        _currentOptionsLocation[i].transform.right = new Vector3(transform.position.x + 3, transform.position.y, 0) - _currentOptionsLocation[i].transform.position;
+                    }
+                    else
+                    {
+                        _currentEnemy = hit.transform.gameObject;
+                    }
+                }
+                else
+                {
+                    _currentOptionsLocation[i].transform.right = _currentEnemy.transform.position - _currentOptionsLocation[i].transform.position;
+                }
+                
+                Instantiate(_playerShotVulcan,
+                    _currentOptionsLocation[i].transform.position, _currentOptionsLocation[i].transform.rotation,
+                    _playerBulletPool);
+            }
+        }
     }
 
     private void CancelShooting()
     {
         _slowMovement = false;
         _fireButtonPressed = false;
+        _2ndShotEnabled = false;
+        _currentEnemy = null;
+    }
+
+    private void ResetGunPositions()
+    {
+        for (int i = 0; i < _currentOptionsLocation.Length; i++) //GameObject gun in _currentOptionsLocation)
+        {
+            _currentOptionsLocation[i].transform.position = _base1stOptionsLocation[i].transform.position;
+            _currentOptionsLocation[i].transform.rotation = _base1stOptionsLocation[i].transform.rotation;
+        }
+    }
+
+    private void RotateGuns()
+    {
+        _gunRotTimer += Time.deltaTime;
+        if(!_2ndShotEnabled)
+        {
+            _currentOptionsLocation[0].transform.position = Vector3.Lerp(_base1stOptionsLocation[1].position,
+                _base1stOptionsLocation[0].position,
+                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+
+            _currentOptionsLocation[1].transform.position = Vector3.Lerp(_base1stOptionsLocation[0].position,
+                _base1stOptionsLocation[1].position,
+                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+        }
+        else
+        {
+            _currentOptionsLocation[0].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+                _base2ndOptionsLocation[2].position,
+                (Mathf.Sin((_gunRotTimer + 0.25f) * speed) * amplitude + amplitudeOffset));
+
+            _currentOptionsLocation[1].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+                _base2ndOptionsLocation[2].position,
+                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+
+            _currentOptionsLocation[2].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+                _base2ndOptionsLocation[2].position,
+                (Mathf.Sin((_gunRotTimer + 0.75f) * speed) * amplitude + amplitudeOffset));
+
+            _currentOptionsLocation[3].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+                _base2ndOptionsLocation[2].position,
+                (Mathf.Sin((_gunRotTimer + 1f) * speed) * amplitude + amplitudeOffset));
+        }
     }
 
     private void Block()
