@@ -964,52 +964,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de3624e1b14bac4a920ee8677f7fe57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fastSpeed: 400
   _slowSpeed: 200
-  _blockTime: 0.5
-  _blockCoolDown: 2
-  _shieldRemainingCooldown: 0
+  _fastSpeed: 400
   _deathTime: 3
-  _shieldOnCooldownColor: {r: 1, g: 0, b: 0, a: 0.7058824}
-  _shieldNotOnCooldownColor: {r: 0, g: 1, b: 0.9903989, a: 0.7058824}
-  _rb: {fileID: 678379538}
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  _shieldSprite: {fileID: 933305903}
-  _hitboxSprite: {fileID: 107083023}
   _playerRespawnLocation: {fileID: 352135170}
-  _1stShotEnabled: 1
-  _fireTime: 0.4
-  _fireRate: 0.1
-  _fireRate2nd: 0.5
-  _playerShotVulcan: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
-  _2ndShotEnabled: 0
-  _timeTo2ndShot: 0.5
-  _secondaryShot: {fileID: 4409051570943762180, guid: c7abeb25ef5c6234788727ba4a317c32, type: 3}
-  _base2ndOptionsLocation:
-  - {fileID: 340989853}
-  - {fileID: 759313079}
-  - {fileID: 495750146}
-  - {fileID: 1865043002}
+  _playerBulletPool: {fileID: 2092770887}
+  _optionsGameObject: []
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _fireActiveTime: 0.4
+  _fireRate1st: 0.1
+  _primaryShotPrefab: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
   _base1stOptionsLocation:
   - {fileID: 1614347721}
   - {fileID: 1826351161}
   - {fileID: 1345369867}
   - {fileID: 690342572}
-  _playerBulletPool: {fileID: 2092770887}
-  _currentOptionsLocation:
-  - {fileID: 44115854}
-  - {fileID: 578146129}
-  - {fileID: 505167783}
-  - {fileID: 1346855209}
-  speed: 5
-  amplitude: 0.5
-  amplitudeOffset: 0.5
-  _gunRotTimer: 0
-  _enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
+  _timeFor2ndShotActivation: 0.5
+  _fireRate2nd: 0.5
+  _noLockShotDistance: 10
+  _secondaryShotPrefab: {fileID: 4409051570943762180, guid: c7abeb25ef5c6234788727ba4a317c32, type: 3}
+  _base2ndOptionsLocation:
+  - {fileID: 340989853}
+  - {fileID: 759313079}
+  - {fileID: 495750146}
+  - {fileID: 1865043002}
+  _blockDuration: 0.5
+  _blockCooldown: 2
+  _shieldOnCooldownColor: {r: 1, g: 0, b: 0, a: 0.7058824}
+  _shieldNotOnCooldownColor: {r: 0, g: 1, b: 0.9903989, a: 0.7058824}
+  _shieldSprite: {fileID: 933305903}
+  _hitboxSprite: {fileID: 107083023}
+  _rb: {fileID: 678379538}
 --- !u!50 &678379538
 Rigidbody2D:
   serializedVersion: 4

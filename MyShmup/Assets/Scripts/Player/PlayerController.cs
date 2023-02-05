@@ -5,68 +5,78 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+    TODO TAGS:
+
+    TODOVISUALS
+    TODOUI
+    TODO
+ */
+
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _fastSpeed;
+    [Header("Movement")]
     [SerializeField] private float _slowSpeed;
+    [SerializeField] private float _fastSpeed;
+    private Vector2 _movementValues;
     private bool _slowMovement = false;
-    private bool _invincible = false;
-    [SerializeField] private float _blockTime;
-    [SerializeField] private float _blockCoolDown;
-    [SerializeField] private float _shieldRemainingCooldown = 0;
+
+    [Header("PlayerStatus")]
     [SerializeField] private float _deathTime;
-    [SerializeField] private Color _shieldOnCooldownColor;
-    [SerializeField] private Color _shieldNotOnCooldownColor;
+    [SerializeField] private Transform _playerRespawnLocation;
     private bool _dead = false;
 
-    private Vector2 _movement;
-
-    [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private LayerMask _groundLayer;
-
-    private PlayerInput playerInput;
+    [Header("General Shooting")]
+    [SerializeField] private Transform _playerBulletPool;
+    [SerializeField] private GameObject[] _optionsGameObject;
+    [SerializeField] private LayerMask _enemyLayerMask;
     private InputAction fireAction;
-    private InputAction blockAction;
-
-    private SpriteRenderer[] _playerSprites;
-
-    [SerializeField] private GameObject _shieldSprite;
-    [SerializeField] private GameObject _hitboxSprite;
-    private SpriteRenderer _hitboxRenderer;
-    [SerializeField] private Transform _playerRespawnLocation;
-
-    [SerializeField] private bool _1stShotEnabled = false;
-    [SerializeField] private float _fireTime;
-    private float _fireRemainingCooldown;
-    [SerializeField] private float _fireRate;
-    [SerializeField] private float _fireRate2nd;
-    private float _timeToShoot = 0;
-    private float _timeToShoot2nd = 0;
     private bool _fireButtonPressed = false;
-    [SerializeField] private GameObject _playerShotVulcan;
+
+    [Header("MainShot")]
+    [SerializeField] private float _fireActiveTime;
+    [SerializeField] private float _fireRate1st;
+    [SerializeField] private GameObject _primaryShotPrefab;
+    [SerializeField] private Transform[] _base1stOptionsLocation;
+    private bool _1stShotEnabled = false;
+    private float _timeUntilShooting1st = 0;
+    private float _fire1stTimeRemaining;
 
     [Header("SecondaryShot")]
-    [SerializeField]  private bool _2ndShotEnabled = false;
-    [SerializeField] private float _timeTo2ndShot;
-    private float _timeUntil2ndShot;
-    [SerializeField] private GameObject _secondaryShot;
+    [SerializeField] private float _timeFor2ndShotActivation;
+    [SerializeField] private float _fireRate2nd;
+    [SerializeField] private float _noLockShotDistance;
+    [SerializeField] private GameObject _secondaryShotPrefab;
     [SerializeField] private Transform[] _base2ndOptionsLocation;
+    private bool _2ndShotEnabled = false;
+    private float _timeUntilShooting2nd = 0;
+    private float _timeUntil2ndShotEnabled;
+    private GameObject _currentlyLockedEnemy;
 
-    [SerializeField] private Transform[] _base1stOptionsLocation;
-    [SerializeField] private Transform _playerBulletPool;
+    [Header("Shield")]
+    [SerializeField] private float _blockDuration;
+    [SerializeField] private float _blockCooldown;
+    [SerializeField] private Color _shieldOnCooldownColor;
+    [SerializeField] private Color _shieldNotOnCooldownColor;
+    private InputAction blockAction;
+    private bool _invincible = false;
+    private float _shieldRemainingCooldown = 0;
 
-    [SerializeField] private GameObject[] _currentOptionsLocation;
 
+    [Header("Visuals")]
+    [SerializeField] private GameObject _shieldSprite;
+    [SerializeField] private GameObject _hitboxSprite;
+    private float _gunRotSpeed = 5f;
+    private float _gunRotAmplitude = 0.5f;
+    private float _gunRotAmplitudeOffset = 0.5f;
+    private float _gunRotTime = 0;
+    private SpriteRenderer[] _playerSprites;
+    private SpriteRenderer _hitboxRenderer;
 
-    public float speed = 5f;
-    public float amplitude = 0.5f;
-    public float amplitudeOffset = 0.5f;
+    [Header("Dependecies")]
+    [SerializeField] private Rigidbody2D _rb;
+    private PlayerInput playerInput;
 
-    [SerializeField] private float _gunRotTimer = 0;
-
-    [SerializeField] private LayerMask _enemyLayerMask;
-
-    private GameObject _currentEnemy;
 
     private void Awake()
     {
@@ -85,13 +95,15 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _timeUntil2ndShot = _timeTo2ndShot;
-        ResetGunPositions();
+        _timeUntil2ndShotEnabled = _timeFor2ndShotActivation;
+        ResetOptionPositions();
 
         fireAction.started += ctx => {
+            _fireButtonPressed = true;
             StartShooting();
         };
         fireAction.canceled += ctx => {
+            _fireButtonPressed = false;
             CancelShooting();
         };
 
@@ -102,162 +114,181 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(!_dead)
+        //Decrease time where fire is active 
+        if (_fire1stTimeRemaining > 0) _fire1stTimeRemaining = Mathf.Max(_fire1stTimeRemaining - Time.deltaTime, 0f);
+        if (_fire1stTimeRemaining > 0 && _timeUntil2ndShotEnabled > 0) Fire();
+
+        //Decrease time until enabling the secondary shot 
+        if (_timeUntil2ndShotEnabled > 0 && _fireButtonPressed) _timeUntil2ndShotEnabled = Mathf.Max(_timeUntil2ndShotEnabled - Time.deltaTime, 0f);
+        if (_timeUntil2ndShotEnabled == 0 && _fireButtonPressed) Fire2nd();
+
+        //Disable 1stshot enabled when stopped firing
+        if (_fire1stTimeRemaining == 0 && _1stShotEnabled)
+            _1stShotEnabled = false;
+
+        //Decrease shield cooldown
+        if (_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
+
+        //Change hitbox color depending on shield cooldown
+        if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor) _hitboxRenderer.color = _shieldNotOnCooldownColor;
+
+        //If not shooting reset option positions
+        if (!_1stShotEnabled && !_2ndShotEnabled)
         {
-            //Decrease shield cooldown
-            if (_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
-
-            //Change hitbox color depending on shield cooldown
-            if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor) _hitboxRenderer.color = _shieldNotOnCooldownColor;
-
-            //Decrease time where fire is active 
-            if (_fireRemainingCooldown > 0) _fireRemainingCooldown = Mathf.Max(_fireRemainingCooldown - Time.deltaTime, 0f);
-            if (_fireRemainingCooldown > 0 && _timeUntil2ndShot > 0) Fire();
-
-            //Decrease time where fire is active 
-            if (_timeUntil2ndShot > 0 && _fireButtonPressed) _timeUntil2ndShot = Mathf.Max(_timeUntil2ndShot - Time.deltaTime, 0f);
-            if (_timeUntil2ndShot == 0 && _fireButtonPressed) Fire2nd();
-
-            if (_fireRemainingCooldown == 0 && _1stShotEnabled)
-                _1stShotEnabled = false;
-
-            //If not shooting
-            if (!_1stShotEnabled && !_2ndShotEnabled)
-            {
-                ResetGunPositions();
-                _gunRotTimer = 0;
-            }
-            else
-            {
-                RotateGuns();
-            }
+            ResetOptionPositions();
+            _gunRotTime = 0;
+        }
+        else
+        {
+            RotateOptions();
         }
     }
 
     private void FixedUpdate()
     {
-        if (!_dead)
-        {
-            Move();
-        }
+        Move();
     }
+
+    public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>();
 
     private void Move()
     {
-        if (_slowMovement)
-            _rb.velocity = _movement * _slowSpeed * Time.deltaTime;
-        else
-            _rb.velocity = _movement * _fastSpeed * Time.deltaTime;
+        if (!_dead)
+        {
+            //TODOANIM play moving anim
+            if (_slowMovement)
+                _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues;
+            else
+                _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues;
+        }
     }
 
     private void StartShooting()
     {
-        _fireRemainingCooldown = _fireTime;
-        _fireButtonPressed = true;
-        _timeUntil2ndShot = _timeTo2ndShot;
+        //Enable the timer to shoot both main and secondary
+        _fire1stTimeRemaining = _fireActiveTime;
+        _timeUntil2ndShotEnabled = _timeFor2ndShotActivation;
         _1stShotEnabled = true;
+    }
+
+    private void CancelShooting()
+    {
+        _slowMovement = false;
+        _2ndShotEnabled = false;
+        _currentlyLockedEnemy = null;
     }
 
     private void Fire()
     {
-        _1stShotEnabled = true;
-        if(Time.time > _timeToShoot)
+        if(!_dead)
         {
-            _timeToShoot = Time.time + _fireRate;
+            _1stShotEnabled = true;
 
-            for (int i = 0; i < _currentOptionsLocation.Length; i++) //GameObject gun in _currentOptionsLocation)
+            //If cooldown between shots has passed
+            if (Time.time > _timeUntilShooting1st)
             {
-                //TODO Change to 2nd shot, set rotation to face the raycast hit
-                Instantiate(_playerShotVulcan,
-                    _currentOptionsLocation[i].transform.position, _currentOptionsLocation[i].transform.rotation,
-                    _playerBulletPool);
+                _timeUntilShooting1st = Time.time + _fireRate1st;
+
+                //For each option
+                for (int i = 0; i < _optionsGameObject.Length; i++)
+                {
+                    //Shoot a shot
+                    Instantiate(_primaryShotPrefab,
+                        _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
+                        _playerBulletPool);
+                }
             }
         }
     }
 
     private void Fire2nd()
     {
-        if(_slowMovement == false) _slowMovement = true;
-        _2ndShotEnabled = true;
-
-        if (Time.time > _timeToShoot2nd)
+        if (!_dead)
         {
-            _timeToShoot2nd = Time.time + _fireRate2nd;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
+            //Slow movement while 2nd shot
+            if (_slowMovement == false) _slowMovement = true;
 
-            for (int i = 0; i < _currentOptionsLocation.Length; i++)
+            _2ndShotEnabled = true;
+
+            //If cooldown between shots has passed
+            if (Time.time > _timeUntilShooting2nd)
             {
+                _timeUntilShooting2nd = Time.time + _fireRate2nd;
 
-                if (_currentEnemy == null)
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
+
+                //for each option
+                for (int i = 0; i < _optionsGameObject.Length; i++)
                 {
-                    if (hit.collider == null)
-                    {                   
-                        _currentOptionsLocation[i].transform.right = new Vector3(transform.position.x + 10, transform.position.y, 0) - _currentOptionsLocation[i].transform.position;
+                    if (_currentlyLockedEnemy == null)
+                    {
+                        if (hit.collider == null)
+                        {
+                            //Hasn't hit anything, shoot ahead
+                            _optionsGameObject[i].transform.right = new Vector3(transform.position.x + _noLockShotDistance, transform.position.y, 0) - _optionsGameObject[i].transform.position;
+                        }
+                        else
+                        {
+                            //Has hit, lock to enemy
+                            _currentlyLockedEnemy = hit.transform.gameObject;
+                            _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
+                        }
                     }
                     else
                     {
-                        _currentEnemy = hit.transform.gameObject;
+                        //Point at locked target
+                        _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
                     }
+
+                    //Shoot
+                    Instantiate(_secondaryShotPrefab,
+                        _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
+                        _playerBulletPool);
                 }
-                else
-                {
-                    _currentOptionsLocation[i].transform.right = _currentEnemy.transform.position - _currentOptionsLocation[i].transform.position;
-                }
-                
-                Instantiate(_secondaryShot,
-                    _currentOptionsLocation[i].transform.position, _currentOptionsLocation[i].transform.rotation,
-                    _playerBulletPool);
             }
         }
     }
 
-    private void CancelShooting()
+    private void ResetOptionPositions()
     {
-        _slowMovement = false;
-        _fireButtonPressed = false;
-        _2ndShotEnabled = false;
-        _currentEnemy = null;
-    }
-
-    private void ResetGunPositions()
-    {
-        for (int i = 0; i < _currentOptionsLocation.Length; i++) //GameObject gun in _currentOptionsLocation)
+        for (int i = 0; i < _optionsGameObject.Length; i++)
         {
-            _currentOptionsLocation[i].transform.position = _base1stOptionsLocation[i].transform.position;
-            _currentOptionsLocation[i].transform.rotation = _base1stOptionsLocation[i].transform.rotation;
+            //TODOANIM make options move instead of teleport
+            _optionsGameObject[i].transform.SetPositionAndRotation(_base1stOptionsLocation[i].transform.position, _base1stOptionsLocation[i].transform.rotation);
         }
     }
 
-    private void RotateGuns()
+    private void RotateOptions()
     {
-        _gunRotTimer += Time.deltaTime;
+        _gunRotTime += Time.deltaTime;
+
         if(!_2ndShotEnabled)
         {
-            _currentOptionsLocation[0].transform.position = Vector3.Lerp(_base1stOptionsLocation[1].position,
+            _optionsGameObject[0].transform.position = Vector3.Lerp(_base1stOptionsLocation[1].position,
                 _base1stOptionsLocation[0].position,
-                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
 
-            _currentOptionsLocation[1].transform.position = Vector3.Lerp(_base1stOptionsLocation[0].position,
+            _optionsGameObject[1].transform.position = Vector3.Lerp(_base1stOptionsLocation[0].position,
                 _base1stOptionsLocation[1].position,
-                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
         }
         else
         {
-            _currentOptionsLocation[0].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsGameObject[0].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTimer + 0.25f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 0.25f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
 
-            _currentOptionsLocation[1].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsGameObject[1].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTimer + 0.5f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
 
-            _currentOptionsLocation[2].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsGameObject[2].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTimer + 0.75f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 0.75f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
 
-            _currentOptionsLocation[3].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsGameObject[3].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTimer + 1f) * speed) * amplitude + amplitudeOffset));
+                (Mathf.Sin((_gunRotTime + 1f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
         }
     }
 
@@ -265,15 +296,24 @@ public class PlayerController : MonoBehaviour
     {
         if (!_invincible && (_shieldRemainingCooldown == 0) && !_dead)
         {
-            _shieldRemainingCooldown = _blockCoolDown;
+            _shieldRemainingCooldown = _blockCooldown;
             _hitboxRenderer.color = _shieldOnCooldownColor;
             _shieldSprite.SetActive(true);
             _invincible = true;
-            StartCoroutine(StopInvincibility(_blockTime));
+            StartCoroutine(StopInvincibility(_blockDuration));
         }
     }
 
-    public void OnMove(InputValue value) => _movement = value.Get<Vector2>();
+    private IEnumerator StopInvincibility(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (time == _blockDuration)
+        {
+            _shieldSprite.SetActive(false);
+        }
+        _invincible = false;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -287,25 +327,14 @@ public class PlayerController : MonoBehaviour
             _invincible = true;
             StartCoroutine(StopInvincibility(_deathTime));
 
-            //Animate ship death
+            //TODOANIM Animate ship death
             HideShip();
             StartCoroutine(Respawn(_deathTime));
 
             _dead = true;
             CancelShooting();
-            //TODO Use Credit screen
+            //TODOUI Use Credit screen
         }
-    }
-
-    private IEnumerator StopInvincibility(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        if(time == _blockTime)
-        {
-            _shieldSprite.SetActive(false);
-        }
-        _invincible = false;
     }
 
     private IEnumerator Respawn(float time)
