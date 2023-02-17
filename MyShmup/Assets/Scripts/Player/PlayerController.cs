@@ -107,8 +107,12 @@ public class PlayerController : MonoBehaviour
             CancelShooting();
         };
 
-        blockAction.performed += ctx => {
-            Block();
+        blockAction.started += ctx => {
+            EnableBlock();
+        };
+
+        blockAction.canceled += ctx => {
+            DisableBlock();
         };
     }
 
@@ -129,8 +133,12 @@ public class PlayerController : MonoBehaviour
         //Decrease shield cooldown
         if (_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
 
+        //Disable blocking if blockduration has passed, doesn't execute every frame
+        if (_shieldRemainingCooldown < _blockCooldown - _blockDuration && _shieldRemainingCooldown > 0) DisableBlock();
+
         //Change hitbox color depending on shield cooldown
-        if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor) _hitboxRenderer.color = _shieldNotOnCooldownColor;
+        if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor)
+                _hitboxRenderer.color = _shieldNotOnCooldownColor;
 
         //If not shooting reset option positions
         if (!_1stShotEnabled && !_2ndShotEnabled)
@@ -297,26 +305,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Block()
+    private void EnableBlock()
     {
-        if (!_invincible && (_shieldRemainingCooldown == 0) && !_dead)
+        //if shield not on cooldown allow shielding for the next blockduration seconds
+        if(_shieldRemainingCooldown <= 0)
         {
             _shieldRemainingCooldown = _blockCooldown;
             _hitboxRenderer.color = _shieldOnCooldownColor;
             _shieldSprite.SetActive(true);
             _invincible = true;
-            StartCoroutine(StopInvincibility(_blockDuration));
         }
+    }
+
+    private void DisableBlock()
+    {
+        _shieldSprite.SetActive(false);
+        _invincible = false;
     }
 
     private IEnumerator StopInvincibility(float time)
     {
         yield return new WaitForSeconds(time);
 
-        if (time == _blockDuration)
-        {
-            _shieldSprite.SetActive(false);
-        }
         _invincible = false;
     }
 
