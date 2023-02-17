@@ -224,7 +224,12 @@ public class PlayerController : MonoBehaviour
                     {
                         if (hit.collider == null)
                         {
-                            //Hasn't hit anything, shoot ahead
+                            //Hasn't hit anything, check behind
+                            hit = Physics2D.Raycast(transform.position, Vector2.left, 15, _enemyLayerMask);
+                        }
+                        if (hit.collider == null)
+                        {
+                            //hasn't hit anything both in front or behind, shoot ahead
                             _optionsGameObject[i].transform.right = new Vector3(transform.position.x + _noLockShotDistance, transform.position.y, 0) - _optionsGameObject[i].transform.position;
                         }
                         else
