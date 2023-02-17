@@ -969,7 +969,11 @@ MonoBehaviour:
   _deathTime: 3
   _playerRespawnLocation: {fileID: 352135170}
   _playerBulletPool: {fileID: 2092770887}
-  _optionsGameObject: []
+  _optionsGameObject:
+  - {fileID: 44115854}
+  - {fileID: 578146129}
+  - {fileID: 505167783}
+  - {fileID: 1346855209}
   _enemyLayerMask:
     serializedVersion: 2
     m_Bits: 256
