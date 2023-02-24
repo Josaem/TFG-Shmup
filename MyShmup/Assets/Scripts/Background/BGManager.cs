@@ -54,7 +54,7 @@ public class BGManager : MonoBehaviour
                     case 1: bgObject._backgroundSprite.SetActive(false);
                         break;
 
-                    case 2: //enable background object action, change its state;
+                    case 2: bgObject._backgroundSprite.GetComponent<ScrollNoLoop>().Action();
                         break;
 
                     default: Destroy(bgObject._backgroundSprite);
