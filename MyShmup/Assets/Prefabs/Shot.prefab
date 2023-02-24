@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8611242605688926261}
   - component: {fileID: -5012560126495252067}
   - component: {fileID: 3018078060065001539}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6990696921711767401}
   - component: {fileID: 8151396439241189241}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: ShotSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6040974512936427132}
   - component: {fileID: 3837873404939405379}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: ShotBasePostition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
