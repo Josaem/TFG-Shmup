@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviour
     public class Section
     {
         public Orientation _shipOrientation;
-        public BackgroundSection _backgroundSection;
+        public BGSection _backgroundSection;
         public BGObject[] _backgroundObjects;
         public Wave[] _waves;
     }
 
     [System.Serializable]
-    public class BackgroundSection
+    public class BGSection
     {
         public float _scrollSpeed;
         public BGObject _background;
@@ -37,10 +37,16 @@ public class GameManager : MonoBehaviour
     private Section[] _sections;
 
     private bool _canStartNextSection = false;
-    private int _previousbackgroundindex = 9999;
+    private BGObject _currentBG = null;
+    private BGObject _prevBackground = null; //check if this works
 
     private void Start()
     {
+        if(_sectionIndex != 0)
+        {
+            _currentBG = _sections[_sectionIndex]._backgroundSection._background;
+        }
+
         StartSection();
     }
 
@@ -62,20 +68,29 @@ public class GameManager : MonoBehaviour
 
     private void StartSection()
     {
-        /*
-         si backgroundObjects no es null
-            spawnea backgroundObjects
-    
-        si sectionIndex es distinto de 0
-            previousBackgroundIndex = null
+        //Spawn background objects (meteorites, etc)
+        if (_sections[_sectionIndex]._backgroundObjects != null)
+        {
+            //spawnea backgroundObjects
+        }
 
-        si backgroundSection anterior es distinto del actual pone backgroundSection
-        else setea la velocidad de scroll del backgroundSection
+        //If last background is different from the one being spawned
+        if(_prevBackground != _sections[_sectionIndex]._backgroundSection._background)
+        {
+            //spawn background with specific speed
+            _currentBG = _sections[_sectionIndex]._backgroundSection._background;
+        }     
 
-        pone orientacion del jugador si esta ha cambiado -> player.changeOrientation(orientation)
+        //Change scroll speed, TODO lerp the speed
+        _currentBG._customSpeed = _sections[_sectionIndex]._backgroundSection._scrollSpeed;
 
-        SpawnWave()
-        */
+        PlayerController player = FindObjectsOfType<PlayerController>()[0];
+        if(player != null)
+        {
+            player.ChangeOrientation(_sections[_sectionIndex]._shipOrientation);
+        }
+
+        SpawnWave();
     }
 
     private void EndSection()
@@ -91,6 +106,11 @@ public class GameManager : MonoBehaviour
                 dice a background que esta dying
                 SpawnEndWave();
         */
+    }
+
+    public void AllowStartNextSection()
+    {
+        _canStartNextSection = true;
     }
 
     private void SpawnWave()

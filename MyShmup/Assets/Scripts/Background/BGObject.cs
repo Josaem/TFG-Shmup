@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class BGObject : MonoBehaviour
 {
-    public bool _safeToTransition = false;
-    public bool _loops;
-    private bool _backgroundIsDynamic;
-    public float _customSpeed;
-
     [SerializeField]
-    private int _waypointIndex = 0;
-
-    public bool _dying;
+    private GameObject _background;
+    public bool _loops;
+    public bool _backgroundIsDynamic;
+    public float _customSpeed = 3;
     public Transform _deathWaypoint;
+    [SerializeField]
+    private ScrollWaypointObject[] _waypoints;
+    
+    [HideInInspector]
+    public bool _dying = false;
+    [HideInInspector]
+    public  bool _safeToTransition = false;
+
+    private int _waypointToGo = 0;
+
 
     [System.Serializable]
     public class ScrollWaypointObject
@@ -22,13 +28,10 @@ public class BGObject : MonoBehaviour
         public Transform _waypoint;
     }
 
-    [SerializeField]
-    private ScrollWaypointObject[] _waypoints;
-
 
     private void Start()
     {
-        transform.position = _waypoints[_waypointIndex]._waypoint.position;
+        
     }
 
     private void Update()
@@ -46,33 +49,40 @@ public class BGObject : MonoBehaviour
     public void Move()
     {
         //if there are waypoints left
-        if (_waypointIndex < _waypoints.Length)
+        if (_waypointToGo < _waypoints.Length)
         {
             if(!_backgroundIsDynamic)
             {
+                Debug.Log(_customSpeed);
                 //move to waypoint
-                transform.position = Vector2.MoveTowards(transform.position, _waypoints[_waypointIndex]._waypoint.position,
+                _background.transform.position = Vector2.MoveTowards(_background.transform.position, _waypoints[_waypointToGo]._waypoint.position,
                     _customSpeed * Time.deltaTime);
             }
             else
             {
                 //move to waypoint
-                transform.position = Vector2.MoveTowards(transform.position, _waypoints[_waypointIndex]._waypoint.position,
-                    _waypoints[_waypointIndex]._speed * Time.deltaTime);
+                _background.transform.position = Vector2.MoveTowards(_background.transform.position, _waypoints[_waypointToGo]._waypoint.position,
+                    _waypoints[_waypointToGo]._speed * Time.deltaTime);
             }
 
             //TODO use lerp to transition speeds seamlessly/not using sudden speed changes
 
             //If reached waypoint
-            if (transform.position == _waypoints[_waypointIndex]._waypoint.position)
+            if (_background.transform.position == _waypoints[_waypointToGo]._waypoint.position)
             {
                 //if last waypoint
-                if(_waypointIndex == _waypoints.Length - 1)
+                if(_waypointToGo == _waypoints.Length - 1)
                 {
                     _safeToTransition = true;
 
                     if(!_backgroundIsDynamic && _dying)
-                        //send message to gamemanager to transition to next bg 
+                    {
+                        GameManager gm = FindObjectsOfType<GameManager>()[0];
+                        if (gm != null)
+                        {
+                            gm.AllowStartNextSection();
+                        }
+                    }    
 
                     //and loops
                     if (_loops)
@@ -81,7 +91,8 @@ public class BGObject : MonoBehaviour
                         if(!_dying)
                         {
                             _safeToTransition = false;
-                            transform.position = _waypoints[0]._waypoint.position;
+                            _background.transform.position = _waypoints[0]._waypoint.position;
+                            _waypointToGo = 1;
                         }
                     }
                     else
@@ -92,7 +103,7 @@ public class BGObject : MonoBehaviour
                 else
                 {
                     //Go to next one
-                    _waypointIndex++;
+                    _waypointToGo++;
                 }
             }
         }
@@ -101,10 +112,10 @@ public class BGObject : MonoBehaviour
     public void MoveToDeath()
     {
         //move to waypoint
-        transform.position = Vector2.MoveTowards(transform.position, _deathWaypoint.position,
+        _background.transform.position = Vector2.MoveTowards(_background.transform.position, _deathWaypoint.position,
             _waypoints[^1]._speed * Time.deltaTime);
 
-        if (transform.position == _deathWaypoint.position)
+        if (_background.transform.position == _deathWaypoint.position)
         {
             Destroy(gameObject);
         }

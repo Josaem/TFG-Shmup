@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Header("PlayerStatus")]
     [SerializeField] private float _deathTime;
     [SerializeField] private Transform _playerRespawnLocation;
+    public Orientation shipOrientation = Orientation.horizontal;
     private bool _dead = false;
 
     [Header("General Shooting")]
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _timeFor2ndShotActivation;
     [SerializeField] private float _fireRate2nd;
     [SerializeField] private float _noLockShotDistance;
+    [SerializeField] private Transform _noLockObject;
     [SerializeField] private GameObject _secondaryShotPrefab;
     [SerializeField] private Transform[] _base2ndOptionsLocation;
     private bool _2ndShotEnabled = false;
@@ -64,14 +67,13 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Visuals")]
-    [SerializeField] private GameObject _shieldSprite;
-    [SerializeField] private GameObject _hitboxSprite;
+    [SerializeField] private SpriteRenderer _shieldSprite;
+    [SerializeField] private SpriteRenderer _hitboxSprite;
     private float _gunRotSpeed = 5f;
     private float _gunRotAmplitude = 0.5f;
     private float _gunRotAmplitudeOffset = 0.5f;
     private float _gunRotTime = 0;
     private SpriteRenderer[] _playerSprites;
-    private SpriteRenderer _hitboxRenderer;
 
     [Header("Dependecies")]
     [SerializeField] private Rigidbody2D _rb;
@@ -90,7 +92,6 @@ public class PlayerController : MonoBehaviour
         blockAction.ReadValue<float>();
 
         _playerSprites = GetComponentsInChildren<SpriteRenderer>();
-        _hitboxRenderer = _hitboxSprite.GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -114,6 +115,10 @@ public class PlayerController : MonoBehaviour
         blockAction.canceled += ctx => {
             DisableBlock();
         };
+
+        _shieldSprite.enabled = false;
+
+        _noLockObject.position = transform.right * _noLockShotDistance;
     }
 
     private void Update()
@@ -137,8 +142,8 @@ public class PlayerController : MonoBehaviour
         if (_shieldRemainingCooldown < _blockCooldown - _blockDuration && _shieldRemainingCooldown > 0) DisableBlock();
 
         //Change hitbox color depending on shield cooldown
-        if (_shieldRemainingCooldown == 0 && _hitboxRenderer.color != _shieldNotOnCooldownColor)
-                _hitboxRenderer.color = _shieldNotOnCooldownColor;
+        if (_shieldRemainingCooldown == 0 && _hitboxSprite.color != _shieldNotOnCooldownColor)
+                _hitboxSprite.color = _shieldNotOnCooldownColor;
 
         //If not shooting reset option positions
         if (!_1stShotEnabled && !_2ndShotEnabled)
@@ -223,7 +228,7 @@ public class PlayerController : MonoBehaviour
             {
                 _timeUntilShooting2nd = Time.time + _fireRate2nd;
 
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, _enemyLayerMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15, _enemyLayerMask);
 
                 //for each option
                 for (int i = 0; i < _optionsGameObject.Length; i++)
@@ -233,12 +238,12 @@ public class PlayerController : MonoBehaviour
                         if (hit.collider == null)
                         {
                             //Hasn't hit anything, check behind
-                            hit = Physics2D.Raycast(transform.position, Vector2.left, 15, _enemyLayerMask);
+                            hit = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
                         }
                         if (hit.collider == null)
                         {
                             //hasn't hit anything both in front or behind, shoot ahead
-                            _optionsGameObject[i].transform.right = new Vector3(transform.position.x + _noLockShotDistance, transform.position.y, 0) - _optionsGameObject[i].transform.position;
+                            _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
                         }
                         else
                         {
@@ -311,15 +316,15 @@ public class PlayerController : MonoBehaviour
         if(_shieldRemainingCooldown <= 0)
         {
             _shieldRemainingCooldown = _blockCooldown;
-            _hitboxRenderer.color = _shieldOnCooldownColor;
-            _shieldSprite.SetActive(true);
+            _hitboxSprite.color = _shieldOnCooldownColor;
+            _shieldSprite.enabled = true;
             _invincible = true;
         }
     }
 
     private void DisableBlock()
     {
-        _shieldSprite.SetActive(false);
+        _shieldSprite.enabled = false;
         _invincible = false;
     }
 
@@ -373,6 +378,28 @@ public class PlayerController : MonoBehaviour
         foreach (var sprite in _playerSprites)
         {
             sprite.enabled = true;
+        }
+    }
+
+    public void ChangeOrientation(Orientation orientation)
+    {
+        shipOrientation = orientation;
+
+        //add here the visual changes and the lerping
+        switch(orientation)
+        {
+            case Orientation.diagonalUp:
+                transform.rotation = Quaternion.Euler(0, 0, 45);
+                break;
+            case Orientation.diagonalDown:
+                transform.rotation = Quaternion.Euler(0, 0, -45);
+                break;
+            case Orientation.vertical:
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case Orientation.horizontal:
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
         }
     }
 }
