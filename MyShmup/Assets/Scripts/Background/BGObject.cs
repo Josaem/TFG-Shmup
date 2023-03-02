@@ -53,7 +53,6 @@ public class BGObject : MonoBehaviour
         {
             if(!_backgroundIsDynamic)
             {
-                Debug.Log(_customSpeed);
                 //move to waypoint
                 _background.transform.position = Vector2.MoveTowards(_background.transform.position, _waypoints[_waypointToGo]._waypoint.position,
                     _customSpeed * Time.deltaTime);

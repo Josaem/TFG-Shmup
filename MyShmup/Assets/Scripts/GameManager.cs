@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,10 +24,10 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class Wave
     {
-        public int requisitosPorCumplirIndex = GameProperties._extraLevelRequirements[0][0];
+        public int _requirementsIndex = GameProperties._extraLevelRequirements[0][0];
         public float _duration = 1;
         public float _delayUntilNext = 0;
-        //TODO lista de enemigos con atributos para asignar
+        public bool[] _enemyWave; //TODO lista de enemigos con atributos para asignar
     }
 
     [SerializeField]
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     private bool _canStartNextSection = false;
     private BGObject _currentBG = null;
     private BGObject _prevBackground = null; //check if this works
+    private IEnumerator _waitForWave;
 
     private void Start()
     {
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
         si prioritywave es true
             si priorityEnemiesLeft == 0
                 EndWave()
-                Desactiva timer de EndWave
+                Desactiva waitfornextwave
                 prioritywave = false
 
         si canStartNextSection
@@ -71,14 +73,16 @@ public class GameManager : MonoBehaviour
         //Spawn background objects (meteorites, etc)
         if (_sections[_sectionIndex]._backgroundObjects != null)
         {
-            //spawnea backgroundObjects
+            foreach(BGObject bGObject in _sections[_sectionIndex]._backgroundObjects)
+            {
+                Instantiate(bGObject);
+            }
         }
 
         //If last background is different from the one being spawned
         if(_prevBackground != _sections[_sectionIndex]._backgroundSection._background)
         {
-            //spawn background with specific speed
-            _currentBG = _sections[_sectionIndex]._backgroundSection._background;
+            _currentBG = Instantiate(_sections[_sectionIndex]._backgroundSection._background);
         }     
 
         //Change scroll speed, TODO lerp the speed
@@ -95,10 +99,15 @@ public class GameManager : MonoBehaviour
 
     private void EndSection()
     {
+        _sectionIndex++;
+
+        Debug.Log("Ending section");
+        if (_sectionIndex < _sections.Length)
+        {
+
+        }
         /*
          si sectionIndex + 1 not null 
-            sectionIndex++
-
             si background anterior es el mismo que +1
                 StartSection
 
@@ -115,18 +124,67 @@ public class GameManager : MonoBehaviour
 
     private void SpawnWave()
     {
-        /*
-         si waveObject no es null
-            spawnea waveobject
-            pone un timer coroutine de EndWave basado en el waveObject
+        Debug.Log("Spawning wave: " + _waveIndex);
+        //spawnea enemyWave si hay 
 
-            cuenta enemigos de prioridad de la wave -> priorityEnemyAmount
-            si priorityEnemyAmount es mayor que 0 -> es wave de enemigos de prioridad
-                    setea priorityEnemiesLeft = priorityEnemyAmount
-            prioritywave es true
-        else
-            EndWave()
+        //Set timer to forcibly end wave
+        _waitForWave = WaitForWave(_sections[_sectionIndex]._waves[_waveIndex]._duration);
+        StartCoroutine(_waitForWave);
+
+        //si hay enemyWave
+        //cuenta enemigos de prioridad de la enemyWave -> priorityEnemyAmount
+        //si priorityEnemyAmount es mayor que 0->es wave de enemigos de prioridad
+        //        setea priorityEnemiesLeft = priorityEnemyAmount
+        //prioritywave es true                  
+    }
+
+    private IEnumerator WaitForWave(float waveDuration)
+    {
+        yield return new WaitForSeconds(waveDuration);
+        EndWave();
+    }
+
+    public void EndWave()
+    {
+        /*
+        si enemyWave no es null
+            despawnea enemyWave
         */
+
+        //Search next wave after delay
+        Invoke(nameof(GetNextWave), _sections[_sectionIndex]._waves[_waveIndex]._delayUntilNext);
+    }
+
+    public void GetNextWave()
+    {
+        //Look for next wave
+        int? nextWave = SelectNextWave(_waveIndex + 1);
+
+        if(nextWave == null)
+        {
+            //No next wave, end section
+            _waveIndex = 0;
+            EndSection();
+        }
+        else
+        {
+            _waveIndex = (int)nextWave;
+            SpawnWave();
+        }
+    }
+
+    private int? SelectNextWave(int selectedWave)
+    {
+        if (selectedWave >= _sections[_sectionIndex]._waves.Length)
+        {
+            return null;
+        }
+        else if (GameProperties._extraLevelRequirements[GameProperties._currentLevel]
+                [_sections[_sectionIndex]._waves[selectedWave]._requirementsIndex] == 0)
+        {
+            return selectedWave;
+        }
+        else return SelectNextWave(selectedWave + 1);
     }
 
     private void SpawnEndWave()
@@ -148,47 +206,6 @@ public class GameManager : MonoBehaviour
     public void BackgroundDead()
     {
         _canStartNextSection = true;
-    }
-
-    private IEnumerator WaitForWave(float waveDuration)
-    {
-        yield return new WaitForSeconds(waveDuration);
-        EndWave();
-    }
-
-    public void EndWave()
-    {
-        /*
-        si waveObject no es null
-            despawnea waveObject
-        Invoke("GetNextWave", offset)
-        */
-    }
-
-    public void GetNextWave()
-    {
-        /*
-        int waveSelected = currentWveIndex
-
-        nextWave = SelectNextWave(waveSelected)
-
-        si nextWave es null EndSection()
-        else
-            currentWaveIndex = nextWave;
-            SpawnWave();
-        */
-    }
-
-    private int SelectNextWave(int selectedWave)
-    {
-        /*
-        if waves[selectedWave + 1] == null
-            return null;
-        else if waves[selectedWave + 1].requisitos por cumplir == 0 usar persistent settings requirements[level-1][index]
-            return selectedWave + 1;
-        else
-            return SelectNextWave(selectedWave + 1)*/
-        return selectedWave; //quitar esto
     }
 
     /*        
