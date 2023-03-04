@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
             else
                 dice a background que esta dying
                 SpawnEndWave();
+         TODO cuando un background este muriendo y otro haya aparecido hay que cambiar sus velocidades a lerp entre velocidad de anterior background y el nuevo
         */
     }
 
