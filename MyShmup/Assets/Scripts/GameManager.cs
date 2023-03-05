@@ -30,25 +30,19 @@ public class GameManager : MonoBehaviour
         public bool[] _enemyWave; //TODO lista de enemigos con atributos para asignar
     }
 
-    [SerializeField]
-    private int _sectionIndex;
+    public int _sectionIndex;
     [SerializeField]
     private int _waveIndex;
-    [SerializeField]
-    private Section[] _sections;
+    public Section[] _sections;
 
     private bool _canStartNextSection = false;
     private BGObject _currentBG = null;
-    private BGObject _prevBackground = null; //check if this works
+    private BGObject _previousBG = null;
+    private int _previousBGIndex = 999;
     private IEnumerator _waitForWave;
 
     private void Start()
     {
-        if(_sectionIndex != 0)
-        {
-            _currentBG = _sections[_sectionIndex]._backgroundSection._background;
-        }
-
         StartSection();
     }
 
@@ -66,6 +60,14 @@ public class GameManager : MonoBehaviour
             StartSection()
             canStartNextSection = false
          */
+
+        //Waits for message from background saying the new bg can spawn
+        if(_canStartNextSection)
+        {
+            //DespawnEndWave
+            StartSection();
+            _canStartNextSection = false;
+        }
     }
 
     private void StartSection()
@@ -79,14 +81,17 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //If last background is different from the one being spawned
-        if(_prevBackground != _sections[_sectionIndex]._backgroundSection._background)
+        if(!FirstSpawn()) _previousBG = _currentBG;
+
+        //If last background is different from the one being spawned spawn it
+        if (SectionBGIsDifferentFromPrevious())
         {
-            _currentBG = Instantiate(_sections[_sectionIndex]._backgroundSection._background);
-        }     
+            _currentBG = Instantiate(_sections[_sectionIndex]._backgroundSection._background);            
+        }
 
         //Change scroll speed, TODO lerp the speed
         _currentBG._customSpeed = _sections[_sectionIndex]._backgroundSection._scrollSpeed;
+        if(!FirstSpawn()) _previousBG._customSpeed = _sections[_sectionIndex]._backgroundSection._scrollSpeed;
 
         PlayerController player = FindObjectsOfType<PlayerController>()[0];
         if(player != null)
@@ -99,12 +104,22 @@ public class GameManager : MonoBehaviour
 
     private void EndSection()
     {
+        _previousBGIndex = _sectionIndex;
         _sectionIndex++;
 
         Debug.Log("Ending section");
         if (_sectionIndex < _sections.Length)
         {
-
+            if(!SectionBGIsDifferentFromPrevious())
+            {
+                StartSection();
+            }
+            else
+            {
+                //Messages background to die and waits for it to tell when the next bg can be loaded
+                _currentBG.KillBG();
+                //SpawnEndWave
+            }
         }
         /*
          si sectionIndex + 1 not null 
@@ -207,6 +222,22 @@ public class GameManager : MonoBehaviour
     public void BackgroundDead()
     {
         _canStartNextSection = true;
+    }
+
+    private bool SectionBGIsDifferentFromPrevious()
+    {
+        if (_previousBGIndex == 999 || _sections[_previousBGIndex]._backgroundSection._background != _sections[_sectionIndex]._backgroundSection._background)
+            return true;
+        else
+            return false;
+    }
+
+    private bool FirstSpawn()
+    {
+        if (_previousBGIndex == 999)
+            return true;
+        else
+            return false;
     }
 
     /*        

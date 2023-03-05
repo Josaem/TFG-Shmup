@@ -354,19 +354,17 @@ MonoBehaviour:
     _backgroundObjects: []
     _waves:
     - _requirementsIndex: 0
-      _duration: 10
-      _delayUntilNext: 0
-      _enemyWave: 
-    - _requirementsIndex: 1
       _duration: 5
       _delayUntilNext: 0
       _enemyWave: 
+  - _shipOrientation: 2
+    _backgroundSection:
+      _scrollSpeed: 10
+      _background: {fileID: 5974494775853258413, guid: 235711d82ed252940ac82225834bac31, type: 3}
+    _backgroundObjects: []
+    _waves:
     - _requirementsIndex: 0
-      _duration: 4
-      _delayUntilNext: 0
-      _enemyWave: 
-    - _requirementsIndex: 0
-      _duration: 2
+      _duration: 5
       _delayUntilNext: 0
       _enemyWave: 
 --- !u!1 &1417774855
@@ -786,9 +784,5 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1667454502}
-    - target: {fileID: 6954143850450981557, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}

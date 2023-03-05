@@ -20,6 +20,8 @@ public class BGObject : MonoBehaviour
 
     private int _waypointToGo = 0;
 
+    private GameManager _myGM;
+
 
     [System.Serializable]
     public class ScrollWaypointObject
@@ -31,7 +33,7 @@ public class BGObject : MonoBehaviour
 
     private void Start()
     {
-        
+        _myGM = FindObjectsOfType<GameManager>()[0];
     }
 
     private void Update()
@@ -64,24 +66,13 @@ public class BGObject : MonoBehaviour
                     _waypoints[_waypointToGo]._speed * Time.deltaTime);
             }
 
-            //TODO use lerp to transition speeds seamlessly/not using sudden speed changes
-
             //If reached waypoint
             if (_background.transform.position == _waypoints[_waypointToGo]._waypoint.position)
             {
                 //if last waypoint
                 if(_waypointToGo == _waypoints.Length - 1)
                 {
-                    _safeToTransition = true;
-
-                    if(!_backgroundIsDynamic && _dying)
-                    {
-                        GameManager gm = FindObjectsOfType<GameManager>()[0];
-                        if (gm != null)
-                        {
-                            gm.AllowStartNextSection();
-                        }
-                    }    
+                    _safeToTransition = true;   
 
                     //and loops
                     if (_loops)
@@ -98,6 +89,11 @@ public class BGObject : MonoBehaviour
                     {
                         KillBG();
                     }
+
+                    if (!_backgroundIsDynamic && _dying)
+                    {
+                        _myGM.AllowStartNextSection();
+                    }
                 }
                 else
                 {
@@ -111,8 +107,16 @@ public class BGObject : MonoBehaviour
     public void MoveToDeath()
     {
         //move to waypoint
-        _background.transform.position = Vector2.MoveTowards(_background.transform.position, _deathWaypoint.position,
-            _waypoints[^1]._speed * Time.deltaTime);
+        if(!_backgroundIsDynamic)
+        {
+            _background.transform.position = Vector2.MoveTowards(_background.transform.position, _deathWaypoint.position,
+                        _customSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _background.transform.position = Vector2.MoveTowards(_background.transform.position, _deathWaypoint.position,
+                        _waypoints[^1]._speed * Time.deltaTime);
+        }
 
         if (_background.transform.position == _deathWaypoint.position)
         {
