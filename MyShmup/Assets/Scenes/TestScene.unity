@@ -353,20 +353,46 @@ MonoBehaviour:
       _background: {fileID: 5974494775853258413, guid: 235711d82ed252940ac82225834bac31, type: 3}
     _backgroundObjects: []
     _waves:
-    - _requirementsIndex: 0
+    - _spawnRequirementsIndex: 0
       _duration: 5
       _delayUntilNext: 0
-      _enemyWave: 
+      _enemyWave: {fileID: 8181601964117689297, guid: 659b8780fe30ea7498b18f82154f8a38, type: 3}
+    - _spawnRequirementsIndex: 0
+      _duration: 5
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 8181601964117689297, guid: 39111adedc5de7a42b3b9c983272436a, type: 3}
+    - _spawnRequirementsIndex: 0
+      _duration: 5
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+    _endWave: {fileID: 8181601964117689297, guid: cccb7a9a4d68e8d42a693e32d16b77c4, type: 3}
   - _shipOrientation: 2
     _backgroundSection:
-      _scrollSpeed: 10
-      _background: {fileID: 5974494775853258413, guid: 235711d82ed252940ac82225834bac31, type: 3}
+      _scrollSpeed: 5
+      _background: {fileID: 5974494775853258413, guid: 180ba7e940bb50e4986350c96fcfa52a, type: 3}
     _backgroundObjects: []
     _waves:
-    - _requirementsIndex: 0
+    - _spawnRequirementsIndex: 0
       _duration: 5
       _delayUntilNext: 0
-      _enemyWave: 
+      _enemyWave: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+    - _spawnRequirementsIndex: 0
+      _duration: 3
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 8181601964117689297, guid: 39111adedc5de7a42b3b9c983272436a, type: 3}
+    _endWave: {fileID: 0}
+  - _shipOrientation: 1
+    _backgroundSection:
+      _scrollSpeed: 10
+      _background: {fileID: 5974494775853258413, guid: 180ba7e940bb50e4986350c96fcfa52a, type: 3}
+    _backgroundObjects:
+    - {fileID: 5974494775853258413, guid: 5942e3690dc730f42ac56dadb6b0495a, type: 3}
+    _waves:
+    - _spawnRequirementsIndex: 0
+      _duration: 4
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+    _endWave: {fileID: 0}
 --- !u!1 &1417774855
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1778419676
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -631,7 +657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1870230568
 SpriteRenderer:
   m_ObjectHideFlags: 0

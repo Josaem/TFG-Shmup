@@ -23,7 +23,7 @@ public class WaveObject : MonoBehaviour
 
     public void DespawnWave()
     {
-
+        Destroy(gameObject);
     }
 
     /*

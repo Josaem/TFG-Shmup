@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         {
             if(IsThereEndWave())
             {
-                DespawnWave();
+                DespawnEndWave();
             }
             StartSection();
             _canStartNextSection = false;
@@ -219,21 +219,32 @@ public class GameManager : MonoBehaviour
     {
         if(IsThereEndWave())
         {
-            _currentWave = Instantiate(_sections[_sectionIndex]._endWave);
+            Debug.Log("Spawning EndWave");
+            _currentWave = Instantiate(_sections[_sectionIndex-1]._endWave);
         }
     }
 
     private void DespawnWave()
     {
+        if (IsThereEnemyWave())
+        {
+            Debug.Log("Despawning Wave");
+            _currentWave.GetComponent<WaveObject>().DespawnWave();
+        }
+    }
+
+    private void DespawnEndWave()
+    {
         if (IsThereEndWave())
         {
+            Debug.Log("Despawning EndWave");
             _currentWave.GetComponent<WaveObject>().DespawnWave();
         }
     }
 
     private bool IsThereEndWave()
     {
-        if (_sections[_sectionIndex]._endWave != null)
+        if (_sections[_sectionIndex-1]._endWave != null)
         {
             return true;
         }
