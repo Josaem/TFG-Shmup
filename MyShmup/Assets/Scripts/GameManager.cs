@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         public BGSection _backgroundSection;
         public BGObject[] _backgroundObjects;
         public Wave[] _waves;
+        public GameObject _endWave;
     }
 
     [System.Serializable]
@@ -24,10 +25,10 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class Wave
     {
-        public int _requirementsIndex = GameProperties._extraLevelRequirements[0][0];
+        public int _spawnRequirementsIndex = GameProperties._extraLevelRequirements[0][0];
         public float _duration = 1;
         public float _delayUntilNext = 0;
-        public bool[] _enemyWave; //TODO lista de enemigos con atributos para asignar
+        public GameObject _enemyWave;
     }
 
     public int _sectionIndex;
@@ -40,6 +41,9 @@ public class GameManager : MonoBehaviour
     private BGObject _previousBG = null;
     private int _previousBGIndex = 999;
     private IEnumerator _waitForWave;
+    private bool _priorityWave = false;
+    private int _priorityEnemiesLeft = 0;
+    private GameObject _currentWave;
 
     private void Start()
     {
@@ -48,23 +52,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        /*
-        si prioritywave es true
-            si priorityEnemiesLeft == 0
-                EndWave()
-                Desactiva waitfornextwave
-                prioritywave = false
-
-        si canStartNextSection
-            DespawnEndWave()
-            StartSection()
-            canStartNextSection = false
-         */
+        if(_priorityWave)
+        {
+            if(_priorityEnemiesLeft == 0)
+            {
+                EndWave();
+                StopCoroutine(_waitForWave);
+                _priorityWave = false;
+            }
+        }
 
         //Waits for message from background saying the new bg can spawn
         if(_canStartNextSection)
         {
-            //DespawnEndWave
+            if(IsThereEndWave())
+            {
+                DespawnWave();
+            }
             StartSection();
             _canStartNextSection = false;
         }
@@ -118,19 +122,9 @@ public class GameManager : MonoBehaviour
             {
                 //Messages background to die and waits for it to tell when the next bg can be loaded
                 _currentBG.KillBG();
-                //SpawnEndWave
+                SpawnEndWave();
             }
         }
-        /*
-         si sectionIndex + 1 not null 
-            si background anterior es el mismo que +1
-                StartSection
-
-            else
-                dice a background que esta dying
-                SpawnEndWave();
-         TODO cuando un background este muriendo y otro haya aparecido hay que cambiar sus velocidades a lerp entre velocidad de anterior background y el nuevo
-        */
     }
 
     public void AllowStartNextSection()
@@ -141,17 +135,25 @@ public class GameManager : MonoBehaviour
     private void SpawnWave()
     {
         Debug.Log("Spawning wave: " + _waveIndex);
-        //spawnea enemyWave si hay 
+
+        //spawnea enemyWave si hay
+        if (IsThereEnemyWave())
+        {
+            _currentWave = Instantiate(_sections[_sectionIndex]._waves[_waveIndex]._enemyWave);
+        }
 
         //Set timer to forcibly end wave
         _waitForWave = WaitForWave(_sections[_sectionIndex]._waves[_waveIndex]._duration);
         StartCoroutine(_waitForWave);
 
-        //si hay enemyWave
-        //cuenta enemigos de prioridad de la enemyWave -> priorityEnemyAmount
-        //si priorityEnemyAmount es mayor que 0->es wave de enemigos de prioridad
-        //        setea priorityEnemiesLeft = priorityEnemyAmount
-        //prioritywave es true                  
+        if(IsThereEnemyWave())
+        {
+            _priorityEnemiesLeft = _currentWave.GetComponent<WaveObject>().CountPriorityEnemies();
+            if(_priorityEnemiesLeft > 0)
+            {
+                _priorityWave = true;
+            }
+        }
     }
 
     private IEnumerator WaitForWave(float waveDuration)
@@ -162,10 +164,10 @@ public class GameManager : MonoBehaviour
 
     public void EndWave()
     {
-        /*
-        si enemyWave no es null
-            despawnea enemyWave
-        */
+        if (IsThereEnemyWave())
+        {
+            DespawnWave();
+        }
 
         //Search next wave after delay
         Invoke(nameof(GetNextWave), _sections[_sectionIndex]._waves[_waveIndex]._delayUntilNext);
@@ -196,27 +198,47 @@ public class GameManager : MonoBehaviour
             return null;
         }
         else if (GameProperties._extraLevelRequirements[GameProperties._currentLevel]
-                [_sections[_sectionIndex]._waves[selectedWave]._requirementsIndex] == 0)
+                [_sections[_sectionIndex]._waves[selectedWave]._spawnRequirementsIndex] == 0)
         {
             return selectedWave;
         }
         else return SelectNextWave(selectedWave + 1);
     }
 
-    private void SpawnEndWave()
+    private bool IsThereEnemyWave()
     {
-        /*
-         si endwave no es null
-                Spawnea endwave
-        */
+        if (_sections[_sectionIndex]._waves[_waveIndex]._enemyWave != null)
+        {
+            return true;
+        }
+        else
+            return false;
     }
 
-    private void DespawnEndWave()
+    private void SpawnEndWave()
     {
-        /*
-         si endwave no es null
-            despawnea endwave
-        */
+        if(IsThereEndWave())
+        {
+            _currentWave = Instantiate(_sections[_sectionIndex]._endWave);
+        }
+    }
+
+    private void DespawnWave()
+    {
+        if (IsThereEndWave())
+        {
+            _currentWave.GetComponent<WaveObject>().DespawnWave();
+        }
+    }
+
+    private bool IsThereEndWave()
+    {
+        if (_sections[_sectionIndex]._endWave != null)
+        {
+            return true;
+        }
+        else
+            return false;
     }
 
     public void BackgroundDead()
@@ -239,36 +261,4 @@ public class GameManager : MonoBehaviour
         else
             return false;
     }
-
-    /*        
-    Player
-        change orientation(orientation)
-            rotation = orientation
-
-
-    Enemies (clase base):
-        si son prioritarios
-        transform de entrada
-        behavior
-        path
-        waypoints
-        transform salida
-        offset hasta primer ataque timing entre ataques por ataque
-        array de Guns
-
-
-    Gun -> puede o no tener sprite
-        offset entre ataque
-        cuanto tarda en atacar de primeras
-        si apunta a jugador
-        direccion donde apuntar si no apunta a jugador
-        ataque para hacer -> puede ser null
-
-
-    Attack Generator
-        poner las propias balas
-
-
-    Bullet prefabs
-         */
 }
