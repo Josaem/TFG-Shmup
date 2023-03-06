@@ -19,9 +19,14 @@ public static class GameProperties
 }
 
 /*
-    EnemyWave:
-    -EnemyPrefabs
+    TODO TAGS:
 
+    TODOVISUALS
+    TODOUI
+    TODO
+ */
+
+/*
     Weapon:
     -gun[]
     -delayUntilShooting

@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
     {
         if(_priorityWave)
         {
-            if(_priorityEnemiesLeft == 0)
+            _priorityEnemiesLeft = _currentWave.GetComponent<WaveObject>().CountPriorityEnemies();
+            if (_priorityEnemiesLeft == 0)
             {
                 EndWave();
                 StopCoroutine(_waitForWave);
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
             _currentBG = Instantiate(_sections[_sectionIndex]._backgroundSection._background);            
         }
 
-        //Change scroll speed, TODO lerp the speed
+        //Change scroll speed, TODOVISUALS lerp the speed
         _currentBG._customSpeed = _sections[_sectionIndex]._backgroundSection._scrollSpeed;
         if(!FirstSpawn()) _previousBG._customSpeed = _sections[_sectionIndex]._backgroundSection._scrollSpeed;
 
@@ -142,9 +143,13 @@ public class GameManager : MonoBehaviour
             _currentWave = Instantiate(_sections[_sectionIndex]._waves[_waveIndex]._enemyWave);
         }
 
-        //Set timer to forcibly end wave
-        _waitForWave = WaitForWave(_sections[_sectionIndex]._waves[_waveIndex]._duration);
-        StartCoroutine(_waitForWave);
+        //if wave is not endless set timer
+        if(_sections[_sectionIndex]._waves[_waveIndex]._duration != 0)
+        {
+            //Set timer to forcibly end wave
+            _waitForWave = WaitForWave(_sections[_sectionIndex]._waves[_waveIndex]._duration);
+            StartCoroutine(_waitForWave);
+        }
 
         if(IsThereEnemyWave())
         {

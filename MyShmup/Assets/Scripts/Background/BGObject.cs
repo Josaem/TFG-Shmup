@@ -24,7 +24,7 @@ public class BGObject : MonoBehaviour
 
 
     [System.Serializable]
-    public class ScrollWaypointObject
+    private class ScrollWaypointObject
     {
         public float _speed;
         public Transform _waypoint;

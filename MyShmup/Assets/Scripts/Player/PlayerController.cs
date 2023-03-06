@@ -6,14 +6,6 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/*
-    TODO TAGS:
-
-    TODOVISUALS
-    TODOUI
-    TODO
- */
-
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
