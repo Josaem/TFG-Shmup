@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,7 +9,10 @@ public class Enemy : MonoBehaviour
     [Header("Status")]
     [SerializeField]
     private int _health;
+
+    [Header("Wave Dependent")]
     public bool _prioritary = false;
+    public bool _multiphase = false;
 
     [Header("Extra")]
     [SerializeField]
@@ -20,7 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private WaypointMovement _entryDestination;
     [SerializeField]
-    private WaypointMovement _deathDestination;
+    private WaypointMovement _exitDestination;
 
     private WaveObject _myWave;
     private EnemyMovementState _movementState = EnemyMovementState.Entering;
@@ -47,7 +51,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(_movementState == EnemyMovementState.Entering)
         {
@@ -62,73 +66,139 @@ public class Enemy : MonoBehaviour
             MoveToDeath();
         }
     }
+    public void MoveToInitialPosition()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _entryDestination._waypoint.position,
+                    _entryDestination._speed * Time.deltaTime);
+
+        if (transform.position == _entryDestination._waypoint.position)
+        {
+            Debug.Log("Reached Initial Position");
+            _movementState = EnemyMovementState.Moving;
+            Invoke(nameof(StartAttacking), _delayUntilFirstAttack);
+        }
+    }
+
+    public virtual void StartAttacking()
+    {
+
+    }
+
+    public virtual void Move()
+    {
+
+    }
 
     public void Kill()
     {
         _movementState = EnemyMovementState.Dying;
     }
 
-    public void MoveToInitialPosition()
+    public void TakeDamage()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _entryDestination._waypoint.position,
-                    _entryDestination._speed * Time.deltaTime);
-
-        if (transform.position == _deathDestination._waypoint.position)
-        {
-            _movementState = EnemyMovementState.Moving;
-        }
-    }
-
-    public void Move()
-    {
+        /*
+        TODO
+        count of drills and shots personal++ -> depending on what hit
+        count of drills and shots++ -> gamepropreties
         
+        if bigEnemy tag drillshots stick
+
+        health -= shotDamage
+
+        UpdateHealth
+         */
     }
 
-    public void MoveToDeath()
+    public void TakeDamageByExplosion()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _deathDestination._waypoint.position,
-                    _deathDestination._speed * Time.deltaTime);
+        /*
+        TODO
+        life - (drills(drill damage reduction) * shots(shot damage reduction)
+        if life = 0
+            DieByExplosion
+        */
+    }
 
-        if (transform.position == _deathDestination._waypoint.position)
-        {
-            DieByWaypoint();
-        }
+    public void UpdateHealth()
+    {
+        /*
+        if health 20 % show it
+        if health 10 % show it
+        if health 5 % show it
+        if health 0 or less
+            enemiesstuck--
+            AddScore
+            Die
+        */
+    }
+
+    public void WillDieWithExplosion()
+    {
+        //TODO check if life <= 0 if exploded
     }
 
     private void Die()
     {
         if(_myWave != null)
         {
-            if(_prioritary)
+            if(_prioritary && !_multiphase)
             {
                 _myWave.PriorityEnemyKilled();
             }
+
+            if(_multiphase)
+            {
+                //TODO add multiphase scrip, call to it, spawn respective enemy and if last phase set multiphase to false
+            }
+
+            if(_specialRequirementsIndex != 0)
+            {
+                GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
+            }
         }
-        
+
         //Animate death
+
         Destroy(gameObject);
+    }
+
+    private void AddScore()
+    {
+        //Add GameProperties score += enemyValue * drill * shots 
+    }
+
+    public void MoveToDeath()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _exitDestination._waypoint.position,
+                    _exitDestination._speed * Time.deltaTime);
+
+        if (transform.position == _exitDestination._waypoint.position)
+        {
+            DieByWaypoint();
+        }
     }
 
     private void DieByWaypoint()
     {
+        //gamepropreties count of shots -= current shot count
+        //gamepropreties count of drills -= current drill count 
         Destroy(gameObject);
     }
 
     /*
-    Enemies (clase base):
-    -behavior
-    -path
-    -waypoints
-    -offset hasta primer ataque
-    -attack[]:
-        -weapon[]
-        -duration
-        -timeUntilNextAttack
-    
-    Move
-    GameManage.UpdatePriorityEnemies -> when dead
-    Update levelRequirements
-    Die
-    ShootAttack
-    */
+    TODO
+    Player explosion
+        enemyKill = 0
+        accumulated shots = 0
+        accumulated drills = 0
+
+        look in area for enemies
+            if shot count != 0 || drill count != 0
+                check if kill
+                    enemyKill++
+                    accumulated shots += enemy shots
+                    accumulated drills += enemy drills
+                enemy Take Damage By explosion
+        add score * drill * shots * kill    
+     */
 }
