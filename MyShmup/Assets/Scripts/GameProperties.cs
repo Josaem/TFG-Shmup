@@ -27,19 +27,6 @@ public static class GameProperties
  */
 
 /*
-    Weapon:
-    -enabled
-    -gun[]
-    -delayUntilShooting
-    -weaponBehavior[]
-        -enabled
-        -rotative
-        -pointatplayer
-        -duration
-        -offset
-
-    GunContainer prefab:
-    -gun prefabs
 
     Gun: never stops firing, can swap bullets depending on timing
     -base rotation

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
         public BGObject[] _backgroundObjects;
         public Wave[] _waves;
         public GameObject _endWave;
+        public Transform _playerStartingPosition;
     }
 
     [System.Serializable]
@@ -102,6 +103,10 @@ public class GameManager : MonoBehaviour
         if(player != null)
         {
             player.ChangeOrientation(_sections[_sectionIndex]._shipOrientation);
+            if(_sections[_sectionIndex]._playerStartingPosition != null)
+            {
+                player.transform.position = _sections[_sectionIndex]._playerStartingPosition.position;
+            }
         }
 
         SpawnWave();

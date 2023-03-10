@@ -9,6 +9,7 @@ public class ShootingEnemy : Enemy
 
     private int _attackIndex = 0;
 
+    //Which weapons attack and for how long
     [System.Serializable]
     private class AttackType
     {
@@ -25,7 +26,10 @@ public class ShootingEnemy : Enemy
             weapon.EnableWeapon();
         }
 
-        Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
+        if(_attackPattern[_attackIndex]._duration != 0)
+        {
+            Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
+        }
     }
 
     private void StopAttacking()

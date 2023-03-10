@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _deathTime;
     [SerializeField] private Transform _playerRespawnLocation;
     public Orientation shipOrientation = Orientation.horizontal;
-    private bool _dead = false;
+    [HideInInspector]
+    public bool _dead = false;
 
     [Header("General Shooting")]
     [SerializeField] private Transform _playerBulletPool;
