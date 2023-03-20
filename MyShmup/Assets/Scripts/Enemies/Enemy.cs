@@ -7,8 +7,12 @@ using UnityEngine.UIElements;
 public class Enemy : MonoBehaviour
 {
     [Header("Status")]
+    public int _maxHealth;
+    public int _currentHealth;
     [SerializeField]
-    private int _health;
+    private int _baseScore;
+    public int _stuckNails = 0;
+    public int _stuckDrills = 0;
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
@@ -27,7 +31,7 @@ public class Enemy : MonoBehaviour
     private WaypointMovement _exitDestination;
 
     private WaveObject _myWave;
-    private EnemyMovementState _movementState = EnemyMovementState.Entering;
+    protected EnemyMovementState _movementState = EnemyMovementState.Entering;
     private bool _invincible = false;
 
     [System.Serializable]
@@ -37,7 +41,7 @@ public class Enemy : MonoBehaviour
         public Transform _waypoint;
     }
 
-    private enum EnemyMovementState
+    public enum EnemyMovementState
     {
         Entering,
         Moving,
@@ -48,22 +52,24 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _myWave = GetComponentInParent<WaveObject>();
+        _currentHealth = _maxHealth;
+        UpdateHealth();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if(_movementState == EnemyMovementState.Entering)
+        switch(_movementState)
         {
-            MoveToInitialPosition();
-        }
-        if (_movementState == EnemyMovementState.Moving)
-        {
-            Move();
-        }
-        if (_movementState == EnemyMovementState.Dying)
-        {
-            MoveToDeath();
+            case EnemyMovementState.Entering:
+                MoveToInitialPosition();
+                break;
+            case EnemyMovementState.Moving:
+                Move();
+                break;
+            case EnemyMovementState.Dying:
+                MoveToDeath();
+                break;
         }
     }
     public void MoveToInitialPosition()
@@ -94,8 +100,11 @@ public class Enemy : MonoBehaviour
         _movementState = EnemyMovementState.Dying;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
+        _currentHealth -= damage;
+
+        UpdateHealth();
         /*
         TODO
         count of drills and shots personal++ -> depending on what hit
@@ -121,15 +130,27 @@ public class Enemy : MonoBehaviour
 
     public void UpdateHealth()
     {
-        /*
-        if health 20 % show it
-        if health 10 % show it
-        if health 5 % show it
-        if health 0 or less
-            enemiesstuck--
-            AddScore
-            Die
-        */
+        float currentHealthPercent = (_currentHealth * 100f)/_maxHealth;
+        Debug.Log(currentHealthPercent);
+
+        if(currentHealthPercent <= 20)
+        {
+            switch (currentHealthPercent)
+            {
+                case <= 0:
+                    //enemiesStuck--
+                    AddScore();
+                    Die();
+                    break;
+                case <= 5:
+                    break;
+                case <= 10:
+                    break;
+                case <= 20:
+                    //TODO visuales
+                    break;
+            }
+        }
     }
 
     public void WillDieWithExplosion()

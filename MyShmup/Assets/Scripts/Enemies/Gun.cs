@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
         public bool _pointAtPlayer = false;
         public RotativeBehavior _rotativeBehavior;
         public GameObject _bulletObject;
-        //public GameObject _bulletMovement; TODO change this to a "MovementType" script
+        public GameObject _bulletMovement; //TODO change this to a "MovementType" script
     }
 
     [System.Serializable]
@@ -148,8 +148,6 @@ public class Gun : MonoBehaviour
                     _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
                     - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
         }
-
-
     }
 
 }

@@ -51,14 +51,4 @@ public class ShootingEnemy : Enemy
             _attackIndex = 0;
         }
     }
-
-    public override void Move()
-    {
-        /*
-        TODO
-        -behavior
-        -path
-        -waypoints
-         */
-    }
 }
