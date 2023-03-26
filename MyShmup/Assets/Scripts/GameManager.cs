@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
     private int _previousBGIndex = 999;
     private IEnumerator _waitForWave;
     private bool _priorityWave = false;
-    private int _priorityEnemiesLeft = 0;
+    [HideInInspector]
+    public int _priorityEnemiesLeft = 0;
     private GameObject _currentWave;
 
     private void Start()
@@ -55,11 +56,11 @@ public class GameManager : MonoBehaviour
     {
         if(_priorityWave)
         {
-            _priorityEnemiesLeft = _currentWave.GetComponent<WaveObject>().CountPriorityEnemies();
-            if (_priorityEnemiesLeft == 0)
+            if (_priorityEnemiesLeft <= 0)
             {
                 EndWave();
-                StopCoroutine(_waitForWave);
+                if(_waitForWave != null)
+                    StopCoroutine(_waitForWave);
                 _priorityWave = false;
             }
         }
@@ -158,8 +159,8 @@ public class GameManager : MonoBehaviour
 
         if(IsThereEnemyWave())
         {
-            _priorityEnemiesLeft = _currentWave.GetComponent<WaveObject>().CountPriorityEnemies();
-            if(_priorityEnemiesLeft > 0)
+            _currentWave.GetComponent<WaveObject>().SetPriorityEnemies();
+            if (_priorityEnemiesLeft > 0)
             {
                 _priorityWave = true;
             }
@@ -236,20 +237,16 @@ public class GameManager : MonoBehaviour
 
     private void DespawnWave()
     {
-        if (IsThereEnemyWave())
-        {
-            Debug.Log("Despawning Wave");
+        Debug.Log("Despawning Wave");
+        if(_currentWave != null)
             _currentWave.GetComponent<WaveObject>().DespawnWave();
-        }
     }
 
     private void DespawnEndWave()
     {
-        if (IsThereEndWave())
-        {
-            Debug.Log("Despawning EndWave");
+        Debug.Log("Despawning EndWave");
+        if(_currentWave != null)
             _currentWave.GetComponent<WaveObject>().DespawnWave();
-        }
     }
 
     private bool IsThereEndWave()

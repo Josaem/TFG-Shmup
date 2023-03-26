@@ -64,13 +64,13 @@ public class Weapon : MonoBehaviour
 
     public void EnableWeapon()
     {
+        _isEnabled = true;
         Invoke(nameof(StartWeapon), _delayUntilShooting);
     }
 
     private void StartWeapon()
     {
         Debug.Log("Starting Weapon");
-        _isEnabled = true;
 
         _weaponBehaviorIndex = 0;
 
@@ -121,7 +121,11 @@ public class Weapon : MonoBehaviour
         _isEnabled = false;
 
         Debug.Log("Ending Weapon");
-        //Disable guns
+
+        foreach (Gun gun in _guns)
+        {
+            gun.DisableShooting();
+        }
     }
 
     private void ManageTargetting()

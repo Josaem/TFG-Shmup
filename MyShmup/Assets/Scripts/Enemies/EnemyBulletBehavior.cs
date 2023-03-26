@@ -18,6 +18,14 @@ public class EnemyBulletBehavior : MonoBehaviour
         rb.velocity = transform.up * _speed;
     }
 
+    private void Update()
+    {
+        if (Mathf.Abs(transform.position.x) > 15 || Mathf.Abs(transform.position.y) > 10)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);

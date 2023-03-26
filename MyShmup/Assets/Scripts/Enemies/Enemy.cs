@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField]
-    private WaypointMovement _entryDestination;
+    protected WaypointMovement _entryDestination;
     [SerializeField]
     private WaypointMovement _exitDestination;
 
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     private bool _invincible = false;
 
     [System.Serializable]
-    private class WaypointMovement
+    protected class WaypointMovement
     {
         public float _speed;
         public Transform _waypoint;
@@ -79,7 +79,6 @@ public class Enemy : MonoBehaviour
 
         if (transform.position == _entryDestination._waypoint.position)
         {
-            Debug.Log("Reached Initial Position");
             _movementState = EnemyMovementState.Moving;
             Invoke(nameof(StartAttacking), _delayUntilFirstAttack);
         }
@@ -131,7 +130,6 @@ public class Enemy : MonoBehaviour
     public void UpdateHealth()
     {
         float currentHealthPercent = (_currentHealth * 100f)/_maxHealth;
-        Debug.Log(currentHealthPercent);
 
         if(currentHealthPercent <= 20)
         {
@@ -164,7 +162,7 @@ public class Enemy : MonoBehaviour
         {
             if(_prioritary && !_multiphase)
             {
-                _myWave.PriorityEnemyKilled();
+                _myWave.SetPriorityEnemiesDead();
             }
 
             if(_multiphase)

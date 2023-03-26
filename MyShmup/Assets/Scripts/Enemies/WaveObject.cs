@@ -5,20 +5,6 @@ using UnityEngine;
 public class WaveObject : MonoBehaviour
 {
     private Enemy[] _enemies;
-    private int _priorityEnemyCount = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _enemies = GetComponentsInChildren<Enemy>();
-        foreach (Enemy enemy in _enemies)
-        {
-            if (enemy._prioritary)
-            {
-                _priorityEnemyCount++;
-            }
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -27,29 +13,53 @@ public class WaveObject : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        //TODO movement
     }
 
-    public int CountPriorityEnemies()
+    public void SetPriorityEnemies()
     {
-        return _priorityEnemyCount;
+        int _priorityEnemyCount = 0;
+
+        _enemies = GetComponentsInChildren<Enemy>(false);
+        foreach (Enemy enemy in _enemies)
+        {
+            if (enemy._prioritary)
+            {
+                _priorityEnemyCount++;
+            }
+        }
+
+        Debug.Log(_priorityEnemyCount);
+        FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
+    }
+
+    public void SetPriorityEnemiesDead()
+    {
+        int _priorityEnemyCount = -1;
+
+        _enemies = GetComponentsInChildren<Enemy>(false);
+        foreach (Enemy enemy in _enemies)
+        {
+            if (enemy._prioritary)
+            {
+                _priorityEnemyCount++;
+            }
+        }
+
+        Debug.Log(_priorityEnemyCount);
+        FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
     }
 
     public void DespawnWave()
     {
+        _enemies = GetComponentsInChildren<Enemy>();
+
         //If alive kills them
-        foreach(Enemy enemy in _enemies)
+        foreach (Enemy enemy in _enemies)
         {
             enemy.Kill();
         }
 
         //TODO kill generators
-    }
-
-    public void PriorityEnemyKilled()
-    {
-        _priorityEnemyCount--;
     }
 
     /*
