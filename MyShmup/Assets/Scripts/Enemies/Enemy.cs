@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,13 +17,16 @@ public class Enemy : MonoBehaviour
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
-    public bool _multiphase = false;
 
     [Header("Extra")]
     [SerializeField]
     private int _specialRequirementsIndex = 0;
     [SerializeField]
-    private float _delayUntilFirstAttack = 0;
+    private float _delayUntilFirstAction = 0;
+    [SerializeField]
+    protected bool _spawnInBackground;
+    [SerializeField]
+    private Phase _nextPhase;
 
     [Header("Movement")]
     [SerializeField]
@@ -30,15 +34,22 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private WaypointMovement _exitDestination;
 
-    private WaveObject _myWave;
+    protected WaveObject _myWave;
     protected EnemyMovementState _movementState = EnemyMovementState.Entering;
-    private bool _invincible = false;
+    protected bool _invincible = false;
 
     [System.Serializable]
     protected class WaypointMovement
     {
         public float _speed;
         public Transform _waypoint;
+    }
+
+    [System.Serializable]
+    protected class Phase
+    {
+        public GameObject _phaseObject;
+        public bool _entryPosDifferent;
     }
 
     public enum EnemyMovementState
@@ -49,11 +60,17 @@ public class Enemy : MonoBehaviour
     };
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealth();
+
+        if (_spawnInBackground)
+        {
+            _invincible = true;
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -79,12 +96,18 @@ public class Enemy : MonoBehaviour
 
         if (transform.position == _entryDestination._waypoint.position)
         {
+            if (_spawnInBackground)
+            {
+                _invincible = false;
+                GetComponent<BoxCollider2D>().enabled = true;
+            }
+
             _movementState = EnemyMovementState.Moving;
-            Invoke(nameof(StartAttacking), _delayUntilFirstAttack);
+            Invoke(nameof(StartAction), _delayUntilFirstAction);
         }
     }
 
-    public virtual void StartAttacking()
+    public virtual void StartAction()
     {
 
     }
@@ -101,20 +124,23 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _currentHealth -= damage;
+        if(!_invincible)
+        {
+            _currentHealth -= damage;
 
-        UpdateHealth();
-        /*
-        TODO
-        count of drills and shots personal++ -> depending on what hit
-        count of drills and shots++ -> gamepropreties
-        
-        if bigEnemy tag drillshots stick
+            UpdateHealth();
+            /*
+            TODO
+            count of drills and shots personal++ -> depending on what hit
+            count of drills and shots++ -> gamepropreties
 
-        health -= shotDamage
+            if bigEnemy tag drillshots stick
 
-        UpdateHealth
-         */
+            health -= shotDamage
+
+            UpdateHealth
+             */
+        }
     }
 
     public void TakeDamageByExplosion()
@@ -134,12 +160,7 @@ public class Enemy : MonoBehaviour
         if(currentHealthPercent <= 20)
         {
             switch (currentHealthPercent)
-            {
-                case <= 0:
-                    //enemiesStuck--
-                    AddScore();
-                    Die();
-                    break;
+            { 
                 case <= 5:
                     break;
                 case <= 10:
@@ -148,6 +169,13 @@ public class Enemy : MonoBehaviour
                     //TODO visuales
                     break;
             }
+        }
+
+        if(_currentHealth <= 0)
+        {
+            //enemiesStuck--
+            AddScore();
+            Die();
         }
     }
 
@@ -158,26 +186,47 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        if(_myWave != null)
+        if (_nextPhase._phaseObject != null)
         {
-            if(_prioritary && !_multiphase)
+            GameObject nextPhase;
+
+            if (_myWave != null)
+            {
+                nextPhase = Instantiate(_nextPhase._phaseObject,
+                    Vector2.zero, Quaternion.identity, _myWave.transform);
+            }
+            else
+            {
+                nextPhase = Instantiate(_nextPhase._phaseObject,
+                    Vector2.zero, Quaternion.identity);
+            }
+
+            Enemy[] enemies = nextPhase.GetComponentsInChildren<Enemy>();
+
+            foreach (Enemy enemy in enemies)
+            {
+                if (!_nextPhase._entryPosDifferent)
+                {
+                    enemy._entryDestination._waypoint.position = transform.position;
+                }
+                enemy.transform.position = transform.position;
+            }
+        }
+        else
+        {
+            if (_prioritary)
             {
                 _myWave.SetPriorityEnemiesDead();
             }
 
-            if(_multiphase)
-            {
-                //TODO add multiphase scrip, call to it, spawn respective enemy and if last phase set multiphase to false
-            }
-
-            if(_specialRequirementsIndex != 0)
+            if (_specialRequirementsIndex != 0)
             {
                 GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
             }
         }
 
         //Animate death
-
+        GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
     }
 

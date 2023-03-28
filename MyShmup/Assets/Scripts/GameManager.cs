@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         public GameObject _enemyWave;
     }
 
+    public int _level;
     public int _sectionIndex;
     [SerializeField]
     private int _waveIndex;
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        GameProperties._currentLevel = _level;
         StartSection();
     }
 

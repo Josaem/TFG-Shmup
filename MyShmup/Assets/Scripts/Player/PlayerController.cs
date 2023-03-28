@@ -338,7 +338,7 @@ public class PlayerController : MonoBehaviour
             transform.position = _playerRespawnLocation.position;
 
             _invincible = true;
-            StartCoroutine(StopInvincibility(_deathTime));
+            StartCoroutine(StopInvincibility(_deathTime+2f));
 
             //TODOANIM Animate ship death
             HideShip();
@@ -371,6 +371,7 @@ public class PlayerController : MonoBehaviour
         foreach (var sprite in _playerSprites)
         {
             sprite.enabled = true;
+            _shieldSprite.enabled = false;
         }
     }
 

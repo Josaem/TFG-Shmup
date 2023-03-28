@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     private Gun[] _guns;
     private int _weaponBehaviorIndex = 0;
     private Transform _player;
+    private float _rotTime = 0;
 
     //Duration of gun activation, where the weapon shoots
     [System.Serializable]
@@ -58,6 +59,7 @@ public class Weapon : MonoBehaviour
     {
         if(_isEnabled)
         {
+            _rotTime += Time.deltaTime;
             ManageTargetting();
         }
     }
@@ -70,9 +72,8 @@ public class Weapon : MonoBehaviour
 
     private void StartWeapon()
     {
-        Debug.Log("Starting Weapon");
-
         _weaponBehaviorIndex = 0;
+        _rotTime = 0;
 
         StartWeaponBehavior();
     }
@@ -81,8 +82,6 @@ public class Weapon : MonoBehaviour
     {
         if(_isEnabled)
         {
-            Debug.Log("Starting Gun, attack: " + _weaponBehaviorIndex);
-
             foreach(Gun gun in _guns)
             {
                 gun.EnableShooting();
@@ -119,8 +118,6 @@ public class Weapon : MonoBehaviour
     public void DisableWeapon()
     {
         _isEnabled = false;
-
-        Debug.Log("Ending Weapon");
 
         foreach (Gun gun in _guns)
         {
@@ -164,11 +161,18 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            _weaponPivot.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(Time.time * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
+            if (_weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Left)
+            {
+                transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
                     _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
-                    - _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle/2);
+                    - _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+            }
+            else
+            {
+                transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
+                    - _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+            }
         }
-
-        
     }
 }

@@ -6,8 +6,6 @@ public class RandomMovShootingEnemy : ShootingEnemy
 {
     [SerializeField]
     private ScrollWaypointObject[] _waypoints;
-    [SerializeField]
-    private bool _dieOnLastWaypoint = false;
 
     private int _waypointToGo = 0;
     private bool _firstWaypoint = true;
@@ -52,11 +50,5 @@ public class RandomMovShootingEnemy : ShootingEnemy
                 }
             }
         }
-       
-        /*
-        TODO
-        -behavior
-        -waypoints
-         */
     }
 }

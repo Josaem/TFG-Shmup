@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootingEnemy : Enemy
 {
     [SerializeField]
     private AttackType[] _attackPattern;
+    [SerializeField]
+    private bool _shootOnSpawn;
 
     private int _attackIndex = 0;
 
@@ -18,9 +21,25 @@ public class ShootingEnemy : Enemy
         public float _delayUntilNextAttack;
     }
 
-    public override void StartAttacking()
+    protected override void Start()
     {
-        Debug.Log("Start Shooting attack: " + _attackIndex);
+        base.Start();
+        if(_shootOnSpawn)
+        {
+            StartAttacking();
+        }
+    }
+
+    public override void StartAction()
+    {
+        if (!_shootOnSpawn)
+        {
+            StartAttacking();
+        }
+    }
+
+    public void StartAttacking()
+    {
         foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
         {
             weapon.EnableWeapon();
@@ -34,7 +53,6 @@ public class ShootingEnemy : Enemy
 
     private void StopAttacking()
     {
-        Debug.Log("Stop Shooting");
         foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
         {
             weapon.DisableWeapon();
