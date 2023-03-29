@@ -1,24 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Gun : MonoBehaviour
 {
     [SerializeField]
-    private GunBehavior[] _gunBehavior;
+    protected GunBehavior[] _gunBehavior;
 
     private Vector3 _originalTransform;
-    private int _gunBehaviorIndex = 0;
-    private Transform _player;
+    protected int _gunBehaviorIndex = 0;
+    protected Transform _player;
     private PlayerController _playerController;
-    private bool _shoot = false;
+    protected bool _shoot = false;
     private float _timeUntilShooting;
-    private Transform _playerBulletPool;
+    protected Transform _bulletPool;
     private float _rotTime = 0;
 
     [System.Serializable]
-    private class GunBehavior
+    protected class GunBehavior
     {
         public float _duration;
         public float _fireRate;
@@ -26,18 +25,17 @@ public class Gun : MonoBehaviour
         public bool _pointAtPlayer = false;
         public RotativeBehavior _rotativeBehavior;
         public GameObject _bulletObject;
-        public GameObject _bulletMovement; //TODO change this to a "MovementType" script
     }
 
     [System.Serializable]
-    private class RotativeBehavior
+    protected class RotativeBehavior
     {
         public RotateStart _rotateStart = RotateStart.None;
         public float _rotationAngle;
         public float _rotationSpeed;
     }
 
-    private enum RotateStart
+    protected enum RotateStart
     {
         None,
         Left,
@@ -49,14 +47,14 @@ public class Gun : MonoBehaviour
     {
         _originalTransform = transform.localEulerAngles;
         _player = FindObjectOfType<PlayerController>().transform;
-        _playerBulletPool = GameObject.FindWithTag("BulletPool").transform;
+        _bulletPool = GameObject.FindWithTag("BulletPool").transform;
         _playerController = _player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_shoot && !_playerController._dead)
+        if (_shoot)
         {
             _rotTime += Time.deltaTime;
             ManageShooting();
@@ -78,7 +76,7 @@ public class Gun : MonoBehaviour
         _shoot = false;
     }
 
-    private void StartGunBehavior()
+    protected virtual void StartGunBehavior()
     {
         if (_gunBehavior[_gunBehaviorIndex]._duration != 0)
         {
@@ -86,7 +84,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private void EndGunBehavior()
+    protected virtual void EndGunBehavior()
     {
         _gunBehaviorIndex++;
         if (_gunBehaviorIndex >= _gunBehavior.Length)
@@ -97,7 +95,7 @@ public class Gun : MonoBehaviour
         Invoke(nameof(StartGunBehavior), 0.05f);
     }
 
-    private void ManageShooting()
+    protected virtual void ManageShooting()
     {
         if (_gunBehavior[_gunBehaviorIndex]._fireRate != 0)
         {
@@ -109,7 +107,7 @@ public class Gun : MonoBehaviour
                 //Shoot a shot
                 GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                     transform.position, transform.rotation,
-                    _playerBulletPool);
+                    _bulletPool);
                 bullet.GetComponent<EnemyBulletBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
             }
         }
@@ -119,7 +117,14 @@ public class Gun : MonoBehaviour
     {
         if (_gunBehavior[_gunBehaviorIndex]._pointAtPlayer)
         {
-            transform.up = _player.position - transform.position;
+            if (!_playerController._dead)
+            {
+                PointAtPlayer();
+            }
+            else
+            {
+                ResetRotation();
+            }
         }
         else if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart != RotateStart.None)
         {
@@ -127,9 +132,15 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            transform.localEulerAngles = _originalTransform;
+            ResetRotation();
         }
     }
+
+    private void ResetRotation()
+    {
+        transform.localEulerAngles = _originalTransform;
+    }
+
     private void RotateWeapon()
     {
         if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle == 0)
@@ -160,4 +171,8 @@ public class Gun : MonoBehaviour
         }
     }
 
+    protected virtual void PointAtPlayer()
+    {
+        transform.up = _player.position - transform.position;
+    }
 }

@@ -21,6 +21,12 @@ public class ShootingEnemy : Enemy
         public float _delayUntilNextAttack;
     }
 
+    public override void Kill()
+    {
+        base.Kill();
+        StopAttacking();
+    }
+
     protected override void Start()
     {
         base.Start();

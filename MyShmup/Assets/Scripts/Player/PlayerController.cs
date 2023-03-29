@@ -221,8 +221,9 @@ public class PlayerController : MonoBehaviour
             {
                 _timeUntilShooting2nd = Time.time + _fireRate2nd;
 
+                //Check front middle
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15, _enemyLayerMask);
-
+                                
                 //for each option
                 for (int i = 0; i < _optionsGameObject.Length; i++)
                 {
@@ -230,15 +231,40 @@ public class PlayerController : MonoBehaviour
                     {
                         if (hit.collider == null)
                         {
-                            //Hasn't hit anything, check behind
-                            hit = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
+                            //Check front up
+                            hit = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), transform.right, 15, _enemyLayerMask);
+
+                            if (hit.collider == null)
+                            {
+                                //Check front down
+                                hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), transform.right, 15, _enemyLayerMask);
+
+                                if (hit.collider == null)
+                                {
+                                    //Check behind middle
+                                    hit = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
+                                    if (hit.collider == null)
+                                    {
+                                        //Check behind up
+                                        hit = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
+
+                                        if (hit.collider == null)
+                                        {
+                                            //Check behind down
+                                            hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
+
+                                            if (hit.collider == null)
+                                            {
+                                                //hasn't hit anything both in front or behind, shoot ahead
+                                                _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        if (hit.collider == null)
-                        {
-                            //hasn't hit anything both in front or behind, shoot ahead
-                            _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
-                        }
-                        else
+
+                        if (hit.collider != null)
                         {
                             //Has hit, lock to enemy
                             _currentlyLockedEnemy = hit.transform.gameObject;
@@ -328,9 +354,9 @@ public class PlayerController : MonoBehaviour
         _invincible = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void GetHurt()
     {
-        if(collision.gameObject.tag == "Damage" && !_invincible)
+        if(!_invincible)
         {
             GameProperties._life--;
             FindObjectOfType<LifeUI>().SetUpLifebar();
