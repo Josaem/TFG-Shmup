@@ -29,7 +29,10 @@ public class WaveObject : MonoBehaviour
         }
 
         Debug.Log(_priorityEnemyCount);
-        FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
+        if (FindObjectOfType<GameManager>() != null)
+        {
+            FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
+        }
     }
 
     public void SetPriorityEnemiesDead()
@@ -46,7 +49,11 @@ public class WaveObject : MonoBehaviour
         }
 
         Debug.Log(_priorityEnemyCount);
-        FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
+
+        if(FindObjectOfType<GameManager>() != null)
+        {
+            FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
+        }
     }
 
     public void DespawnWave()

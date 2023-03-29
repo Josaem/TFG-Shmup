@@ -99,16 +99,19 @@ public class Gun : MonoBehaviour
 
     private void ManageShooting()
     {
-        //If cooldown between shots has passed
-        if (Time.time > _timeUntilShooting)
+        if (_gunBehavior[_gunBehaviorIndex]._fireRate != 0)
         {
-            _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
+            //If cooldown between shots has passed
+            if (Time.time > _timeUntilShooting)
+            {
+                _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
 
-            //Shoot a shot
-            GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
-                transform.position, transform.rotation,
-                _playerBulletPool);
-            bullet.GetComponent<EnemyBulletBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                //Shoot a shot
+                GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
+                    transform.position, transform.rotation,
+                    _playerBulletPool);
+                bullet.GetComponent<EnemyBulletBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+            }
         }
     }
 

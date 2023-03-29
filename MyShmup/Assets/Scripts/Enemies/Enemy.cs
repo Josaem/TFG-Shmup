@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
 {
     [Header("Status")]
     public int _maxHealth;
-    public int _currentHealth;
     [SerializeField]
     private int _baseScore;
     public int _stuckNails = 0;
@@ -27,6 +26,8 @@ public class Enemy : MonoBehaviour
     protected bool _spawnInBackground;
     [SerializeField]
     private Phase _nextPhase;
+    [SerializeField]
+    private Enemy[] _enemiesToKillOnDeath;
 
     [Header("Movement")]
     [SerializeField]
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private WaypointMovement _exitDestination;
 
+    protected int _currentHealth;
     protected WaveObject _myWave;
     protected EnemyMovementState _movementState = EnemyMovementState.Entering;
     protected bool _invincible = false;
@@ -74,7 +76,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    protected virtual void Update()
     {
         switch(_movementState)
         {
@@ -117,7 +119,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         _movementState = EnemyMovementState.Dying;
     }
@@ -225,6 +227,14 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        foreach(Enemy enemy in _enemiesToKillOnDeath)
+        {
+            if(enemy != null)
+            {
+                enemy.Kill();
+            }
+        }
+
         //Animate death
         GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
@@ -251,6 +261,16 @@ public class Enemy : MonoBehaviour
         //gamepropreties count of shots -= current shot count
         //gamepropreties count of drills -= current drill count 
         Destroy(gameObject);
+    }
+
+    public void IsShielded()
+    {
+        _invincible = true;
+    }
+
+    public void IsNotShielded()
+    {
+        _invincible = false;
     }
 
     /*

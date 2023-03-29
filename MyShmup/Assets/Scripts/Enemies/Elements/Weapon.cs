@@ -163,13 +163,13 @@ public class Weapon : MonoBehaviour
         {
             if (_weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Left)
             {
-                transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                _weaponPivot.transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
                     _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
                     - _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
             }
             else
             {
-                transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                _weaponPivot.transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
                     _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
                     - _weaponBehaviors[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
             }
