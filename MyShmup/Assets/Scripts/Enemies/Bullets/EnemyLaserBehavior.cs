@@ -9,6 +9,7 @@ public class EnemyLaserBehavior : MonoBehaviour
     private LayerMask _layerMask;
     [SerializeField]
     private GameObject _laserEnd;
+    private float _currentLaserDistance = 0;
 
     private void Start()
     {
@@ -28,7 +29,8 @@ public class EnemyLaserBehavior : MonoBehaviour
 
                 if(hit.collider == null)
                 {
-                    transform.localScale = new Vector2(1, Mathf.Lerp(transform.localScale.y, 20, Time.time * _shootSpeed));
+                    transform.localScale = new Vector2(1, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _shootSpeed));
+                    _currentLaserDistance = 20;
                     _laserEnd.SetActive(false);
                 }
             }
@@ -36,9 +38,20 @@ public class EnemyLaserBehavior : MonoBehaviour
         
         if(hit.collider != null)
         {
-            transform.localScale = new Vector2(1, Mathf.Lerp(transform.localScale.y, Vector2.Distance(transform.position, hit.collider.transform.position)-0.5f, Time.time * _shootSpeed));
+            float hitDistance = Vector2.Distance(transform.position, hit.collider.transform.position) - 0.5f;
+            if (_currentLaserDistance > hitDistance)
+            {
+                _currentLaserDistance = hitDistance;
+                transform.localScale = new Vector2(1, _currentLaserDistance);
+            }
+            else
+            {
+                _currentLaserDistance = Mathf.Lerp(transform.localScale.y, hitDistance, Time.deltaTime * _shootSpeed);
+                transform.localScale = new Vector2(1, _currentLaserDistance);
+            }
+            
             _laserEnd.SetActive(true);
-            _laserEnd.transform.localPosition = new Vector2(0, Vector2.Distance(transform.position, hit.collider.transform.position) - 0.5f);
+            _laserEnd.transform.localPosition = new Vector2(0, hitDistance);
         }
     }
 

@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
     private Phase _nextPhase;
     [SerializeField]
     private Enemy[] _enemiesToKillOnDeath;
+    [SerializeField]
+    private bool _unSpawned = false;
 
     [Header("Movement")]
     [SerializeField]
@@ -59,11 +61,17 @@ public class Enemy : MonoBehaviour
         Entering,
         Moving,
         Dying,
+        Unspawned
     };
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        if(!_unSpawned)
+        {
+            _movementState = EnemyMovementState.Entering;
+        }
+
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealth();
@@ -91,6 +99,12 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+
+    public void Spawn()
+    {
+        _movementState = EnemyMovementState.Entering;
+    }
+
     public void MoveToInitialPosition()
     {
         transform.position = Vector2.MoveTowards(transform.position, _entryDestination._waypoint.position,
@@ -186,7 +200,7 @@ public class Enemy : MonoBehaviour
         //TODO check if life <= 0 if exploded
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         if (_nextPhase._phaseObject != null)
         {

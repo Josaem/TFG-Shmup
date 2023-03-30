@@ -71,7 +71,7 @@ public class Gun : MonoBehaviour
         StartGunBehavior();
     }
 
-    public void DisableShooting()
+    public virtual void DisableShooting()
     {
         _shoot = false;
     }

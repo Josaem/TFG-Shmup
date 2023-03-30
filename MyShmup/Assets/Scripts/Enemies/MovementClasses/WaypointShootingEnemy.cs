@@ -12,7 +12,7 @@ public class WaypointShootingEnemy : ShootingEnemy
     private int _waypointToGo = 0;
 
     [System.Serializable]
-    private class ScrollWaypointObject
+    public class ScrollWaypointObject
     {
         public float _speed;
         public Transform _waypoint;

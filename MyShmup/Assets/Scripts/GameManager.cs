@@ -34,8 +34,7 @@ public class GameManager : MonoBehaviour
 
     public int _level;
     public int _sectionIndex;
-    [SerializeField]
-    private int _waveIndex;
+    public int _waveIndex;
     public Section[] _sections;
 
     private bool _canStartNextSection = false;

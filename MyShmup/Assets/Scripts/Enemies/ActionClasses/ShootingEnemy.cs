@@ -27,6 +27,12 @@ public class ShootingEnemy : Enemy
         StopAttacking();
     }
 
+    protected override void Die()
+    {
+        StopAttacking();
+        base.Die();
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -46,33 +52,39 @@ public class ShootingEnemy : Enemy
 
     public void StartAttacking()
     {
-        foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
+        if(_attackPattern.Length != 0)
         {
-            weapon.EnableWeapon();
-        }
+            foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
+            {
+                weapon.EnableWeapon();
+            }
 
-        if(_attackPattern[_attackIndex]._duration != 0)
-        {
-            Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
+            if (_attackPattern[_attackIndex]._duration != 0)
+            {
+                Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
+            }
         }
     }
 
     private void StopAttacking()
     {
-        foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
+        if(_attackPattern.Length != 0)
         {
-            weapon.DisableWeapon();
-        }
+            foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
+            {
+                weapon.DisableWeapon();
+            }
 
-        Invoke(nameof(StartAttacking), _attackPattern[_attackIndex]._delayUntilNextAttack);
+            Invoke(nameof(StartAttacking), _attackPattern[_attackIndex]._delayUntilNextAttack);
 
-        //Next attack
-        _attackIndex++;
+            //Next attack
+            _attackIndex++;
 
-        //if no more attacks go to first one
-        if(_attackIndex >= _attackPattern.Length)
-        {
-            _attackIndex = 0;
+            //if no more attacks go to first one
+            if (_attackIndex >= _attackPattern.Length)
+            {
+                _attackIndex = 0;
+            }
         }
     }
 }

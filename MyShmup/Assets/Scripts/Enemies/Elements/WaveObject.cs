@@ -9,7 +9,7 @@ public class WaveObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetComponentsInChildren<Enemy>().Length == 0)
+        if(GetComponentsInChildren<Enemy>().Length == 0 && GetComponentsInChildren<Generator>().Length == 0)
         {
             Destroy(gameObject);
         }
@@ -66,7 +66,11 @@ public class WaveObject : MonoBehaviour
             enemy.Kill();
         }
 
-        //TODO kill generators
+        //If alive kills them
+        foreach(Generator generator in GetComponentsInChildren<Generator>())
+        {
+            generator.EndSpawner();
+        }
     }
 
     /*

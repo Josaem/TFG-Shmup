@@ -29,6 +29,13 @@ public class LaserGun : Gun
         }
     }
 
+    public override void DisableShooting()
+    {
+        base.DisableShooting();
+
+        Destroy(_currentLaser);
+    }
+
     protected override void EndGunBehavior()
     {
         base.EndGunBehavior();
