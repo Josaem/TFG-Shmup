@@ -19,6 +19,9 @@ public class Gun : MonoBehaviour
     [System.Serializable]
     protected class GunBehavior
     {
+        #if UNITY_EDITOR
+        [Help("If object is a laser _fireRate enables/disables it \nIf object is a laser _bulletSpeed controls the ray speed", UnityEditor.MessageType.None)]
+        #endif
         public float _duration;
         public float _fireRate;
         public float _bulletSpeed;
@@ -31,6 +34,7 @@ public class Gun : MonoBehaviour
     protected class RotativeBehavior
     {
         public RotateStart _rotateStart = RotateStart.None;
+        public bool _dontCenterAngleRotation = false;
         public float _rotationAngle;
         public float _rotationSpeed;
     }
@@ -156,17 +160,33 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Left)
+            if(_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._dontCenterAngleRotation)
             {
-                transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                    _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
-                    - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, -Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                }
+                else
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                }
             }
             else
             {
-                transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                    _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
-                    - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
+                        - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                }
+                else
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
+                        - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                }
             }
         }
     }

@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
     private Enemy[] _enemiesToKillOnDeath;
     [SerializeField]
     private bool _unSpawned = false;
+    [SerializeField]
+    private GameObject _collisionsWithPlayer;
 
     [Header("Movement")]
     [SerializeField]
@@ -80,6 +82,7 @@ public class Enemy : MonoBehaviour
         {
             _invincible = true;
             GetComponent<BoxCollider2D>().enabled = false;
+            _collisionsWithPlayer.SetActive(false);
         }
     }
 
@@ -116,6 +119,7 @@ public class Enemy : MonoBehaviour
             {
                 _invincible = false;
                 GetComponent<BoxCollider2D>().enabled = true;
+                _collisionsWithPlayer.SetActive(true);
             }
 
             _movementState = EnemyMovementState.Moving;
@@ -167,6 +171,8 @@ public class Enemy : MonoBehaviour
         if life = 0
             DieByExplosion
         */
+
+        UpdateHealth();
     }
 
     public void UpdateHealth()
@@ -274,7 +280,7 @@ public class Enemy : MonoBehaviour
     {
         //gamepropreties count of shots -= current shot count
         //gamepropreties count of drills -= current drill count 
-        Destroy(gameObject);
+        Die();
     }
 
     public void IsShielded()
