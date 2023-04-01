@@ -7,7 +7,7 @@ public class Gun : MonoBehaviour
     [SerializeField]
     protected GunBehavior[] _gunBehavior;
 
-    private Vector3 _originalTransform;
+    private Vector3 _originalRot;
     protected int _gunBehaviorIndex = 0;
     protected Transform _player;
     private PlayerController _playerController;
@@ -49,7 +49,7 @@ public class Gun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _originalTransform = transform.localEulerAngles;
+        _originalRot = transform.localEulerAngles;
         _player = FindObjectOfType<PlayerController>().transform;
         _bulletPool = GameObject.FindWithTag("BulletPool").transform;
         _playerController = _player.GetComponent<PlayerController>();
@@ -61,8 +61,8 @@ public class Gun : MonoBehaviour
         if (_shoot)
         {
             _rotTime += Time.deltaTime;
-            ManageShooting();
             ManageTargetting();
+            ManageShooting();
         }
     }
 
@@ -142,7 +142,7 @@ public class Gun : MonoBehaviour
 
     private void ResetRotation()
     {
-        transform.localEulerAngles = _originalTransform;
+        transform.localEulerAngles = _originalRot;
     }
 
     private void RotateWeapon()
@@ -164,12 +164,12 @@ public class Gun : MonoBehaviour
             {
                 if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
                 {
-                    transform.localEulerAngles = new Vector3(0, 0, -Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
                 }
                 else
                 {
-                    transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
                 }
             }
@@ -177,13 +177,13 @@ public class Gun : MonoBehaviour
             {
                 if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
                 {
-                    transform.localEulerAngles = new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
                         - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
                 }
                 else
                 {
-                    transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
                         - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
                 }

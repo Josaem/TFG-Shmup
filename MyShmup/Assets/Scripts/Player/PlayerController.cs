@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _deathTime;
     [SerializeField] private Transform _playerRespawnLocation;
     public Orientation shipOrientation = Orientation.horizontal;
+    [SerializeField]
+    private bool _invincibleTest = false;
     [HideInInspector]
     public bool _dead = false;
 
@@ -112,6 +114,8 @@ public class PlayerController : MonoBehaviour
         _shieldSprite.enabled = false;
 
         _noLockObject.position = transform.right * _noLockShotDistance;
+
+        if (_invincibleTest) _invincible = true;
     }
 
     private void Update()
