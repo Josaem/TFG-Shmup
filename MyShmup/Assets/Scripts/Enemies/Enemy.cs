@@ -21,15 +21,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _specialRequirementsIndex = 0;
     [SerializeField]
-    private float _delayUntilFirstAction = 0;
+    protected float _delayUntilActive = 0;
+    [SerializeField]
+    protected float _delayUntilFirstAction = 0;
     [SerializeField]
     protected bool _spawnInBackground;
     [SerializeField]
     private Phase _nextPhase;
     [SerializeField]
     private Enemy[] _enemiesToKillOnDeath;
-    [SerializeField]
-    private bool _unSpawned = false;
     [SerializeField]
     private GameObject _collisionsWithPlayer;
 
@@ -41,7 +41,8 @@ public class Enemy : MonoBehaviour
 
     protected int _currentHealth;
     protected WaveObject _myWave;
-    protected EnemyMovementState _movementState = EnemyMovementState.Entering;
+    protected EnemyMovementState _movementState = EnemyMovementState.Unspawned;
+    [SerializeField]
     protected bool _invincible = false;
 
     [System.Serializable]
@@ -67,16 +68,17 @@ public class Enemy : MonoBehaviour
     };
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected void Start()
     {
-        if(!_unSpawned)
-        {
-            _movementState = EnemyMovementState.Entering;
-        }
-
+        Invoke(nameof(Spawn), _delayUntilActive);
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealth();
+    }
+
+    protected virtual void Spawn()
+    {
+        _movementState = EnemyMovementState.Entering;
 
         if (_spawnInBackground)
         {
@@ -101,11 +103,6 @@ public class Enemy : MonoBehaviour
                 MoveToDeath();
                 break;
         }
-    }
-
-    public void Spawn()
-    {
-        _movementState = EnemyMovementState.Entering;
     }
 
     public void MoveToInitialPosition()
@@ -144,7 +141,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(!_invincible)
+        if(!_invincible && _movementState != EnemyMovementState.Unspawned)
         {
             _currentHealth -= damage;
 
@@ -210,33 +207,11 @@ public class Enemy : MonoBehaviour
     {
         if (_nextPhase._phaseObject != null)
         {
-            GameObject nextPhase;
-
-            if (_myWave != null)
-            {
-                nextPhase = Instantiate(_nextPhase._phaseObject,
-                    Vector2.zero, Quaternion.identity, _myWave.transform);
-            }
-            else
-            {
-                nextPhase = Instantiate(_nextPhase._phaseObject,
-                    Vector2.zero, Quaternion.identity);
-            }
-
-            Enemy[] enemies = nextPhase.GetComponentsInChildren<Enemy>();
-
-            foreach (Enemy enemy in enemies)
-            {
-                if (!_nextPhase._entryPosDifferent)
-                {
-                    enemy._entryDestination._waypoint.position = transform.position;
-                }
-                enemy.transform.position = transform.position;
-            }
+            SpawnPhase();
         }
         else
         {
-            if (_prioritary)
+            if (_myWave != null && _prioritary)
             {
                 _myWave.SetPriorityEnemiesDead();
             }
@@ -258,6 +233,33 @@ public class Enemy : MonoBehaviour
         //Animate death
         GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
+    }
+
+    private void SpawnPhase()
+    {
+        GameObject nextPhase;
+
+        if (_myWave != null)
+        {
+            nextPhase = Instantiate(_nextPhase._phaseObject,
+                Vector2.zero, Quaternion.identity, _myWave.transform);
+        }
+        else
+        {
+            nextPhase = Instantiate(_nextPhase._phaseObject,
+                Vector2.zero, Quaternion.identity);
+        }
+
+        Enemy[] enemies = nextPhase.GetComponentsInChildren<Enemy>();
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (!_nextPhase._entryPosDifferent)
+            {
+                enemy._entryDestination._waypoint.position = transform.position;
+            }
+            enemy.transform.position = transform.position;
+        }
     }
 
     private void AddScore()

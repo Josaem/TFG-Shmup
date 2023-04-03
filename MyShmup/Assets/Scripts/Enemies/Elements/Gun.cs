@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
     protected Transform _player;
     private PlayerController _playerController;
     protected bool _shoot = false;
-    private float _timeUntilShooting;
+    protected float _timeUntilShooting;
     protected Transform _bulletPool;
     private float _rotTime = 0;
 
@@ -35,6 +35,8 @@ public class Gun : MonoBehaviour
     {
         public RotateStart _rotateStart = RotateStart.None;
         public bool _dontCenterAngleRotation = false;
+        public bool _resetRotTimer;
+        public RotType _rotType;
         public float _rotationAngle;
         public float _rotationSpeed;
     }
@@ -44,6 +46,12 @@ public class Gun : MonoBehaviour
         None,
         Left,
         Right,
+    };
+
+    protected enum RotType
+    {
+        Pingpong,
+        Repeat
     };
 
     // Start is called before the first frame update
@@ -82,6 +90,11 @@ public class Gun : MonoBehaviour
 
     protected virtual void StartGunBehavior()
     {
+        if(_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._resetRotTimer)
+        {
+            _rotTime = 0;
+        }
+
         if (_gunBehavior[_gunBehaviorIndex]._duration != 0)
         {
             Invoke(nameof(EndGunBehavior), _gunBehavior[_gunBehaviorIndex]._duration);
@@ -164,28 +177,63 @@ public class Gun : MonoBehaviour
             {
                 if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
                 {
-                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                    if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                            _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                    }
+                    else
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.Repeat(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                            _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                    }
                 }
                 else
                 {
-                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                    }
+                    else
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                            _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle));
+                    }
                 }
+
             }
             else
             {
                 if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
                 {
-                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                    if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
                         - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                    }
+                    else
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
+                        - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                    }                                
                 }
                 else
-                {
-                    transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                {                 
+                    if (_gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
                         _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
                         - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                    }
+                    else
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationSpeed,
+                        _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle)
+                        - _gunBehavior[_gunBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                    }
                 }
             }
         }

@@ -84,7 +84,8 @@ public class Weapon : MonoBehaviour
         {
             foreach(Gun gun in _guns)
             {
-                gun.EnableShooting();
+                if(gun != null)
+                    gun.EnableShooting();
             }
 
             if(_weaponBehaviors[_weaponBehaviorIndex]._duration != 0)

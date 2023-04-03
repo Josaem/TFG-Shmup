@@ -25,7 +25,10 @@ public class LaserGun : Gun
             _currentLaser = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                 transform.position, transform.rotation,
                 _bulletPool);
-            _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+            if (_currentLaser.GetComponentInChildren<EnemyLaserBehavior>() != null)
+            {
+                _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+            }
         }
     }
 

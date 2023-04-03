@@ -9,6 +9,8 @@ public class ShootingEnemy : Enemy
     private AttackType[] _attackPattern;
     [SerializeField]
     private bool _shootOnSpawn;
+    [SerializeField]
+    private bool _changeAttackOnEntry;
 
     private int _attackIndex = 0;
 
@@ -33,12 +35,16 @@ public class ShootingEnemy : Enemy
         base.Die();
     }
 
-    protected override void Start()
+    protected override void Spawn()
     {
-        base.Start();
+        base.Spawn();
         if(_shootOnSpawn)
         {
             StartAttacking();
+        }
+        else
+        {
+            _changeAttackOnEntry = false;
         }
     }
 
@@ -47,6 +53,12 @@ public class ShootingEnemy : Enemy
         if (!_shootOnSpawn)
         {
             StartAttacking();
+        }
+
+        if (_shootOnSpawn && _changeAttackOnEntry)
+        {
+            _changeAttackOnEntry = false;
+            StopAttacking();
         }
     }
 
@@ -58,8 +70,8 @@ public class ShootingEnemy : Enemy
             {
                 weapon.EnableWeapon();
             }
-
-            if (_attackPattern[_attackIndex]._duration != 0)
+                       
+            if (!_changeAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
             {
                 Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
             }
