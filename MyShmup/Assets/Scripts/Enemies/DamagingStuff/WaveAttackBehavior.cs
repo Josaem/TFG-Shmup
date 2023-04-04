@@ -29,7 +29,7 @@ public class WaveAttackBehavior : MonoBehaviour
         if(collision.gameObject.GetComponent<PlayerController>() != null && Vector2.Distance(collision.transform.position, transform.position) > transform.localScale.x / 2 - 0.5)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
-            collision.gameObject.GetComponent<PlayerController>().ResetShield();
+            collision.gameObject.GetComponent<PlayerController>().ResetShield(3);
         }
     }
 }

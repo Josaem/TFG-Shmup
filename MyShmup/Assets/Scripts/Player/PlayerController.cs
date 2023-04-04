@@ -58,8 +58,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color _shieldNotOnCooldownColor;
     private InputAction blockAction;
     private bool _invincible = false;
+    private float _shieldRemainingTime = 0;
     private float _shieldRemainingCooldown = 0;
-    private bool _canResetShield = true;
+    private float _nextShieldCooldown;
+    private bool _blockActionEnabled;
 
 
     [Header("Visuals")]
@@ -105,11 +107,18 @@ public class PlayerController : MonoBehaviour
         };
 
         blockAction.started += ctx => {
+            if(_shieldRemainingCooldown <= 0)
+                _blockActionEnabled = true;
             EnableBlock();
         };
 
         blockAction.canceled += ctx => {
-            DisableBlock();
+            _blockActionEnabled = false;
+
+            if(_shieldRemainingTime > 0)
+            {
+                DisableBlock();
+            }
         };
 
         _shieldSprite.enabled = false;
@@ -117,6 +126,8 @@ public class PlayerController : MonoBehaviour
         _noLockObject.position = transform.right * _noLockShotDistance;
 
         if (_invincibleTest) _invincible = true;
+
+        _nextShieldCooldown = _blockCooldown;
     }
 
     private void Update()
@@ -133,15 +144,27 @@ public class PlayerController : MonoBehaviour
         if (_fire1stTimeRemaining == 0 && _1stShotEnabled)
             _1stShotEnabled = false;
 
+        //Decrease shield active time
+        if (_shieldRemainingTime > 0) _shieldRemainingTime = Mathf.Max(_shieldRemainingTime - Time.deltaTime, 0f);
+
         //Decrease shield cooldown
         if (_shieldRemainingCooldown > 0) _shieldRemainingCooldown = Mathf.Max(_shieldRemainingCooldown - Time.deltaTime, 0f);
 
-        //Disable blocking if blockduration has passed, doesn't execute every frame
-        if (_shieldRemainingCooldown < _blockCooldown - _blockDuration && _shieldRemainingCooldown > 0) DisableBlock();
+        //Disable blocking if shield time over, doesn't execute every frame
+        if (_shieldRemainingTime <= 0 && _blockActionEnabled)
+        {
+            _blockActionEnabled = false;
+            DisableBlock();
+        }    
 
         //Change hitbox color depending on shield cooldown
-        if (_shieldRemainingCooldown == 0 && _hitboxSprite.color != _shieldNotOnCooldownColor)
+        if (_shieldRemainingCooldown <= 0)
+        {
+            if(_hitboxSprite.color != _shieldNotOnCooldownColor)
+            {
                 _hitboxSprite.color = _shieldNotOnCooldownColor;
+            }
+        }    
 
         //If not shooting reset option positions
         if (!_1stShotEnabled && !_2ndShotEnabled)
@@ -171,6 +194,10 @@ public class PlayerController : MonoBehaviour
                 _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues;
             else
                 _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues;
+        }
+        else
+        {
+            _rb.velocity = Vector2.zero;
         }
     }
 
@@ -339,26 +366,29 @@ public class PlayerController : MonoBehaviour
         //if shield not on cooldown allow shielding for the next blockduration seconds
         if(_shieldRemainingCooldown <= 0)
         {
-            _shieldRemainingCooldown = _blockCooldown;
-            _hitboxSprite.color = _shieldOnCooldownColor;
+            _shieldRemainingTime = _blockDuration;
+            _nextShieldCooldown = _blockCooldown;
             _shieldSprite.enabled = true;
             _invincible = true;
-            _canResetShield = true;
         }
     }
 
     private void DisableBlock()
     {
+        _shieldRemainingTime = 0;
+        _shieldRemainingCooldown = _nextShieldCooldown;
         _shieldSprite.enabled = false;
         _invincible = false;
+
+        _hitboxSprite.color = _shieldOnCooldownColor;
     }
 
-    public void ResetShield()
+    public void ResetShield(float cooldownDivider)
     {
-        if(_canResetShield && _shieldRemainingCooldown > 0)
+        //if shield is up
+        if(_shieldRemainingTime > 0)
         {
-            _shieldRemainingCooldown /= 3;
-            _canResetShield = false;
+            _nextShieldCooldown = Mathf.Min(_nextShieldCooldown, _blockCooldown/cooldownDivider);
         }
     }
 

@@ -284,7 +284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1066040118
 Transform:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _level: 0
   _sectionIndex: 0
-  _waveIndex: 1
+  _waveIndex: 0
   _sections:
   - _shipOrientation: 3
     _backgroundSection:
@@ -328,30 +328,18 @@ MonoBehaviour:
       _duration: 5
       _delayUntilNext: 0
       _enemyWave: {fileID: 0}
-    _endWave: {fileID: 0}
-    _playerStartingPosition: {fileID: 0}
-  - _shipOrientation: 3
-    _backgroundSection:
-      _scrollSpeed: 6
-      _background: {fileID: 5974494775853258413, guid: 235711d82ed252940ac82225834bac31, type: 3}
-    _backgroundObjects: []
-    _waves:
-    - _spawnRequirementsIndex: 0
-      _duration: 6
-      _delayUntilNext: 0
-      _enemyWave: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
-    _endWave: {fileID: 0}
-    _playerStartingPosition: {fileID: 0}
-  - _shipOrientation: 3
-    _backgroundSection:
-      _scrollSpeed: 6
-      _background: {fileID: 5974494775853258413, guid: 235711d82ed252940ac82225834bac31, type: 3}
-    _backgroundObjects: []
-    _waves:
     - _spawnRequirementsIndex: 0
       _duration: 10
       _delayUntilNext: 0
-      _enemyWave: {fileID: 8181601964117689297, guid: cccb7a9a4d68e8d42a693e32d16b77c4, type: 3}
+      _enemyWave: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+    - _spawnRequirementsIndex: 0
+      _duration: 3
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 0}
+    - _spawnRequirementsIndex: 0
+      _duration: 3
+      _delayUntilNext: 0
+      _enemyWave: {fileID: 0}
     _endWave: {fileID: 0}
     _playerStartingPosition: {fileID: 0}
   _priorityEnemiesLeft: 0
@@ -751,9 +739,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2135383787418071095, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513933549832983134, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: _waveFollow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513933549832983134, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: _gunBehavior.Array.data[0]._bulletSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872365270726684277, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3633308759971404507, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136979338884216412, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726472206336012436, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
       propertyPath: m_Name
       value: WaveTest3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8181601964117689297, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8181601964117689299, guid: db025169c51dd3544a7b8f68bddf6330, type: 3}
       propertyPath: m_RootOrder
@@ -859,6 +879,14 @@ PrefabInstance:
     - target: {fileID: 6954143850170903128, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: _blockCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: _blockDuration
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: _invincibleTest
