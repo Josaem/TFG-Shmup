@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private int _baseScore;
     public int _stuckNails = 0;
     public int _stuckDrills = 0;
+    private bool _isDead;
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
@@ -237,46 +238,50 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        if (_nextPhase._phaseObject != null)
+        if(!_isDead)
         {
-            SpawnPhase();
-        }
-        else
-        {
-            if (_myWave != null && _prioritary)
+            _isDead = true;
+            if (_nextPhase._phaseObject != null)
             {
-                _myWave.SetPriorityEnemiesDead();
-            }
-
-            if (_specialRequirementsIndex != 0)
-            {
-                GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
-            }
-        }
-
-        foreach (GameObject spawn in _stuffToSpawnOnDeath)
-        {
-            if(spawn.GetComponent<WaveGunNoEnemy>() != null)
-            {
-                Instantiate(spawn, transform.position, Quaternion.identity);
+                SpawnPhase();
             }
             else
             {
-                Instantiate(spawn);
-            }
-        }
+                if (_myWave != null && _prioritary)
+                {
+                    _myWave.SetPriorityEnemiesDead();
+                }
 
-        foreach (Enemy enemy in _enemiesToKillOnDeath)
-        {
-            if(enemy != null)
+                if (_specialRequirementsIndex != 0)
+                {
+                    GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
+                }
+            }
+
+            foreach (GameObject spawn in _stuffToSpawnOnDeath)
             {
-                enemy.Kill();
+                if (spawn.GetComponent<WaveGunNoEnemy>() != null)
+                {
+                    Instantiate(spawn, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(spawn);
+                }
             }
-        }
 
-        //Animate death
-        GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(gameObject);
+            foreach (Enemy enemy in _enemiesToKillOnDeath)
+            {
+                if (enemy != null)
+                {
+                    enemy.Kill();
+                }
+            }
+
+            //Animate death
+            GetComponent<BoxCollider2D>().enabled = false;
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnPhase()
