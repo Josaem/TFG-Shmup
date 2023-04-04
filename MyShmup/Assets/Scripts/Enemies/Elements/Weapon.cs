@@ -97,8 +97,6 @@ public class Weapon : MonoBehaviour
 
     private void EndWeaponBehavior()
     {
-        Debug.Log("Ending Gun");
-
         foreach (Gun gun in _guns)
         {
             gun.DisableShooting();

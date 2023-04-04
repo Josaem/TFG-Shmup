@@ -5,6 +5,11 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class WaveGun : Gun
 {
+    [SerializeField]
+    private bool _waveFollow;
+    [SerializeField]
+    private float _maxSize = 30;
+
     protected override void ManageShooting()
     {
         if (_gunBehavior[_gunBehaviorIndex]._fireRate != 0)
@@ -15,10 +20,15 @@ public class WaveGun : Gun
                 _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
 
                 //Shoot a shot
-                GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
+                WaveAttackBehavior wave = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                     transform.position, Quaternion.identity,
-                    _bulletPool);
-                bullet.GetComponent<WaveAttackBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                    _bulletPool).GetComponent<WaveAttackBehavior>();
+                wave._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                wave._maxSize = _maxSize;
+                if(_waveFollow)
+                {
+                    wave._followTarget = transform;
+                }
             }
         }
     }

@@ -20,7 +20,9 @@ public class Gun : MonoBehaviour
     protected class GunBehavior
     {
         #if UNITY_EDITOR
-        [Help("If object is a laser _fireRate enables/disables it \nIf object is a laser _bulletSpeed controls the ray speed", UnityEditor.MessageType.None)]
+        [Help("If object is a laser _fireRate enables/disables it" +
+            "\nIf object is a laser _bulletSpeed controls the ray speed" +
+            "\nIf object is wave gun then point at player and rotative behavior are useless", UnityEditor.MessageType.None)]
         #endif
         public float _duration;
         public float _fireRate;

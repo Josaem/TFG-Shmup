@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnWave()
     {
-        Debug.Log("Spawning wave: " + _waveIndex);
+        Debug.Log("Spawning wave: " + _sectionIndex + "/" + _waveIndex);
 
         //spawnea enemyWave si hay
         if (IsThereEnemyWave())

@@ -26,7 +26,7 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _myGM = GetComponentInParent<GameManager>();
+        _myGM = FindObjectOfType<GameManager>();
         Invoke(nameof(EnableSpawn), _delayUntilSpawn);
     }
 

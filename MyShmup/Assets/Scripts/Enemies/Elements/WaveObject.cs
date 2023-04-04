@@ -28,7 +28,6 @@ public class WaveObject : MonoBehaviour
             }
         }
 
-        Debug.Log(_priorityEnemyCount);
         if (FindObjectOfType<GameManager>() != null)
         {
             FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;

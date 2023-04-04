@@ -131,26 +131,34 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 1
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
   _enemiesToKillOnDeath: []
-  _unSpawned: 0
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 5
     _waypoint: {fileID: 656366378698162558}
   _exitDestination:
     _speed: 5
     _waypoint: {fileID: 656366377037375039}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 656366376938297252}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 3
     _waypoint: {fileID: 656366378308020399}
@@ -708,6 +716,9 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 0
       _rotationSpeed: 0
     _bulletObject: {fileID: 4409051570943762180, guid: c54a2f81d6a7e9847a3ee53dc218f42c, type: 3}

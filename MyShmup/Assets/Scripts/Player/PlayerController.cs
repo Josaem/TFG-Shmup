@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private InputAction blockAction;
     private bool _invincible = false;
     private float _shieldRemainingCooldown = 0;
+    private bool _canResetShield = true;
 
 
     [Header("Visuals")]
@@ -342,6 +343,7 @@ public class PlayerController : MonoBehaviour
             _hitboxSprite.color = _shieldOnCooldownColor;
             _shieldSprite.enabled = true;
             _invincible = true;
+            _canResetShield = true;
         }
     }
 
@@ -349,6 +351,15 @@ public class PlayerController : MonoBehaviour
     {
         _shieldSprite.enabled = false;
         _invincible = false;
+    }
+
+    public void ResetShield()
+    {
+        if(_canResetShield && _shieldRemainingCooldown > 0)
+        {
+            _shieldRemainingCooldown /= 3;
+            _canResetShield = false;
+        }
     }
 
     private IEnumerator StopInvincibility(float time)

@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
+    [SerializeField]
+    private WaveSelector _dieOnWave;
+    private GameManager _myGM;
 
     [Header("Extra")]
     [SerializeField]
@@ -26,6 +29,8 @@ public class Enemy : MonoBehaviour
     protected float _delayUntilFirstAction = 0;
     [SerializeField]
     protected bool _spawnInBackground;
+    [SerializeField]
+    protected bool _dieInBackground;
     [SerializeField]
     private Phase _nextPhase;
     [SerializeField]
@@ -69,6 +74,13 @@ public class Enemy : MonoBehaviour
         Unspawned
     };
 
+    [System.Serializable]
+    private class WaveSelector
+    {
+        public int _section;
+        public int _wave;
+    }
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -76,6 +88,7 @@ public class Enemy : MonoBehaviour
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealth();
+        _myGM = FindObjectOfType<GameManager>();
     }
 
     protected virtual void Spawn()
@@ -86,7 +99,8 @@ public class Enemy : MonoBehaviour
         {
             _invincible = true;
             GetComponent<BoxCollider2D>().enabled = false;
-            _collisionsWithPlayer.SetActive(false);
+            if(_collisionsWithPlayer != null)
+                _collisionsWithPlayer.SetActive(false);
         }
     }
 
@@ -104,6 +118,11 @@ public class Enemy : MonoBehaviour
             case EnemyMovementState.Dying:
                 MoveToDeath();
                 break;
+        }
+
+        if (_myGM != null && (_myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
+        {
+            Kill();
         }
     }
 
@@ -138,7 +157,18 @@ public class Enemy : MonoBehaviour
 
     public virtual void Kill()
     {
-        _movementState = EnemyMovementState.Dying;
+        if ((_dieOnWave._section == 0 && _dieOnWave._wave == 0)
+            || (_myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
+        {
+            _movementState = EnemyMovementState.Dying;
+            if(_dieInBackground)
+            {
+                _invincible = true;
+                GetComponent<BoxCollider2D>().enabled = false;
+                if (_collisionsWithPlayer != null)
+                    _collisionsWithPlayer.SetActive(false);
+            }
+        }
     }
 
     public void TakeDamage(int damage)

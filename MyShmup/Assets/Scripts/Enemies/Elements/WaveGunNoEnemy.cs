@@ -27,7 +27,7 @@ public class WaveGunNoEnemy : MonoBehaviour
 
     private void Start()
     {
-        _myGM = GetComponentInParent<GameManager>();
+        _myGM = FindObjectOfType<GameManager>();
         _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
     }
 
@@ -46,7 +46,7 @@ public class WaveGunNoEnemy : MonoBehaviour
 
         if (_myGM != null && (_myGM._sectionIndex == _waveToDie._section && _myGM._waveIndex == _waveToDie._wave))
         {
-            Destroy(gameObject.transform.parent);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }
