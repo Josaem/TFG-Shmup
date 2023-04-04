@@ -3936,6 +3936,8 @@ MonoBehaviour:
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath:
+  - {fileID: 3780293866254882486, guid: 98b6a1f9b60055146843a761d6377445, type: 3}
   _enemiesToKillOnDeath: []
   _collisionsWithPlayer: {fileID: 8897188107528113366}
   _entryDestination:

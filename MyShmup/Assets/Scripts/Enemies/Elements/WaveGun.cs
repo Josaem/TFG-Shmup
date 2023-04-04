@@ -1,53 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class WaveGun : MonoBehaviour
+public class WaveGun : Gun
 {
-    [SerializeField]
-    private float _timeBetweenWaves;
-    [SerializeField]
-    private float _waveSpeed;
-    [SerializeField]
-    private WaveSelector _waveToDie;
-    [SerializeField]
-    private GameObject _waveObject;
-
-    private float _waveTime = 0;
-    private GameManager _myGM;
-
-    [System.Serializable]
-    private class WaveSelector
+    protected override void ManageShooting()
     {
-        public int _section;
-        public int _wave;
-    }
-
-    private void Start()
-    {
-        _myGM = GetComponentInParent<GameManager>();
-    }
-
-    private void Update()
-    {
-        //If cooldown between shots has passed
-        if (Time.time > _waveTime)
+        if (_gunBehavior[_gunBehaviorIndex]._fireRate != 0)
         {
-            _waveTime = Time.time + _timeBetweenWaves;
+            //If cooldown between shots has passed
+            if (Time.time > _timeUntilShooting)
+            {
+                _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
 
-            //Shoot a shot
-            GameObject wave = Instantiate(_waveObject,
-                transform.position, Quaternion.identity,
-                transform);
-            wave.GetComponent<ExpandingWaveBehavior>()._speed = _waveSpeed;
-        }
-
-        if (_myGM != null && (_myGM._sectionIndex == _waveToDie._section && _myGM._waveIndex == _waveToDie._wave))
-        {
-            Destroy(gameObject);
+                //Shoot a shot
+                GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
+                    transform.position, Quaternion.identity,
+                    _bulletPool);
+                bullet.GetComponent<WaveAttackBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+            }
         }
     }
 }

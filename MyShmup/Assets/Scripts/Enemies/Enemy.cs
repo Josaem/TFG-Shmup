@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Phase _nextPhase;
     [SerializeField]
+    private GameObject[] _stuffToSpawnOnDeath;
+    [SerializeField]
     private Enemy[] _enemiesToKillOnDeath;
     [SerializeField]
     private GameObject _collisionsWithPlayer;
@@ -222,7 +224,19 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        foreach(Enemy enemy in _enemiesToKillOnDeath)
+        foreach (GameObject spawn in _stuffToSpawnOnDeath)
+        {
+            if(spawn.GetComponent<WaveGunNoEnemy>() != null)
+            {
+                Instantiate(spawn, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(spawn);
+            }
+        }
+
+        foreach (Enemy enemy in _enemiesToKillOnDeath)
         {
             if(enemy != null)
             {
