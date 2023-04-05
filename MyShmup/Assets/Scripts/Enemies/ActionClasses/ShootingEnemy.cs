@@ -10,6 +10,8 @@ public class ShootingEnemy : Enemy
     [SerializeField]
     private bool _shootOnSpawn;
     [SerializeField]
+    protected bool _stopShootOnDead = true;
+    [SerializeField]
     private bool _changeAttackOnEntry;
 
     private int _attackIndex = 0;
@@ -26,12 +28,13 @@ public class ShootingEnemy : Enemy
     public override void Kill()
     {
         base.Kill();
-        StopAttacking();
+        if(_stopShootOnDead)
+            StopAttackingPermanently();
     }
 
     protected override void Die()
     {
-        StopAttacking();
+        StopAttackingPermanently();
         base.Die();
     }
 
@@ -96,6 +99,17 @@ public class ShootingEnemy : Enemy
             if (_attackIndex >= _attackPattern.Length)
             {
                 _attackIndex = 0;
+            }
+        }
+    }
+
+    protected void StopAttackingPermanently()
+    {
+        if (_attackPattern.Length != 0)
+        {
+            foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
+            {
+                weapon.DisableWeapon();
             }
         }
     }

@@ -10,7 +10,7 @@ public class DieEarly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke(nameof(Kill), _deathDelay);
+        Invoke(nameof(Kill), _deathDelay + GetComponent<Enemy>()._delayUntilActive);
     }
 
     private void Kill()

@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 2219190371889256940}
   - component: {fileID: 2219190371889256943}
   m_Layer: 0
-  m_Name: Lv1W2
+  m_Name: L1W2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b662af960e349d74abb7e61b96eca0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _duration: 25
 --- !u!1 &2374082366585432016
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,14 +440,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &2837112412444875631
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,20 +787,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &2837112413926681982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,25 +1219,36 @@ MonoBehaviour:
   _baseScore: 100
   _stuckNails: 0
   _stuckDrills: 0
-  _prioritary: 1
+  _prioritary: 0
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 4701579764347800694}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 4701579763401766158}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 4701579763981223609}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 8
     _waypoint: {fileID: 4701579764498054573}
@@ -1366,14 +1385,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &4701579763540758088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,20 +1532,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &4701579763589286210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,20 +1717,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &4701579763629048439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,24 +2102,35 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 4701579765049830065}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 4701579764455310976}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 4701579763508483596}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 6
     _waypoint: {fileID: 4701579763934862024}
@@ -2198,20 +2239,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &4701579763934862023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2458,14 +2503,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &4701579763981223607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,14 +2561,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &4701579764000560569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2686,24 +2737,35 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 4701579764898117111}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 4701579763589286211}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 4701579764657101148}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 6
     _waypoint: {fileID: 4701579764996615499}
@@ -3237,20 +3299,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &4701579764657101146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,14 +3364,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &4701579764676109226
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,24 +3507,35 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 4701579765047263311}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 4701579763401699089}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 4701579763980907938}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 10
     _waypoint: {fileID: 4701579764138941169}
@@ -3893,20 +3973,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 0
     _fireRate: 1
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &4701579765047263310
 GameObject:
   m_ObjectHideFlags: 0
@@ -4333,24 +4417,35 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 4701579764783269815}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 4701579763891956388}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 4701579765354506737}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 8
     _waypoint: {fileID: 4701579765162359305}
@@ -4571,14 +4666,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &4701579765386027337
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,24 +4990,35 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 1577843735089965798}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 3391915680578474771}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 2837112412299207272}
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 10
     _waypoint: {fileID: 2837112413926681983}
@@ -4947,7 +5056,6 @@ GameObject:
   - component: {fileID: 4810495798326902270}
   - component: {fileID: 7078727544433446625}
   - component: {fileID: 8460452984189951249}
-  - component: {fileID: 1453317690}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -5062,23 +5170,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767f785f2fe231542aa70ecad8684d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 300
   _baseScore: 100
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 1
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 15
     _waypoint: {fileID: 1503867697615455935}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 3326451927220502346}
+  _invincible: 0
   _shieldZone: {fileID: 3223174449114739667}
   _waypoints:
   - _speed: 2
@@ -5086,19 +5203,6 @@ MonoBehaviour:
   - _speed: 2
     _waypoint: {fileID: 2766368528485851578}
   _dieOnLastWaypoint: 0
---- !u!114 &1453317690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5744626981446483154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deathDelay: 15
 --- !u!1 &6690609055350864833
 GameObject:
   m_ObjectHideFlags: 0

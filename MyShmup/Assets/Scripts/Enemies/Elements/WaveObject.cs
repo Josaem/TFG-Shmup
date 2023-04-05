@@ -5,10 +5,13 @@ using UnityEngine;
 public class WaveObject : MonoBehaviour
 {
     private Enemy[] _enemies;
+    public float _duration;
+    private float _timer = 0;
 
     // Update is called once per frame
     void Update()
     {
+        _timer += Time.deltaTime;
         if(GetComponentsInChildren<Enemy>().Length == 0 && GetComponentsInChildren<Generator>().Length == 0)
         {
             Destroy(gameObject);
@@ -46,8 +49,6 @@ public class WaveObject : MonoBehaviour
                 _priorityEnemyCount++;
             }
         }
-
-        Debug.Log(_priorityEnemyCount);
 
         if(FindObjectOfType<GameManager>() != null)
         {

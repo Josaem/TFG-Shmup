@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     public int _maxHealth;
     [SerializeField]
     private int _baseScore;
+    [HideInInspector]
     public int _stuckNails = 0;
+    [HideInInspector]
     public int _stuckDrills = 0;
     private bool _isDead;
 
@@ -24,8 +26,7 @@ public class Enemy : MonoBehaviour
     [Header("Extra")]
     [SerializeField]
     private int _specialRequirementsIndex = 0;
-    [SerializeField]
-    protected float _delayUntilActive = 0;
+    public float _delayUntilActive = 0;
     [SerializeField]
     protected float _delayUntilFirstAction = 0;
     [SerializeField]
@@ -138,7 +139,8 @@ public class Enemy : MonoBehaviour
             {
                 _invincible = false;
                 GetComponent<BoxCollider2D>().enabled = true;
-                _collisionsWithPlayer.SetActive(true);
+                if(_collisionsWithPlayer != null)
+                    _collisionsWithPlayer.SetActive(true);
             }
 
             _movementState = EnemyMovementState.Moving;

@@ -508,14 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
-  - _duration: 0
-    _delayUntilNextAttack: 0
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+  _weaponBehavior: []
 --- !u!1 &8897188106488335153
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +723,7 @@ GameObject:
   - component: {fileID: 8897188106633065517}
   - component: {fileID: 8897188106633065518}
   - component: {fileID: 8897188106633065519}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: DamagingArea1
   m_TagString: Damage
   m_Icon: {fileID: 0}
@@ -814,7 +807,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1764,14 +1757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
-  - _duration: 0
-    _delayUntilNextAttack: 0
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+  _weaponBehavior: []
 --- !u!1 &8897188107010348249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,14 +2121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehaviors:
-  - _duration: 0
-    _delayUntilNextAttack: 0
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+  _weaponBehavior: []
 --- !u!1 &8897188107166884515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3929,10 +3908,14 @@ MonoBehaviour:
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
   _delayUntilActive: 2
   _delayUntilFirstAction: 0
   _spawnInBackground: 1
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
@@ -3958,6 +3941,7 @@ MonoBehaviour:
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 1
+  _stopShootOnDead: 1
   _changeAttackOnEntry: 1
   _horizontal: 0
   _speed: 0

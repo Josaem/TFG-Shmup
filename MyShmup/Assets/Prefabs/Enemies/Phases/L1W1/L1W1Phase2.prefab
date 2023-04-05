@@ -84,10 +84,12 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 2
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 15
       _rotationSpeed: 50
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &411473937
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,10 +226,12 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 1
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 15
       _rotationSpeed: 50
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &562027962
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,14 +279,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 1
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &604390308
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,21 +373,25 @@ MonoBehaviour:
     _bulletSpeed: 3
     _pointAtPlayer: 0
     _rotativeBehavior:
-      _rotateStart: 0
-      _rotationAngle: 25
-      _rotationSpeed: 100
+      _rotateStart: 2
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 10
+      _rotationSpeed: 15
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 1
     _fireRate: 0
     _bulletSpeed: 5
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &705736374
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,14 +439,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 1
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &753582650
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,20 +922,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 1
     _fireRate: 0
     _bulletSpeed: 5
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &3400551837106596062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,14 +1165,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 1
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 1
     _rotativeBehavior:
       _rotateStart: 1
-      _rotationAngle: 20
-      _rotationSpeed: 20
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 40
+      _rotationSpeed: 77
 --- !u!1 &3400551837492741920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,20 +1260,24 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
   - _duration: 1
     _fireRate: 0
     _bulletSpeed: 5
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 25
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &3400551837697184067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,14 +1695,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 1
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &3400551838187383712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,14 +1753,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 1
-  _weaponBehaviors:
+  _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
-      _rotationAngle: 90
-      _rotationSpeed: 200
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &3400551838339352817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,10 +1816,12 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 2
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 50
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &3400551838406093555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,10 +2024,12 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 1
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
       _rotationAngle: 50
       _rotationSpeed: 100
     _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
-    _bulletMovement: {fileID: 0}
 --- !u!1 &3400551838873002099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,23 +2244,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfab0ef4acdc2f499ddf1602efe549a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 400
+  _maxHealth: 200
   _baseScore: 100
   _stuckNails: 0
   _stuckDrills: 0
   _prioritary: 1
+  _dieOnWave:
+    _section: 0
+    _wave: 0
   _specialRequirementsIndex: 0
+  _delayUntilActive: 0
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
+  _dieInBackground: 0
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnDeath: []
+  _enemiesToKillOnDeath: []
+  _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
     _waypoint: {fileID: 3400551837106596063}
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 3400551837225110167}
+  _invincible: 0
   _attackPattern:
   - _weapons:
     - {fileID: 3400551837434386958}
@@ -2236,5 +2280,7 @@ MonoBehaviour:
     _duration: 0
     _delayUntilNextAttack: 0
   _shootOnSpawn: 0
+  _stopShootOnDead: 1
+  _changeAttackOnEntry: 0
   _horizontal: 0
-  _speed: 2
+  _speed: 0.7

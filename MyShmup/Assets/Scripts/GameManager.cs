@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class Wave
     {
+        #if UNITY_EDITOR
+        [Help("This duration is only used if there's no waveObject", UnityEditor.MessageType.None)]
+        #endif
         public int _spawnRequirementsIndex = GameProperties._extraLevelRequirements[0][0];
         public float _duration = 1;
         public float _delayUntilNext = 0;
@@ -148,6 +151,7 @@ public class GameManager : MonoBehaviour
         if (IsThereEnemyWave())
         {
             _currentWave = Instantiate(_sections[_sectionIndex]._waves[_waveIndex]._enemyWave);
+            _sections[_sectionIndex]._waves[_waveIndex]._duration = _currentWave.GetComponent<WaveObject>()._duration;
         }
 
         //if wave is not endless set timer

@@ -847,7 +847,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7062968426210351187}
   m_Layer: 8
-  m_Name: EnemyBasic
+  m_Name: WaypointShootingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
