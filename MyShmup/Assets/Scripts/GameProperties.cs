@@ -25,25 +25,3 @@ public static class GameProperties
     TODOUI
     TODO
  */
-
-/*
-
-    Gun: never stops firing, can swap bullets depending on timing
-    -base rotation
-    -delay until shooting
-    -duration (0 means infinite)
-    -gunBehavior[]:
-        -rotative
-        -pointatplayer
-        -fire rate
-        -bulletspeed
-        -duration
-        -bulletObject
-        -movementType script to add (component to be added to the bullet on spawn)
-
-
-    BulletObject
-    -bullets (prefab)
-    -spawn order/rate
-    -time to spawn if multiple bullets
-         */

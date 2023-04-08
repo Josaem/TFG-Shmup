@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b662af960e349d74abb7e61b96eca0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _duration: 0
 --- !u!1001 &2900732800821801426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52,6 +53,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4900529983540857073}
     m_Modifications:
+    - target: {fileID: 7357682379053175275, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _weaponBehavior.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682379053175275, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._pointAtPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682379966355622, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _weaponBehavior.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682380098064766, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _weaponBehavior.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682380098064766, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._pointAtPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7357682380253607057, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -9,10 +9,10 @@ public class ScoreUI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        SetUpScore();
+        InvokeRepeating(nameof(SetUpScore), 0, 0.2f);
     }
     public void SetUpScore()
     {
-        _scoreText.text = GameProperties._score.ToString();
+        _scoreText.text = GameProperties._score.ToString("00000000000000000");
     }
 }

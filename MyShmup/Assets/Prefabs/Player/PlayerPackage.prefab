@@ -815,7 +815,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2121958529
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.7402892, b: 0, a: 1}
   m_FlipX: 0
@@ -935,7 +935,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2121958529
   m_SortingLayer: 1
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
   m_Color: {r: 0, g: 1, b: 0.9430566, a: 0.50980395}
   m_FlipX: 0
@@ -976,7 +976,7 @@ Transform:
   m_GameObject: {fileID: 6954143850170903107}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3865163978354262748}
@@ -1004,6 +1004,7 @@ MonoBehaviour:
   _deathTime: 3
   _playerRespawnLocation: {fileID: 6954143849576202830}
   shipOrientation: 3
+  _invincibleTest: 1
   _dead: 0
   _playerBulletPool: {fileID: 6954143851048406027}
   _optionsGameObject:
@@ -1014,6 +1015,7 @@ MonoBehaviour:
   _enemyLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  _1stShotScore: 1
   _fireActiveTime: 0.4
   _fireRate1st: 0.1
   _primaryShotPrefab: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
@@ -1022,6 +1024,7 @@ MonoBehaviour:
   - {fileID: 6954143851318854261}
   - {fileID: 6954143850570489159}
   - {fileID: 6954143850183909600}
+  _2ndShotScore: 3
   _timeFor2ndShotActivation: 0.5
   _fireRate2nd: 0.5
   _noLockShotDistance: 7
@@ -1032,8 +1035,9 @@ MonoBehaviour:
   - {fileID: 6954143850252867835}
   - {fileID: 6954143849451398734}
   - {fileID: 6954143851290453622}
-  _blockDuration: 0.5
-  _blockCooldown: 2
+  _exploCooldown: 4
+  _blockDuration: 0.4
+  _blockCooldown: 1.5
   _shieldOnCooldownColor: {r: 1, g: 0, b: 0, a: 0.7058824}
   _shieldNotOnCooldownColor: {r: 0, g: 1, b: 0.9903989, a: 0.7058824}
   _shieldSprite: {fileID: 6954143850091328637}
@@ -1856,10 +1860,10 @@ RectTransform:
   m_Father: {fileID: 6954143850450981558}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26, y: -20}
-  m_SizeDelta: {x: 500, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 490, y: -14}
+  m_SizeDelta: {x: 478, y: 43}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &6954143851353250687
 CanvasRenderer:
@@ -1889,7 +1893,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SCORE
+  m_text: 00000000000000000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1916,8 +1920,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

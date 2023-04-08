@@ -13,6 +13,6 @@ public class CreditsUI : MonoBehaviour
     }
     public void SetUpCredits()
     {
-        _creditsText.text = "CREDITS: " + GameProperties._credits.ToString();
+        _creditsText.text = "CREDITS: " + GameProperties._credits.ToString("00");
     }
 }

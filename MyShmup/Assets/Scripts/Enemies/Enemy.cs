@@ -11,11 +11,12 @@ public class Enemy : MonoBehaviour
     public int _maxHealth;
     [SerializeField]
     private int _baseScore;
-    [HideInInspector]
-    public int _stuckNails = 0;
-    [HideInInspector]
-    public int _stuckDrills = 0;
+    private bool _willDieByExplosion;
+    private int _stuckNails = 0;
+    private int _stuckDrills = 0;
     private bool _isDead;
+    private bool _deadByWaypoint;
+    private int _accumulatedScore;
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
@@ -53,6 +54,8 @@ public class Enemy : MonoBehaviour
     protected EnemyMovementState _movementState = EnemyMovementState.Unspawned;
     [SerializeField]
     protected bool _invincible = false;
+    private StuckBulletVisual _stuckBulletVisual;
+    private PlayerController _player;
 
     [System.Serializable]
     protected class WaypointMovement
@@ -87,10 +90,13 @@ public class Enemy : MonoBehaviour
     protected void Start()
     {
         Invoke(nameof(Spawn), _delayUntilActive);
+        GetComponent<BoxCollider2D>().enabled = false;
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
-        UpdateHealth();
+        UpdateHealthVisuals();
         _myGM = FindObjectOfType<GameManager>();
+        _stuckBulletVisual = GetComponentInChildren<StuckBulletVisual>();
+        _player = FindObjectOfType<PlayerController>();
     }
 
     protected virtual void Spawn()
@@ -101,8 +107,12 @@ public class Enemy : MonoBehaviour
         {
             _invincible = true;
             GetComponent<BoxCollider2D>().enabled = false;
-            if(_collisionsWithPlayer != null)
+            if (_collisionsWithPlayer != null)
                 _collisionsWithPlayer.SetActive(false);
+        }
+        else
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 
@@ -174,40 +184,106 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public int GetNails()
     {
-        if(!_invincible && _movementState != EnemyMovementState.Unspawned)
+        return _stuckNails;
+    }
+
+    public int GetDrills()
+    {
+        return _stuckDrills;
+    }
+
+    public bool GetIfDiesFromExplo()
+    {
+        return _willDieByExplosion;
+    }
+
+    public void TakeDamage(int damage, bool shotIsPrimary, Vector3 bulletPos, Quaternion bulletRot)
+    {
+        if (shotIsPrimary)
+        {
+            _stuckNails++;
+        }
+        else
+        {
+            _stuckDrills++;
+        }
+
+        UpdateScore(0);
+
+        _stuckBulletVisual.GotHit(shotIsPrimary, bulletPos, bulletRot, _accumulatedScore);
+
+        bool currentExploDeadStatus = _willDieByExplosion;
+        WillEnemyDieByExplosion();
+
+        if(_willDieByExplosion == true && currentExploDeadStatus == false)
+        {
+            _stuckBulletVisual.EnemyWillDieByExplosion();
+        }
+
+        if (!_invincible)
         {
             _currentHealth -= damage;
 
-            UpdateHealth();
-            /*
-            TODO
-            count of drills and shots personal++ -> depending on what hit
-            count of drills and shots++ -> gamepropreties
+            UpdateHealthVisuals();
 
-            if bigEnemy tag drillshots stick
-
-            health -= shotDamage
-
-            UpdateHealth
-             */
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
     }
 
-    public void TakeDamageByExplosion()
+    public void TakeDamageByExplosion(int deadAmount)
     {
-        /*
-        TODO
-        life - (drills(drill damage reduction) * shots(shot damage reduction)
-        if life = 0
-            DieByExplosion
-        */
+        if (!_isDead)
+        {
+            float damage = 0.40f * (_stuckNails + _stuckDrills);
 
-        UpdateHealth();
+            if (_willDieByExplosion)
+            {
+                UpdateScore(deadAmount);
+                _stuckBulletVisual.GotExploded(true, deadAmount, _accumulatedScore);
+                Die();
+            }
+            else
+            {
+                _stuckNails = 0;
+                _stuckDrills = 0;
+
+                UpdateScore(0);
+                _stuckBulletVisual.GotExploded(false, deadAmount, _accumulatedScore);
+
+                bool currentExploDeadStatus = _willDieByExplosion;
+                WillEnemyDieByExplosion();
+
+                if (_willDieByExplosion == true && currentExploDeadStatus == false)
+                {
+                    _stuckBulletVisual.EnemyWillDieByExplosion();
+                }
+                _currentHealth -= (int) damage;
+
+                UpdateHealthVisuals();
+            }
+        }
     }
 
-    public void UpdateHealth()
+    public void WillEnemyDieByExplosion()
+    {
+        float damage = 0.40f * (_stuckNails + _stuckDrills);
+        if (_currentHealth - damage <= 0)
+        {
+            _willDieByExplosion = true;
+        }
+        else
+        {
+            _willDieByExplosion = false;
+        }
+
+    }
+
+    public void UpdateHealthVisuals()
     {
         float currentHealthPercent = (_currentHealth * 100f)/_maxHealth;
 
@@ -224,18 +300,6 @@ public class Enemy : MonoBehaviour
                     break;
             }
         }
-
-        if(_currentHealth <= 0)
-        {
-            //enemiesStuck--
-            AddScore();
-            Die();
-        }
-    }
-
-    public void WillDieWithExplosion()
-    {
-        //TODO check if life <= 0 if exploded
     }
 
     protected virtual void Die()
@@ -280,7 +344,12 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            //Animate death
+            if(!_deadByWaypoint)
+            {
+                AddScore();
+                //Animate death
+            }
+
             GetComponent<BoxCollider2D>().enabled = false;
             Destroy(gameObject);
         }
@@ -315,7 +384,36 @@ public class Enemy : MonoBehaviour
 
     private void AddScore()
     {
-        //Add GameProperties score += enemyValue * drill * shots 
+        GameProperties._score += _accumulatedScore;
+        //TODO find score text and update
+    }
+
+    private void UpdateScore(int deadMultiplier)
+    {
+        int nails = _stuckNails;
+        int drills = _stuckDrills;
+        int nailScore = _player._1stShotScore;
+        int drillScore = _player._2ndShotScore;
+        int deadAmount = deadMultiplier;
+
+        if (_stuckNails == 0)
+        {
+            nails = 1;
+            nailScore = 1;
+        }
+
+        if(_stuckDrills == 0)
+        {
+            drills = 1;
+            drillScore = 1;
+        }
+
+        if (deadMultiplier == 0)
+        {
+            deadAmount = 1;
+        }
+
+        _accumulatedScore = _baseScore * (nails * nailScore) * (drills * drillScore) * deadAmount;    
     }
 
     public void MoveToDeath()
@@ -331,8 +429,7 @@ public class Enemy : MonoBehaviour
 
     private void DieByWaypoint()
     {
-        //gamepropreties count of shots -= current shot count
-        //gamepropreties count of drills -= current drill count 
+        _deadByWaypoint = true;
         Die();
     }
 
@@ -345,21 +442,4 @@ public class Enemy : MonoBehaviour
     {
         _invincible = false;
     }
-
-    /*
-    TODO
-    Player explosion
-        enemyKill = 0
-        accumulated shots = 0
-        accumulated drills = 0
-
-        look in area for enemies
-            if shot count != 0 || drill count != 0
-                check if kill
-                    enemyKill++
-                    accumulated shots += enemy shots
-                    accumulated drills += enemy drills
-                enemy Take Damage By explosion
-        add score * drill * shots * kill    
-     */
 }

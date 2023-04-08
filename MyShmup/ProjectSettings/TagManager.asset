@@ -20,7 +20,7 @@ TagManager:
   - PlayerAttack
   - EnemyAttack
   - EnemyShield
-  - 
+  - TestCollision
   - 
   - 
   - 
@@ -45,4 +45,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2173008767
+    locked: 0
+  - name: UI
+    uniqueID: 111909017
     locked: 0

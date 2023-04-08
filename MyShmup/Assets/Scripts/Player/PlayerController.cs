@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool _fireButtonPressed = false;
 
     [Header("MainShot")]
+    public int _1stShotScore = 1;
     [SerializeField] private float _fireActiveTime;
     [SerializeField] private float _fireRate1st;
     [SerializeField] private GameObject _primaryShotPrefab;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private float _fire1stTimeRemaining;
 
     [Header("SecondaryShot")]
+    public int _2ndShotScore = 3;
     [SerializeField] private float _timeFor2ndShotActivation;
     [SerializeField] private float _fireRate2nd;
     [SerializeField] private float _noLockShotDistance;
@@ -50,6 +52,12 @@ public class PlayerController : MonoBehaviour
     private float _timeUntilShooting2nd = 0;
     private float _timeUntil2ndShotEnabled;
     private GameObject _currentlyLockedEnemy;
+
+    [Header("Explosion")]
+    [SerializeField]
+    private float _exploCooldown = 4;
+    private float _timeUntilExploAgain = 0;
+    private InputAction explodeAction;
 
     [Header("Shield")]
     [SerializeField] private float _blockDuration;
@@ -86,6 +94,9 @@ public class PlayerController : MonoBehaviour
         fireAction = playerInput.actions["Fire"];
         fireAction.ReadValue<float>();
 
+        explodeAction = playerInput.actions["ExplodeShots"];
+        explodeAction.ReadValue<float>();
+
         blockAction = playerInput.actions["Block"];
         blockAction.ReadValue<float>();
 
@@ -101,9 +112,19 @@ public class PlayerController : MonoBehaviour
             _fireButtonPressed = true;
             StartShooting();
         };
+
         fireAction.canceled += ctx => {
             _fireButtonPressed = false;
             CancelShooting();
+        };
+
+        explodeAction.started += ctx =>
+        {
+            if(Time.time > _timeUntilExploAgain)
+            {
+                _timeUntilExploAgain = Time.time + _exploCooldown;
+                ExplodeBullets();
+            }
         };
 
         blockAction.started += ctx => {
@@ -128,6 +149,8 @@ public class PlayerController : MonoBehaviour
         if (_invincibleTest) _invincible = true;
 
         _nextShieldCooldown = _blockCooldown;
+
+        ChangeOrientation(shipOrientation);
     }
 
     private void Update()
@@ -359,6 +382,50 @@ public class PlayerController : MonoBehaviour
                 _base2ndOptionsLocation[2].position,
                 (Mathf.Sin((_gunRotTime + 1f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
         }
+    }
+
+    /*
+    TODO
+    Player explosion
+        enemyKill = 0
+        accumulated shots = 0
+        accumulated drills = 0
+
+        look in area for enemies
+            if shot count != 0 || drill count != 0
+                check if kill
+                    enemyKill++
+                    accumulated shots += enemy shots
+                    accumulated drills += enemy drills
+                enemy Take Damage By explosion
+        add score * drill * shots * kill    
+     */
+
+    private void ExplodeBullets()
+    {
+        int enemiesKilled = 0;
+
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+
+        foreach (Enemy enemy in enemies)
+        {
+            if(enemy.GetNails() != 0 || enemy.GetDrills() != 0)
+            {
+                if (enemy.GetIfDiesFromExplo())
+                {
+                    enemiesKilled++;
+                }
+            }
+        }
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.GetNails() != 0 || enemy.GetDrills() != 0)
+            {
+                enemy.TakeDamageByExplosion(enemiesKilled);
+            }
+        }
+
     }
 
     private void EnableBlock()

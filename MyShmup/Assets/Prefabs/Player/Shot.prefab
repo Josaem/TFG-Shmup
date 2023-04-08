@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 25
   _damage: 1
+  _isPrimary: 1
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0
