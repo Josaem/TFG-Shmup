@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Enemy[] _enemiesToKillOnDeath;
     [SerializeField]
+    private bool _clearBulletsOnDeath;
+    [SerializeField]
     private GameObject _collisionsWithPlayer;
 
     [Header("Movement")]
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour
     protected EnemyMovementState _movementState = EnemyMovementState.Unspawned;
     [SerializeField]
     protected bool _invincible = false;
+    protected bool _shielded = false;
     private StuckBulletVisual _stuckBulletVisual;
     private PlayerController _player;
 
@@ -222,7 +225,7 @@ public class Enemy : MonoBehaviour
             _stuckBulletVisual.EnemyWillDieByExplosion();
         }
 
-        if (!_invincible)
+        if (!_invincible && !_shielded)
         {
             _currentHealth -= damage;
 
@@ -350,6 +353,11 @@ public class Enemy : MonoBehaviour
                 //Animate death
             }
 
+            if(_clearBulletsOnDeath)
+            {
+                _myWave._bulletPool.ClearBullets();
+            }
+
             GetComponent<BoxCollider2D>().enabled = false;
             Destroy(gameObject);
         }
@@ -435,11 +443,11 @@ public class Enemy : MonoBehaviour
 
     public void IsShielded()
     {
-        _invincible = true;
+        _shielded = true;
     }
 
     public void IsNotShielded()
     {
-        _invincible = false;
+        _shielded = false;
     }
 }

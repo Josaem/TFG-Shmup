@@ -12,8 +12,7 @@ public class LaserGun : Gun
     {
         if (_gunBehavior[_gunBehaviorIndex]._fireRate != 0 && _currentLaser != null)
         {
-            _currentLaser.transform.position = transform.position;
-            _currentLaser.transform.rotation = transform.rotation;
+            _currentLaser.transform.SetPositionAndRotation(transform.position, transform.rotation);
         }
     }
 
@@ -28,6 +27,7 @@ public class LaserGun : Gun
             if (_currentLaser.GetComponentInChildren<EnemyLaserBehavior>() != null)
             {
                 _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
             }
         }
     }

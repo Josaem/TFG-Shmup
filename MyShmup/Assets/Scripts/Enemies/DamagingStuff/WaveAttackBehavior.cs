@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class WaveAttackBehavior : MonoBehaviour
 {
-    [HideInInspector]
-    public float _maxSize;
-    [HideInInspector]
+    public float _maxSize = 30;
     public float _speed = 20;
+    public float _cooldownDivider = 3;
     [HideInInspector]
     public Transform _followTarget;
 
@@ -20,7 +19,7 @@ public class WaveAttackBehavior : MonoBehaviour
 
         if (Mathf.Abs(transform.localScale.x) > _maxSize || Mathf.Abs(transform.localScale.y) > _maxSize)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
@@ -29,7 +28,12 @@ public class WaveAttackBehavior : MonoBehaviour
         if(collision.gameObject.GetComponent<PlayerController>() != null && Vector2.Distance(collision.transform.position, transform.position) > transform.localScale.x / 2 - 0.5)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
-            collision.gameObject.GetComponent<PlayerController>().ResetShield(3);
+            collision.gameObject.GetComponent<PlayerController>().ResetShield(_cooldownDivider);
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }

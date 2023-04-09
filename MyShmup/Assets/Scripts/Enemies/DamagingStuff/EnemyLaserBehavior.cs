@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyLaserBehavior : MonoBehaviour
 {
     public float _shootSpeed;
+    public float _maxDistance = 20;
     [SerializeField]
     private LayerMask _layerMask;
     [SerializeField]
@@ -17,20 +18,20 @@ public class EnemyLaserBehavior : MonoBehaviour
     }
     private void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 20, _layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, _maxDistance, _layerMask);
 
         if(hit.collider == null)
         {
-            hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.right * transform.localScale.x/2), transform.up, 20, _layerMask);
+            hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.right * transform.localScale.x/2), transform.up, _maxDistance, _layerMask);
 
             if(hit.collider == null)
             {
-                hit = Physics2D.Raycast(transform.TransformPoint(Vector3.right * transform.localScale.x / 2), transform.up, 20, _layerMask);
+                hit = Physics2D.Raycast(transform.TransformPoint(Vector3.right * transform.localScale.x / 2), transform.up, _maxDistance, _layerMask);
 
                 if(hit.collider == null)
                 {
                     transform.localScale = new Vector2(1, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _shootSpeed));
-                    _currentLaserDistance = 20;
+                    _currentLaserDistance = _maxDistance;
                     _laserEnd.SetActive(false);
                 }
             }

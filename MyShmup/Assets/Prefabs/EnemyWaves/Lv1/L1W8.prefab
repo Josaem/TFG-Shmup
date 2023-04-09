@@ -564,8 +564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 1
   _dieOnWave:
     _section: 0
@@ -1317,10 +1315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0060e0c497e64dba7658c585f954d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 300
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 0
   _dieOnWave:
     _section: 0
@@ -2069,8 +2065,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 1
   _dieOnWave:
     _section: 0
@@ -3324,10 +3318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0060e0c497e64dba7658c585f954d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 400
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 0
   _dieOnWave:
     _section: 0

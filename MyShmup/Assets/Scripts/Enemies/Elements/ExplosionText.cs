@@ -12,9 +12,16 @@ public class ExplosionText : MonoBehaviour
     [HideInInspector]
     public int _enemiesKilled;
 
-    public void Spawn()
+    public void Spawn(bool outOfBounds)
     {
-        GetComponent<TMP_Text>().text = _score + " x " + _enemiesKilled;
+        TMP_Text myText = GetComponent<TMP_Text>();
+
+        if (outOfBounds)
+        {
+            myText.fontSize = myText.fontSize / 2;
+        }
+        
+        myText.text = _enemiesKilled + " x\n" + _score;
         Invoke(nameof(Die), _timeToDie);
     }
 

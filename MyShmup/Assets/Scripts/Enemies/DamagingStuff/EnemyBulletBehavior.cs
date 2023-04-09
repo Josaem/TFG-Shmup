@@ -5,12 +5,16 @@ using UnityEngine;
 public class EnemyBulletBehavior : MonoBehaviour
 {
     private Rigidbody2D rb;
+    public float _maxDistance = 20;
     [HideInInspector]
     public float _speed = 20;
+
+    private Vector2 _originalPos;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        _originalPos = transform.position;
     }
 
     private void Start()
@@ -20,9 +24,9 @@ public class EnemyBulletBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (Mathf.Abs(transform.position.x) > 15 || Mathf.Abs(transform.position.y) > 10)
+        if (Vector2.Distance(_originalPos, transform.position) > _maxDistance)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
@@ -32,6 +36,11 @@ public class EnemyBulletBehavior : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
         }
+        Destroy(gameObject);
+    }
+
+    public void Die()
+    {
         Destroy(gameObject);
     }
 }

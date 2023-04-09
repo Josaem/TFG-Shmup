@@ -477,6 +477,7 @@ public class PlayerController : MonoBehaviour
 
             _invincible = true;
             StartCoroutine(StopInvincibility(_deathTime+2f));
+            GetComponent<Collider2D>().enabled = false;
 
             //TODOANIM Animate ship death
             HideShip();
@@ -493,6 +494,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         _dead = false;
+        GetComponent<Collider2D>().enabled = true;
         ShowShip();
     }
 

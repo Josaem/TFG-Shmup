@@ -13,6 +13,6 @@ public class ScoreUI : MonoBehaviour
     }
     public void SetUpScore()
     {
-        _scoreText.text = GameProperties._score.ToString("00000000000000000");
+        _scoreText.text = GameProperties._score.ToString("0000000000000000");
     }
 }

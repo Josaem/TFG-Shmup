@@ -49,6 +49,7 @@ MonoBehaviour:
   - _duration: 0
     _fireRate: 3
     _bulletSpeed: 0.1
+    _maxDistance: 20
     _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
@@ -148,42 +149,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 540391431183462496}
-  - {fileID: 540391430527823092}
+  m_Children: []
   m_Father: {fileID: 540391430770500320}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &540391430527823091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 540391430527823092}
-  m_Layer: 8
-  m_Name: Waypoint (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &540391430527823092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540391430527823091}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 540391430500249135}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540391430765533243
 GameObject:
@@ -302,37 +270,6 @@ Transform:
   - {fileID: 540391430500249135}
   m_Father: {fileID: 540391432064194965}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &540391431183462559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 540391431183462496}
-  m_Layer: 8
-  m_Name: Waypoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &540391431183462496
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540391431183462559}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.91, y: 3.98, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 540391430500249135}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540391431781973743
 GameObject:
@@ -496,7 +433,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayUntilShooting: 0
-  _weaponBehavior: []
+  _weaponBehavior:
+  - _duration: 0
+    _delayUntilNextAttack: 0
+    _pointAtPlayer: 0
+    _rotativeBehavior:
+      _rotateStart: 0
+      _dontCenterAngleRotation: 0
+      _resetRotTimer: 0
+      _rotType: 0
+      _rotationAngle: 0
+      _rotationSpeed: 0
 --- !u!1 &540391431903970393
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +456,7 @@ GameObject:
   - component: {fileID: 540391431903970397}
   - component: {fileID: 540391431903970396}
   - component: {fileID: 540391431903970395}
+  - component: {fileID: 5995827032768193031}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -627,8 +575,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 300
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 1
   _dieOnWave:
     _section: 0
@@ -643,6 +589,7 @@ MonoBehaviour:
     _entryPosDifferent: 0
   _stuffToSpawnOnDeath: []
   _enemiesToKillOnDeath: []
+  _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
@@ -661,10 +608,31 @@ MonoBehaviour:
   _changeAttackOnEntry: 0
   _waypoints:
   - _speed: 3
-    _waypoint: {fileID: 540391431183462496}
+    _waypoint: {fileID: 0}
   - _speed: 3
-    _waypoint: {fileID: 540391430527823092}
+    _waypoint: {fileID: 0}
   _dieOnLastWaypoint: 0
+--- !u!50 &5995827032768193031
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540391431903970393}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &540391432064194964
 GameObject:
   m_ObjectHideFlags: 0

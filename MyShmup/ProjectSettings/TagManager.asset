@@ -43,8 +43,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackgroundVisuals
+    uniqueID: 3728708771
+    locked: 0
+  - name: BackgroundAttacks
+    uniqueID: 2991179707
+    locked: 0
   - name: Player
     uniqueID: 2173008767
+    locked: 0
+  - name: Bullets
+    uniqueID: 3865224321
     locked: 0
   - name: UI
     uniqueID: 111909017

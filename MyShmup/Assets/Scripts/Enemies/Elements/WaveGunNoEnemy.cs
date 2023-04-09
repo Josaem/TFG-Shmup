@@ -10,6 +10,10 @@ public class WaveGunNoEnemy : MonoBehaviour
     [SerializeField]
     private float _waveSpeed;
     [SerializeField]
+    private float _maxSize = 30;
+    [SerializeField]
+    private bool _waveFollow;
+    [SerializeField]
     private WaveSelector _waveToDie;
     [SerializeField]
     private GameObject _waveObject;
@@ -28,7 +32,7 @@ public class WaveGunNoEnemy : MonoBehaviour
     private void Start()
     {
         _myGM = FindObjectOfType<GameManager>();
-        _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
+        _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
     }
 
     private void Update()
@@ -39,9 +43,14 @@ public class WaveGunNoEnemy : MonoBehaviour
             _waveTime = Time.time + _timeBetweenWaves;
 
             //Shoot a shot
-            GameObject wave = Instantiate(_waveObject,
-                transform.position, Quaternion.identity, _bulletPool);
-            wave.GetComponent<WaveAttackBehavior>()._speed = _waveSpeed;
+            WaveAttackBehavior wave = Instantiate(_waveObject,
+                transform.position, Quaternion.identity, _bulletPool).GetComponent<WaveAttackBehavior>();
+            wave._speed = _waveSpeed;
+            wave._maxSize = _maxSize;
+            if (_waveFollow)
+            {
+                wave._followTarget = transform;
+            }
         }
 
         if (_myGM != null && (_myGM._sectionIndex == _waveToDie._section && _myGM._waveIndex == _waveToDie._wave))

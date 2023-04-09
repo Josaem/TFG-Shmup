@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4267941391677886817}
   - component: {fileID: 1916102041201825081}
-  - component: {fileID: 7087294333846817558}
+  - component: {fileID: 3317477062623356421}
   m_Layer: 5
   m_Name: Life1
   m_TagString: Untagged
@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 3327941611095717112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,7 +46,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3327941611095717112}
   m_CullTransparentMesh: 1
---- !u!114 &7087294333846817558
+--- !u!114 &3317477062623356421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

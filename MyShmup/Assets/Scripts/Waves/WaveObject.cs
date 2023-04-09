@@ -6,13 +6,21 @@ public class WaveObject : MonoBehaviour
 {
     private Enemy[] _enemies;
     public float _duration;
+    [HideInInspector]
+    public BulletPool _bulletPool;
     private float _timer = 0;
+
+    private void Awake()
+    {
+        _bulletPool = GetComponentInChildren<BulletPool>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         _timer += Time.deltaTime;
-        if(GetComponentsInChildren<Enemy>().Length == 0 && GetComponentsInChildren<Generator>().Length == 0)
+        if(GetComponentsInChildren<Enemy>().Length == 0 && GetComponentsInChildren<Generator>().Length == 0 &&
+            _bulletPool.transform.childCount == 0)
         {
             Destroy(gameObject);
         }

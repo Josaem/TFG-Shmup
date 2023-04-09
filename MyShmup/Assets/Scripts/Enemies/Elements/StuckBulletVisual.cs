@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class StuckBulletVisual : MonoBehaviour
 {
@@ -23,12 +24,14 @@ public class StuckBulletVisual : MonoBehaviour
     private float _timeWhereTextActive = 0;
     private bool _textActive;
     private int _accumulatedScore = 0;
+    private Transform _player;
 
     private void Start()
     {
         _floatingText = GetComponentInChildren<TMP_Text>();
         HideText();
         _willDieFromExploVisual.enabled = false;
+        _player = FindObjectOfType<PlayerController>().transform;
     }
 
     private void Update()
@@ -53,13 +56,26 @@ public class StuckBulletVisual : MonoBehaviour
 
         _accumulatedScore = accumulatedScore;
 
-        if(isPrimary)
+        //this one uses the rotation of the bullet itself
+        /*if (isPrimary)
         {
-            Instantiate(_primaryBulletVisual, bulletPos, bulletRot, transform.GetChild(0));
+            Instantiate(_primaryBulletVisual, bulletPos, bulletRot * Quaternion.Euler(0, 0, Random.Range(-10, 11)), transform.GetChild(0));
         }
         else
         {
-            Instantiate(_secondaryBulletVisual, bulletPos, bulletRot, transform.GetChild(0));
+            Instantiate(_secondaryBulletVisual, bulletPos, bulletRot * Quaternion.Euler(0, 0, Random.Range(-10, 11)), transform.GetChild(0));
+        }*/
+
+        Vector3 relativePos = transform.position - _player.transform.position;
+        float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
+
+        if (isPrimary)
+        {
+            Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), transform.GetChild(0));
+        }
+        else
+        {
+            Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), transform.GetChild(0));
         }
 
         ShowText();
@@ -94,7 +110,37 @@ public class StuckBulletVisual : MonoBehaviour
             ExplosionText visual = Instantiate(_exploTextVisual, transform.position, Quaternion.identity).GetComponent<ExplosionText>();
             visual._enemiesKilled = enemiesDead;
             visual._score = accumulatedScore;
-            visual.Spawn();
+
+            Vector2 explosionPos = transform.position;
+            bool outOfBounds = false;
+
+            if(transform.position.x < - 7)
+            {
+                explosionPos.x = - 5;
+                outOfBounds = true;
+            }
+
+            if (transform.position.x > 7)
+            {
+                explosionPos.x = 5;
+                outOfBounds = true;
+            }
+
+            if (transform.position.y > 4)
+            {
+                explosionPos.y = 4;
+                outOfBounds = true;
+            }
+
+            if (transform.position.y < -4)
+            {
+                explosionPos.y = -4;
+                outOfBounds = true;
+            }
+
+            visual.transform.position = explosionPos;
+
+            visual.Spawn(outOfBounds);
         }
     }
 

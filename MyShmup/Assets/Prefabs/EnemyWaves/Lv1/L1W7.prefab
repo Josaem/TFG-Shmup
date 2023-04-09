@@ -161,8 +161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 0
   _dieOnWave:
     _section: 0
@@ -194,7 +192,7 @@ MonoBehaviour:
   _stopShootOnDead: 0
   _changeAttackOnEntry: 0
   _waypoints:
-  - _speed: 4
+  - _speed: 2
     _waypoint: {fileID: 1048000466}
   _dieOnLastWaypoint: 1
 --- !u!1 &415286206
@@ -540,7 +538,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909695497}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 4, z: 0}
+  m_LocalPosition: {x: 2, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -661,7 +659,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048000465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 2, z: 0}
+  m_LocalPosition: {x: 2.5, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1240,7 +1238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476615810592320429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: -4, z: 0}
+  m_LocalPosition: {x: 2, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1410,8 +1408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 0
   _dieOnWave:
     _section: 0
@@ -1443,7 +1439,7 @@ MonoBehaviour:
   _stopShootOnDead: 0
   _changeAttackOnEntry: 0
   _waypoints:
-  - _speed: 4
+  - _speed: 2
     _waypoint: {fileID: 8944302190841942346}
   _dieOnLastWaypoint: 1
 --- !u!1 &2316696890609370136
@@ -2127,7 +2123,6 @@ GameObject:
   - component: {fileID: 5611844587030930503}
   - component: {fileID: 7863187815077467992}
   - component: {fileID: 1064310218528686386}
-  - component: {fileID: 2084563336}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -2246,8 +2241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _baseScore: 100
-  _stuckNails: 0
-  _stuckDrills: 0
   _prioritary: 1
   _dieOnWave:
     _section: 0
@@ -2283,19 +2276,6 @@ MonoBehaviour:
   - _speed: 6
     _waypoint: {fileID: 4025931029889202249}
   _dieOnLastWaypoint: 0
---- !u!114 &2084563336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4655056632145257835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deathDelay: 15
 --- !u!1 &5022600056599979483
 GameObject:
   m_ObjectHideFlags: 0
@@ -2343,7 +2323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b662af960e349d74abb7e61b96eca0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 0
+  _duration: 18
 --- !u!1 &6051368842252706424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,7 +2678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8944302190841942347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -2, z: 0}
+  m_LocalPosition: {x: 2.5, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

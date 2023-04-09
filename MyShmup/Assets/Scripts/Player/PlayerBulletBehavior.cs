@@ -6,22 +6,25 @@ public class PlayerBulletBehavior : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float _speed;
+    [SerializeField] private float _maxDistance = 20;
     public int _damage = 1;
     [SerializeField] private bool _isPrimary;
 
     private bool _isDead = false;
+    private Vector2 _originalPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _originalPos = transform.position;
         rb.velocity = transform.right * _speed;
     }
 
     private void Update()
     {
-        if (Mathf.Abs(transform.position.x) > 15 || Mathf.Abs(transform.position.y) > 10)
+        if (Vector2.Distance(_originalPos, transform.position) > _maxDistance)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
@@ -37,5 +40,10 @@ public class PlayerBulletBehavior : MonoBehaviour
             _isDead = true;
             Destroy(gameObject);
         } 
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }

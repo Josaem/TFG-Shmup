@@ -27,6 +27,7 @@ public class Gun : MonoBehaviour
         public float _duration;
         public float _fireRate;
         public float _bulletSpeed;
+        public float _maxDistance = 20;
         public bool _pointAtPlayer = false;
         public RotativeBehavior _rotativeBehavior;
         public GameObject _bulletObject;
@@ -61,7 +62,7 @@ public class Gun : MonoBehaviour
     {
         _originalRot = transform.localEulerAngles;
         _player = FindObjectOfType<PlayerController>().transform;
-        _bulletPool = GameObject.FindWithTag("BulletPool").transform;
+        _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
         _playerController = _player.GetComponent<PlayerController>();
     }
 
@@ -124,10 +125,11 @@ public class Gun : MonoBehaviour
                 _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
 
                 //Shoot a shot
-                GameObject bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
+                EnemyBulletBehavior bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                     transform.position, transform.rotation,
-                    _bulletPool);
-                bullet.GetComponent<EnemyBulletBehavior>()._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                    _bulletPool).GetComponent<EnemyBulletBehavior>();
+                bullet._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                bullet._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
             }
         }
     }
