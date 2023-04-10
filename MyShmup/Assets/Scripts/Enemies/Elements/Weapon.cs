@@ -84,6 +84,7 @@ public class Weapon : MonoBehaviour
     {
         _weaponBehaviorIndex = 0;
         _rotTime = 0;
+        ManageTargetting();
 
         StartWeaponBehavior();
     }

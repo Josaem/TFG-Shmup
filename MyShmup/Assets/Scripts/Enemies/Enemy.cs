@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
     protected void Start()
     {
         Invoke(nameof(Spawn), _delayUntilActive);
-        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealthVisuals();
@@ -109,13 +109,13 @@ public class Enemy : MonoBehaviour
         if (_spawnInBackground)
         {
             _invincible = true;
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
             if (_collisionsWithPlayer != null)
                 _collisionsWithPlayer.SetActive(false);
         }
         else
         {
-            GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
             if (_spawnInBackground)
             {
                 _invincible = false;
-                GetComponent<BoxCollider2D>().enabled = true;
+                GetComponent<Collider2D>().enabled = true;
                 if(_collisionsWithPlayer != null)
                     _collisionsWithPlayer.SetActive(true);
             }
@@ -180,7 +180,7 @@ public class Enemy : MonoBehaviour
             if(_dieInBackground)
             {
                 _invincible = true;
-                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<Collider2D>().enabled = false;
                 if (_collisionsWithPlayer != null)
                     _collisionsWithPlayer.SetActive(false);
             }
@@ -358,7 +358,7 @@ public class Enemy : MonoBehaviour
                 _myWave._bulletPool.ClearBullets();
             }
 
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
             Destroy(gameObject);
         }
     }

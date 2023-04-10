@@ -278,7 +278,8 @@ public class PlayerController : MonoBehaviour
 
                 //Check front middle
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15, _enemyLayerMask);
-                                
+                RaycastHit2D hitBehind = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
+
                 //for each option
                 for (int i = 0; i < _optionsGameObject.Length; i++)
                 {
@@ -293,37 +294,55 @@ public class PlayerController : MonoBehaviour
                             {
                                 //Check front down
                                 hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), transform.right, 15, _enemyLayerMask);
+                            }
+                        }
 
-                                if (hit.collider == null)
-                                {
-                                    //Check behind middle
-                                    hit = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
-                                    if (hit.collider == null)
-                                    {
-                                        //Check behind up
-                                        hit = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
+                        if (hitBehind.collider == null)
+                        {
+                            //Check behind up
+                            hitBehind = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
 
-                                        if (hit.collider == null)
-                                        {
-                                            //Check behind down
-                                            hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
-
-                                            if (hit.collider == null)
-                                            {
-                                                //hasn't hit anything both in front or behind, shoot ahead
-                                                _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
-                                            }
-                                        }
-                                    }
-                                }
+                            if (hitBehind.collider == null)
+                            {
+                                //Check behind down
+                                hitBehind = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
                             }
                         }
 
                         if (hit.collider != null)
                         {
-                            //Has hit, lock to enemy
-                            _currentlyLockedEnemy = hit.transform.gameObject;
+                            if (hitBehind.collider != null)
+                            {
+                                if (hit.distance <= hitBehind.distance)
+                                {
+                                    //Locked front only
+                                    _currentlyLockedEnemy = hit.transform.gameObject;
+                                    _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
+                                }
+                                else
+                                {
+                                    //Locked behind only
+                                    _currentlyLockedEnemy = hitBehind.transform.gameObject;
+                                    _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
+                                }
+                            }
+                            else
+                            {
+                                //Locked front only
+                                _currentlyLockedEnemy = hit.transform.gameObject;
+                                _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
+                            }
+                        }
+                        else if (hitBehind.collider != null)
+                        {
+                            //Locked behind only
+                            _currentlyLockedEnemy = hitBehind.transform.gameObject;
                             _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
+                        }
+                        else
+                        {
+                            //hasn't hit anything both in front or behind, shoot ahead
+                            _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
                         }
                     }
                     else
