@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8611242605688926261}
   - component: {fileID: -5012560126495252067}
   - component: {fileID: 2956890066147903651}
+  - component: {fileID: 670026588578149590}
   m_Layer: 11
   m_Name: EnemyShot
   m_TagString: Damage
@@ -97,7 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 20
   _speed: 0
+--- !u!114 &670026588578149590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409051570943762180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e38e8144e3bb749be88f17596f9d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +183,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -429742975
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 0, b: 0.7337055, a: 1}

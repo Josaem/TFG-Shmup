@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldingDetection : MonoBehaviour
+public class ShieldEnemy : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {

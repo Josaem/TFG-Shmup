@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLaserBehavior : MonoBehaviour
+public class LaserBehavior : MonoBehaviour
 {
     public float _shootSpeed;
     public float _maxDistance = 20;
@@ -39,7 +39,7 @@ public class EnemyLaserBehavior : MonoBehaviour
         
         if(hit.collider != null)
         {
-            float hitDistance = Vector2.Distance(transform.position, hit.collider.transform.position) - 0.5f;
+            float hitDistance = hit.distance;
             if (_currentLaserDistance > hitDistance)
             {
                 _currentLaserDistance = hitDistance;
@@ -51,16 +51,15 @@ public class EnemyLaserBehavior : MonoBehaviour
                 transform.localScale = new Vector2(1, _currentLaserDistance);
             }
             
-            _laserEnd.SetActive(true);
-            _laserEnd.transform.localPosition = new Vector2(0, hitDistance);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.GetComponent<PlayerController>() != null)
-        {
-            collision.gameObject.GetComponent<PlayerController>().GetHurt();
+            if(_currentLaserDistance >= hitDistance -0.1)
+            {
+                _laserEnd.SetActive(true);
+                _laserEnd.transform.localPosition = new Vector2(0, hitDistance);
+            }
+            else
+            {
+                _laserEnd.SetActive(false);
+            }
         }
     }
 }

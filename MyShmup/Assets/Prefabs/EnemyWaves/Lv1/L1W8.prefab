@@ -1169,11 +1169,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540391431781973744, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 540391431781973744, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970394, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1188,12 +1188,24 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
+      propertyPath: _prioritary
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _dieInBackground
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
+      propertyPath: _dieOnWave._wave
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _delayUntilActive
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
+      propertyPath: _dieOnWave._section
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _waypoints.Array.size
@@ -1201,7 +1213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _exitDestination._speed
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _entryDestination._speed
@@ -1314,6 +1326,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 540391431903970394, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
   m_PrefabInstance: {fileID: 3931690342145800303}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3598359257006881846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 540391431903970393, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
+  m_PrefabInstance: {fileID: 3931690342145800303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2834985786771122076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3598359257006881846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathDelay: 10
 --- !u!114 &3598359257060226820 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 540391431886278507, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
@@ -1426,6 +1456,10 @@ PrefabInstance:
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _maxHealth
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
+      propertyPath: _prioritary
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _dieInBackground

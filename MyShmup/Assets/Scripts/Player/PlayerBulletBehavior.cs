@@ -28,13 +28,13 @@ public class PlayerBulletBehavior : MonoBehaviour
         }
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(!_isDead)
         {
             if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.TakeDamage(_damage, _isPrimary, collision.contacts[0].point, transform.rotation);
+                enemy.TakeDamage(_damage, _isPrimary, collision.transform.position);
             }
             rb.angularVelocity = 0;
             _isDead = true;

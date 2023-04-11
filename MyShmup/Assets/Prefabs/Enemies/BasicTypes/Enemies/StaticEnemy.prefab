@@ -412,7 +412,7 @@ MonoBehaviour:
   _baseScore: 100
   _prioritary: 0
   _dieOnWave:
-    _section: 0
+    _section: 99
     _wave: 0
   _specialRequirementsIndex: 0
   _delayUntilActive: 0
@@ -428,10 +428,10 @@ MonoBehaviour:
   _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
     _speed: 10
-    _waypoint: {fileID: 1830600190948193063}
+    _waypoint: {fileID: 0}
   _exitDestination:
     _speed: 10
-    _waypoint: {fileID: 1830600190948193063}
+    _waypoint: {fileID: 0}
   _invincible: 0
   _attackPattern:
   - _weapons:

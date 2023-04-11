@@ -59,7 +59,7 @@ public class StuckBulletVisual : MonoBehaviour
         }
     }
 
-    public void GotHit(bool isPrimary, Vector3 bulletPos, Quaternion bulletRot, int accumulatedScore)
+    public void GotHit(bool isPrimary, Vector3 bulletPos, int accumulatedScore)
     {
         _accumulatedScore = accumulatedScore;
 

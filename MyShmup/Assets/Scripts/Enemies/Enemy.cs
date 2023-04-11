@@ -93,30 +93,24 @@ public class Enemy : MonoBehaviour
     protected void Start()
     {
         Invoke(nameof(Spawn), _delayUntilActive);
-        GetComponent<Collider2D>().enabled = false;
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealthVisuals();
         _myGM = FindObjectOfType<GameManager>();
         _stuckBulletVisual = GetComponentInChildren<StuckBulletVisual>();
         _player = FindObjectOfType<PlayerController>();
+
+        if (_spawnInBackground)
+        {
+            GetComponent<Collider2D>().enabled = false;
+            if (_collisionsWithPlayer != null)
+                _collisionsWithPlayer.SetActive(false);
+        }
     }
 
     protected virtual void Spawn()
     {
         _movementState = EnemyMovementState.Entering;
-
-        if (_spawnInBackground)
-        {
-            _invincible = true;
-            GetComponent<Collider2D>().enabled = false;
-            if (_collisionsWithPlayer != null)
-                _collisionsWithPlayer.SetActive(false);
-        }
-        else
-        {
-            GetComponent<Collider2D>().enabled = true;
-        }
     }
 
     // Update is called once per frame
@@ -125,13 +119,27 @@ public class Enemy : MonoBehaviour
         switch(_movementState)
         {
             case EnemyMovementState.Entering:
-                MoveToInitialPosition();
+                if(_entryDestination._waypoint != null)
+                {
+                    MoveToInitialPosition();
+                }
+                else
+                {
+                    MovedToInitialPosition();
+                }
                 break;
             case EnemyMovementState.Moving:
                 Move();
                 break;
             case EnemyMovementState.Dying:
-                MoveToDeath();
+                if (_exitDestination._waypoint != null)
+                {
+                    MoveToDeath();
+                }
+                else
+                {
+                    DieByWaypoint();
+                }
                 break;
         }
 
@@ -150,7 +158,6 @@ public class Enemy : MonoBehaviour
         {
             if (_spawnInBackground)
             {
-                _invincible = false;
                 GetComponent<Collider2D>().enabled = true;
                 if(_collisionsWithPlayer != null)
                     _collisionsWithPlayer.SetActive(true);
@@ -159,6 +166,19 @@ public class Enemy : MonoBehaviour
             _movementState = EnemyMovementState.Moving;
             Invoke(nameof(StartAction), _delayUntilFirstAction);
         }
+    }
+
+    public void MovedToInitialPosition()
+    {
+        if (_spawnInBackground)
+        {
+            GetComponent<Collider2D>().enabled = true;
+            if (_collisionsWithPlayer != null)
+                _collisionsWithPlayer.SetActive(true);
+        }
+
+        _movementState = EnemyMovementState.Moving;
+        Invoke(nameof(StartAction), _delayUntilFirstAction);
     }
 
     public virtual void StartAction()
@@ -202,7 +222,7 @@ public class Enemy : MonoBehaviour
         return _willDieByExplosion;
     }
 
-    public void TakeDamage(int damage, bool shotIsPrimary, Vector3 bulletPos, Quaternion bulletRot)
+    public void TakeDamage(int damage, bool shotIsPrimary, Vector3 bulletPos)
     {
         if (shotIsPrimary)
         {
@@ -215,7 +235,7 @@ public class Enemy : MonoBehaviour
 
         UpdateScore(0);
 
-        _stuckBulletVisual.GotHit(shotIsPrimary, bulletPos, bulletRot, _accumulatedScore);
+        _stuckBulletVisual.GotHit(shotIsPrimary, bulletPos, _accumulatedScore);
 
         bool currentExploDeadStatus = _willDieByExplosion;
         WillEnemyDieByExplosion();

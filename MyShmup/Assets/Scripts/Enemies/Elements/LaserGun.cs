@@ -24,10 +24,10 @@ public class LaserGun : Gun
             _currentLaser = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                 transform.position, transform.rotation,
                 _bulletPool);
-            if (_currentLaser.GetComponentInChildren<EnemyLaserBehavior>() != null)
+            if (_currentLaser.GetComponentInChildren<LaserBehavior>() != null)
             {
-                _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
-                _currentLaser.GetComponentInChildren<EnemyLaserBehavior>()._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
+                _currentLaser.GetComponentInChildren<LaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                _currentLaser.GetComponentInChildren<LaserBehavior>()._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
             }
         }
     }
