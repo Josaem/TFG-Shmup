@@ -455,10 +455,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void DieByWaypoint()
+    public void DieByWaypoint()
     {
         _deadByWaypoint = true;
         Die();
+    }
+
+    public bool HasDeathWaypoint()
+    {
+        if(_exitDestination._waypoint != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void IsShielded()

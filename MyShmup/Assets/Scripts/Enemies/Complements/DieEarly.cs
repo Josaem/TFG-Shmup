@@ -15,6 +15,13 @@ public class DieEarly : MonoBehaviour
 
     private void Kill()
     {
-        GetComponent<Enemy>().Kill();
+        if(GetComponent<Enemy>().HasDeathWaypoint())
+        {
+            GetComponent<Enemy>().Kill();
+        }
+        else
+        {
+            GetComponent<Enemy>().DieByWaypoint();
+        }
     }
 }

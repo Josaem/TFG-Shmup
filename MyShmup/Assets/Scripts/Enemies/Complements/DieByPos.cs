@@ -61,6 +61,6 @@ public class DieByPos : MonoBehaviour
 
     private void Kill()
     {
-        GetComponent<Enemy>().Kill();
+        GetComponent<Enemy>().DieByWaypoint();
     }
 }
