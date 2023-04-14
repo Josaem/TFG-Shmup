@@ -7,8 +7,6 @@ public class WaveGun : Gun
 {
     [SerializeField]
     private bool _waveFollow;
-    [SerializeField]
-    private float _maxSize = 30;
 
     protected override void ManageShooting()
     {
@@ -24,7 +22,7 @@ public class WaveGun : Gun
                     transform.position, Quaternion.identity,
                     _bulletPool).GetComponent<WaveAttackBehavior>();
                 wave._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
-                wave._maxSize = _maxSize;
+                wave._maxSize = _gunBehavior[_gunBehaviorIndex]._maxDistance;
                 if(_waveFollow)
                 {
                     wave._followTarget = transform;
