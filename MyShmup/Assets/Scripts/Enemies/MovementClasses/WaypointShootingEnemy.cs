@@ -25,12 +25,13 @@ public class WaypointShootingEnemy : ShootingEnemy
         {
 
             //move to waypoint
-            transform.position = Vector2.MoveTowards(transform.position, _waypoints[_waypointToGo]._waypoint.position,
-                _waypoints[_waypointToGo]._speed * Time.deltaTime);
+            if(_waypoints[_waypointToGo]._waypoint != null)
+                transform.position = Vector2.MoveTowards(transform.position, _waypoints[_waypointToGo]._waypoint.position,
+                    _waypoints[_waypointToGo]._speed * Time.deltaTime);
 
 
             //If reached waypoint
-            if (transform.position == _waypoints[_waypointToGo]._waypoint.position)
+            if (_waypoints[_waypointToGo]._waypoint != null && transform.position == _waypoints[_waypointToGo]._waypoint.position)
             {
                 //and its the last one
                 if (_waypointToGo == _waypoints.Length - 1)

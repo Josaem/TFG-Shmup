@@ -19,7 +19,7 @@ public class EnemyBulletBehavior : MonoBehaviour
 
     private void Start()
     {
-        rb.velocity = transform.up * _speed;
+        rb.velocity = transform.up.normalized * _speed;
     }
 
     private void Update()

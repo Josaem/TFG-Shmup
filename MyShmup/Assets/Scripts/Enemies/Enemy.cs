@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour
     public virtual void Kill()
     {
         if ((_dieOnWave._section == 0 && _dieOnWave._wave == 0)
-            || (_myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
+            || (_myGM != null && _myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
         {
             _movementState = EnemyMovementState.Dying;
             if(_dieInBackground)

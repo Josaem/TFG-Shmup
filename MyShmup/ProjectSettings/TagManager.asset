@@ -49,6 +49,9 @@ TagManager:
   - name: BackgroundAttacks
     uniqueID: 2991179707
     locked: 0
+  - name: Enemies
+    uniqueID: 3726518829
+    locked: 0
   - name: Player
     uniqueID: 2173008767
     locked: 0

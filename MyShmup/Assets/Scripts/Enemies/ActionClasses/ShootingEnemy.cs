@@ -67,7 +67,7 @@ public class ShootingEnemy : Enemy
 
     public void StartAttacking()
     {
-        if(_attackPattern.Length != 0)
+        if(_attackPattern.Length != 0 && !(_movementState == EnemyMovementState.Dying && _stopShootOnDead))
         {
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
