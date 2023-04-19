@@ -7,7 +7,7 @@ public class GunContainer : MonoBehaviour
 {    
     public bool _startActive = false;
     public float _waitUntilShooting;
-    public float _attackSpeed = 3;
+    public float _speedOfAttack = 3;
     public float _maxDistance = 20;
 
     [SerializeField]

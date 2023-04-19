@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
         explodeAction.started += ctx =>
         {
-            if(Time.time > _timeUntilExploAgain)
+            if(Time.time > _timeUntilExploAgain && !_dead)
             {
                 _timeUntilExploAgain = Time.time + _exploCooldown;
                 ExplodeBullets();
@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>();
+    public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>().normalized;
 
     private void Move()
     {

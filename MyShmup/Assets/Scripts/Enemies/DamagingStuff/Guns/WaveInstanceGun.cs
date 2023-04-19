@@ -23,7 +23,7 @@ public class WaveInstanceGun : GunContainer
             //Shoot a shot
             WaveAttackBehavior wave = Instantiate(_waveObject,
                 transform.position, Quaternion.identity, _bulletPool).GetComponent<WaveAttackBehavior>();
-            wave._speed = _attackSpeed;
+            wave._speed = _speedOfAttack;
             wave._maxSize = _maxDistance*2;
         }
     }

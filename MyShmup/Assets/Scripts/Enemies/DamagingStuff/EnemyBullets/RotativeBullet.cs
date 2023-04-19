@@ -7,13 +7,9 @@ public class RotativeBullet : ProyectileBehavior
     [SerializeField]
     protected float _rot = 0;
 
-    protected override void Update()
+    private void FixedUpdate()
     {
-        RotateMov();
-    }
-
-    protected virtual void RotateMov()
-    {
-        transform.Rotate(0, 0, _rot);
+        transform.Rotate(0, 0, _rot * Time.deltaTime);
+        rb.velocity = transform.up.normalized * _speed;
     }
 }

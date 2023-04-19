@@ -21,7 +21,7 @@ public class LaserInstanceGun : RotativeGuns
 
         if(TryGetComponent<LaserBehavior>(out LaserBehavior laser))
         {
-            laser._laserSpeed = _attackSpeed;
+            laser._laserSpeed = _speedOfAttack;
             laser._maxDistance = _maxDistance;
             laser._timeToSpawn = _guideTime;
         }

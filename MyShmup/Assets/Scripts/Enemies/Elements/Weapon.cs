@@ -14,14 +14,16 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private WeaponBehavior[] _weaponBehavior;
 
-    private Vector3 _originalRot;
-    private Transform _weaponPivot;
-    private Vector3 _originalTransform;
     private bool _isEnabled = false;
     private Gun[] _guns;
     private GunContainer[] _gunsNew;
     private int _weaponBehaviorIndex = 0;
-    private Transform _player;
+
+    private PlayerController _playerController;
+
+    private Transform _weaponPivot;
+    private Vector3 _originalTransform;
+    private Vector3 _originalRot;
     private float _rotTime = 0;
 
     //Duration of gun activation, where the weapon shoots
@@ -30,7 +32,7 @@ public class Weapon : MonoBehaviour
     {
         public float _duration;
         public float _delayUntilNextAttack;
-        public bool _pointAtPlayer;
+        public PointTowardsPlayer _pointAtPlayer = PointTowardsPlayer.None;
         public RotativeBehavior _rotativeBehavior;
     }
 
@@ -38,8 +40,9 @@ public class Weapon : MonoBehaviour
     private class RotativeBehavior
     {
         public RotateStart _rotateStart = RotateStart.None;
-        public bool _dontCenterAngleRotation = false;
+        public bool _dontCenterAngleRotation;
         public bool _resetRotTimer;
+        public bool _resetRot;
         public RotType _rotType;
         public float _rotationAngle;
         public float _rotationSpeed;
@@ -57,14 +60,23 @@ public class Weapon : MonoBehaviour
         Repeat
     };
 
+    public enum PointTowardsPlayer
+    {
+        None,
+        Instant,
+        Slow
+    };
+
     // Start is called before the first frame update
     void Start()
     {
-        _originalTransform = transform.localEulerAngles;
-        _weaponPivot = transform.GetChild(0);
         _guns = GetComponentsInChildren<Gun>();
         _gunsNew = GetComponentsInChildren<GunContainer>();
-        _player = FindObjectOfType<PlayerController>().transform;
+
+        _playerController = FindObjectOfType<PlayerController>();
+
+        _originalTransform = transform.localEulerAngles;
+        _weaponPivot = transform.GetChild(0);
         _originalRot = _weaponPivot.transform.localEulerAngles;
 
         if(_startEnabled)
@@ -76,9 +88,8 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_isEnabled)
+        if(_isEnabled && _weaponBehaviorIndex < _weaponBehavior.Length)
         {
-            _rotTime += Time.deltaTime;
             ManageTargetting();
         }
     }
@@ -99,8 +110,13 @@ public class Weapon : MonoBehaviour
 
     private void InitializeWeapon()
     {
-        _weaponBehaviorIndex = 0;
-        _rotTime = 0;
+        if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._resetRotTimer)
+            _rotTime = 0;
+
+        if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._resetRot)
+            ResetPivotRotation();
+
+        ResetWeaponRotation();
         ManageTargetting();
 
         StartWeaponBehavior();
@@ -142,39 +158,39 @@ public class Weapon : MonoBehaviour
                 gun.DisableGun();
         }
 
-        _weaponBehaviorIndex++;
         if(_isEnabled)
         {
-            if (_weaponBehaviorIndex >= _weaponBehavior.Length)
+            if (_weaponBehaviorIndex + 1 >= _weaponBehavior.Length)
             {
                 _weaponBehaviorIndex = 0;
                 Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._delayUntilNextAttack);
             }
             else
             {
-                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex - 1]._delayUntilNextAttack);
+                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex++]._delayUntilNextAttack);
             }
         }
     }
 
     private void ManageTargetting()
     {
-        if (_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer)
+        _rotTime += Time.deltaTime;
+
+        if (_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer != PointTowardsPlayer.None)
         {
-            transform.up = _player.position - transform.position;
-        }
-        else
-        {
-            transform.localEulerAngles = _originalTransform;
+            if (!_playerController._dead)
+            {
+                PointAtPlayer();
+            }
+            else
+            {
+                ResetWeaponRotation();
+            }
         }
 
         if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotateStart != RotateStart.None)
         {
             RotateWeapon();
-        }
-        else
-        {
-            _weaponPivot.localEulerAngles = new Vector3(0,0,0);
         }
     }
 
@@ -257,5 +273,27 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
+    }
+
+    protected virtual void PointAtPlayer()
+    {
+        if (_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer == PointTowardsPlayer.Instant)
+        {
+            transform.up = _playerController.transform.position - transform.position;
+        }
+        else
+        {
+
+        }
+    }
+
+    private void ResetWeaponRotation()
+    {
+        transform.localEulerAngles = _originalTransform;
+    }
+
+    private void ResetPivotRotation()
+    {
+        _weaponPivot.localEulerAngles = _originalRot;
     }
 }

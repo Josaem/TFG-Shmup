@@ -21,9 +21,15 @@ public class ProyectileGun : RotativeGuns
                 ProyectileBehavior bullet = Instantiate(_attackObject,
                     transform.position, transform.rotation,
                     _bulletPool).GetComponent<ProyectileBehavior>();
-                bullet._speed = _attackSpeed;
+                bullet._speed = _speedOfAttack;
                 bullet._maxDistance = _maxDistance;
             }
         }
+    }
+
+    public override void DisableGun()
+    {
+        base.DisableGun();
+        _timeUntilShooting = 0;
     }
 }
