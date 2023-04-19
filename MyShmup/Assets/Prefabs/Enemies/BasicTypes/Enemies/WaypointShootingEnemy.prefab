@@ -216,7 +216,7 @@ GameObject:
   m_Layer: 8
   m_Name: ExitWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -566,10 +566,10 @@ MonoBehaviour:
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 0}
   _entryDestination:
-    _speed: 5
+    _speed: 2
     _waypoint: {fileID: 3655465155775999606}
   _exitDestination:
-    _speed: 5
+    _speed: 2
     _waypoint: {fileID: 598402479095371651}
   _invincible: 0
   _attackPattern:
@@ -581,9 +581,7 @@ MonoBehaviour:
   _stopShootOnDead: 1
   _changeAttackOnEntry: 0
   _waypoints:
-  - _speed: 4
-    _waypoint: {fileID: 0}
-  - _speed: 4
+  - _speed: 2
     _waypoint: {fileID: 0}
   _dieOnLastWaypoint: 0
 --- !u!50 &6591283782587755248
@@ -619,7 +617,7 @@ GameObject:
   m_Layer: 8
   m_Name: EntryWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

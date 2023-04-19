@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject[] _stuffToSpawnOnDeath;
     [SerializeField]
+    private GameObject[] _stuffToSpawnOnSceneOnDeath;
+    [SerializeField]
     private Enemy[] _enemiesToKillOnDeath;
     [SerializeField]
     private bool _clearBulletsOnDeath;
@@ -90,7 +92,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         Invoke(nameof(Spawn), _delayUntilActive);
         _myWave = GetComponentInParent<WaveObject>();
@@ -347,16 +349,16 @@ public class Enemy : MonoBehaviour
                 }
             }
 
+            
+
             foreach (GameObject spawn in _stuffToSpawnOnDeath)
             {
-                if (spawn.GetComponent<WaveGunNoEnemy>() != null)
-                {
-                    Instantiate(spawn, transform.position, Quaternion.identity);
-                }
-                else
-                {
-                    Instantiate(spawn);
-                }
+                Instantiate(spawn, transform.position, Quaternion.identity);               
+            }
+
+            foreach (GameObject spawn in _stuffToSpawnOnSceneOnDeath)
+            {
+                Instantiate(spawn);
             }
 
             foreach (Enemy enemy in _enemiesToKillOnDeath)

@@ -26,7 +26,7 @@ public class LaserGun : Gun
                 _bulletPool);
             if (_currentLaser.GetComponentInChildren<LaserBehavior>() != null)
             {
-                _currentLaser.GetComponentInChildren<LaserBehavior>()._shootSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
+                _currentLaser.GetComponentInChildren<LaserBehavior>()._laserSpeed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
                 _currentLaser.GetComponentInChildren<LaserBehavior>()._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
             }
         }

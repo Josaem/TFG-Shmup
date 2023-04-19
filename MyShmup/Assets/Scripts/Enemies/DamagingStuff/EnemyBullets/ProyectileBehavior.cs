@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class EnemyBulletBehavior : MonoBehaviour
+public class ProyectileBehavior : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     public float _maxDistance = 20;
-    [HideInInspector]
-    public float _speed = 20;
+    public float _speed = 5;
 
     private Vector2 _originalPos;
 
@@ -17,26 +17,32 @@ public class EnemyBulletBehavior : MonoBehaviour
         _originalPos = transform.position;
     }
 
-    private void Start()
+    protected virtual void Start()
+    {
+        SetDeath();
+        Move();        
+    }
+
+    protected virtual void Update(){ }
+
+    protected virtual void Move()
     {
         rb.velocity = transform.up.normalized * _speed;
     }
 
-    private void Update()
-    {
-        if (Vector2.Distance(_originalPos, transform.position) > _maxDistance)
-        {
-            Die();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.GetComponent<PlayerController>() != null)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
         }
         Destroy(gameObject);
+    }
+
+    protected virtual void SetDeath()
+    {
+        float timeToDie = _maxDistance / _speed;
+        Invoke(nameof(Die), timeToDie);
     }
 
     public void Die()

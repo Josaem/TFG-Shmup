@@ -19,7 +19,7 @@ public class BulletPool : MonoBehaviour
             wave.Die();
         }
 
-        foreach (EnemyBulletBehavior bullet in GetComponentsInChildren<EnemyBulletBehavior>())
+        foreach (ProyectileBehavior bullet in GetComponentsInChildren<ProyectileBehavior>())
         {
             bullet.Die();
         }

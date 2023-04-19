@@ -61,6 +61,13 @@ public class DieByPos : MonoBehaviour
 
     private void Kill()
     {
-        GetComponent<Enemy>().DieByWaypoint();
+        if(TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            enemy.DieByWaypoint();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

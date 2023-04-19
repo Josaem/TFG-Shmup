@@ -8,10 +8,15 @@ public class ShieldingEnemy : Enemy
     [SerializeField]
     private GameObject _shieldZone;
 
+    protected override void Start()
+    {
+        base.Start();
+        _shieldZone.SetActive(false);
+    }
+
     protected override void Spawn()
     {
         base.Spawn();
-        _shieldZone.SetActive(false);
     }
     public override void StartAction()
     {

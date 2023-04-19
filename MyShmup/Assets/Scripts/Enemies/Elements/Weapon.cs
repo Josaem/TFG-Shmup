@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
+    private bool _startEnabled;
+    [SerializeField]
     private float _delayUntilShooting = 0;
     [SerializeField]
     private WeaponBehavior[] _weaponBehavior;
@@ -17,6 +19,7 @@ public class Weapon : MonoBehaviour
     private Vector3 _originalTransform;
     private bool _isEnabled = false;
     private Gun[] _guns;
+    private GunContainer[] _gunsNew;
     private int _weaponBehaviorIndex = 0;
     private Transform _player;
     private float _rotTime = 0;
@@ -60,8 +63,14 @@ public class Weapon : MonoBehaviour
         _originalTransform = transform.localEulerAngles;
         _weaponPivot = transform.GetChild(0);
         _guns = GetComponentsInChildren<Gun>();
+        _gunsNew = GetComponentsInChildren<GunContainer>();
         _player = FindObjectOfType<PlayerController>().transform;
         _originalRot = _weaponPivot.transform.localEulerAngles;
+
+        if(_startEnabled)
+        {
+            EnableWeapon();
+        }
     }
 
     // Update is called once per frame
@@ -77,10 +86,18 @@ public class Weapon : MonoBehaviour
     public void EnableWeapon()
     {
         _isEnabled = true;
-        Invoke(nameof(StartWeapon), _delayUntilShooting);
+
+        Invoke(nameof(InitializeWeapon), _delayUntilShooting);
     }
 
-    private void StartWeapon()
+    public void DisableWeapon()
+    {
+        _isEnabled = false;
+
+        EndWeaponBehavior();
+    }
+
+    private void InitializeWeapon()
     {
         _weaponBehaviorIndex = 0;
         _rotTime = 0;
@@ -99,7 +116,13 @@ public class Weapon : MonoBehaviour
                     gun.EnableShooting();
             }
 
-            if(_weaponBehavior[_weaponBehaviorIndex]._duration != 0)
+            foreach (GunContainer gun in _gunsNew)
+            {
+                if (gun != null)
+                    gun.EnableGun();
+            }
+
+            if (_weaponBehavior[_weaponBehaviorIndex]._duration != 0)
             {
                 Invoke(nameof(EndWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._duration);
             }
@@ -113,25 +136,24 @@ public class Weapon : MonoBehaviour
             gun.DisableShooting();
         }
 
+        foreach (GunContainer gun in _gunsNew)
+        {
+            if (gun != null)
+                gun.DisableGun();
+        }
+
         _weaponBehaviorIndex++;
-        if(_weaponBehaviorIndex >= _weaponBehavior.Length)
+        if(_isEnabled)
         {
-            _weaponBehaviorIndex = 0;
-            Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._delayUntilNextAttack);
-        }
-        else
-        {
-            Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex - 1]._delayUntilNextAttack);
-        }
-    }
-
-    public void DisableWeapon()
-    {
-        _isEnabled = false;
-
-        foreach (Gun gun in _guns)
-        {
-            gun.DisableShooting();
+            if (_weaponBehaviorIndex >= _weaponBehavior.Length)
+            {
+                _weaponBehaviorIndex = 0;
+                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._delayUntilNextAttack);
+            }
+            else
+            {
+                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex - 1]._delayUntilNextAttack);
+            }
         }
     }
 

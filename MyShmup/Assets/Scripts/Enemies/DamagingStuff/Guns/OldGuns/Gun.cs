@@ -125,9 +125,9 @@ public class Gun : MonoBehaviour
                 _timeUntilShooting = Time.time + _gunBehavior[_gunBehaviorIndex]._fireRate;
 
                 //Shoot a shot
-                EnemyBulletBehavior bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
+                ProyectileBehavior bullet = Instantiate(_gunBehavior[_gunBehaviorIndex]._bulletObject,
                     transform.position, transform.rotation,
-                    _bulletPool).GetComponent<EnemyBulletBehavior>();
+                    _bulletPool).GetComponent<ProyectileBehavior>();
                 bullet._speed = _gunBehavior[_gunBehaviorIndex]._bulletSpeed;
                 bullet._maxDistance = _gunBehavior[_gunBehaviorIndex]._maxDistance;
             }

@@ -56,6 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5209696166197132132}
+  - component: {fileID: 1264317426718729628}
   m_Layer: 0
   m_Name: MoveableGameobject
   m_TagString: Untagged
@@ -79,6 +80,22 @@ Transform:
   m_Father: {fileID: 2682743571737748812}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1264317426718729628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4224740926818928944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e240f90605d2489428f3537b8a3db091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollType: 0
+  _scrollX: 0
+  _scrollY: 0
+  _waypoints: []
 --- !u!1001 &5540369328468977031
 PrefabInstance:
   m_ObjectHideFlags: 0
