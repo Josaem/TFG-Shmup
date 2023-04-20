@@ -27,7 +27,7 @@ public class ProyectileBehavior : MonoBehaviour
 
     protected virtual void Move()
     {
-        rb.velocity = transform.up.normalized * _speed;
+        rb.velocity = transform.up * _speed;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

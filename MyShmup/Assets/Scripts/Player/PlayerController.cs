@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     private float _timeUntilShooting2nd = 0;
     private float _timeUntil2ndShotEnabled;
     private GameObject _currentlyLockedEnemy;
+    private int _gunToShoot = 0;
+    private bool _2ndHasShot;
 
     [Header("Explosion")]
     [SerializeField]
@@ -199,6 +201,13 @@ public class PlayerController : MonoBehaviour
         {
             RotateOptions();
         }
+
+        var rotation = Quaternion.AngleAxis(90, Vector3.up);
+        var forward = Vector3.forward;
+
+
+        Debug.DrawRay(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(-3, Vector3.forward) * transform.right * 20, Color.green);
+        Debug.DrawRay(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(2, Vector3.forward) * -transform.right * 20, Color.green);
     }
 
     private void FixedUpdate()
@@ -206,17 +215,26 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>().normalized;
+    public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>();
 
     private void Move()
     {
         if (!_dead)
         {
+            if (_movementValues.x > 0.1)
+                _movementValues.x = 1;
+            if (_movementValues.x < - 0.1)
+                _movementValues.x = -1;
+            if (_movementValues.y > 0.1)
+                _movementValues.y = 1;
+            if (_movementValues.y < -0.1)
+                _movementValues.y = -1;
+
             //TODOANIM play moving anim
             if (_slowMovement)
-                _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues;
+                _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues.normalized;
             else
-                _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues;
+                _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues.normalized;
         }
         else
         {
@@ -277,8 +295,8 @@ public class PlayerController : MonoBehaviour
                 _timeUntilShooting2nd = Time.time + _fireRate2nd;
 
                 //Check front middle
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15, _enemyLayerMask);
-                RaycastHit2D hitBehind = Physics2D.Raycast(transform.position, -transform.right, 15, _enemyLayerMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 20, _enemyLayerMask);
+                RaycastHit2D hitBehind = Physics2D.Raycast(transform.position, -transform.right, 20, _enemyLayerMask);
 
                 //for each option
                 for (int i = 0; i < _optionsGameObject.Length; i++)
@@ -288,24 +306,24 @@ public class PlayerController : MonoBehaviour
                         if (hit.collider == null)
                         {
                             //Check front up
-                            hit = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), transform.right, 15, _enemyLayerMask);
+                            hit = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(3, Vector3.forward) * transform.right, 20, _enemyLayerMask);
 
                             if (hit.collider == null)
                             {
                                 //Check front down
-                                hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), transform.right, 15, _enemyLayerMask);
+                                hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(-3, Vector3.forward) * transform.right, 20, _enemyLayerMask);
                             }
                         }
 
                         if (hitBehind.collider == null)
                         {
                             //Check behind up
-                            hitBehind = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
+                            hitBehind = Physics2D.Raycast(transform.TransformPoint(Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(-2, Vector3.forward) * -transform.right, 20, _enemyLayerMask);
 
                             if (hitBehind.collider == null)
                             {
                                 //Check behind down
-                                hitBehind = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), -transform.right, 15, _enemyLayerMask);
+                                hitBehind = Physics2D.Raycast(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(2, Vector3.forward) * -transform.right, 20, _enemyLayerMask);
                             }
                         }
 
@@ -313,7 +331,7 @@ public class PlayerController : MonoBehaviour
                         {
                             if (hitBehind.collider != null)
                             {
-                                if (hit.distance <= hitBehind.distance)
+                                if (hit.distance - 0.5 <= hitBehind.distance)
                                 {
                                     //Locked front only
                                     _currentlyLockedEnemy = hit.transform.gameObject;
@@ -342,7 +360,7 @@ public class PlayerController : MonoBehaviour
                         else
                         {
                             //hasn't hit anything both in front or behind, shoot ahead
-                            _optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
+                            //_optionsGameObject[i].transform.right = _noLockObject.transform.position - _optionsGameObject[i].transform.position;
                         }
                     }
                     else
@@ -350,12 +368,24 @@ public class PlayerController : MonoBehaviour
                         //Point at locked target
                         _optionsGameObject[i].transform.right = _currentlyLockedEnemy.transform.position - _optionsGameObject[i].transform.position;
                     }
+                    
+                    if(_currentlyLockedEnemy != null && _gunToShoot == i && !_2ndHasShot)
+                    {
+                        //Shoot
+                        Instantiate(_secondaryShotPrefab,
+                            _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
+                            _playerBulletPool);
 
-                    //Shoot
-                    Instantiate(_secondaryShotPrefab,
-                        _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
-                        _playerBulletPool);
+                        _2ndHasShot = true;
+
+                        _gunToShoot++;
+
+                        if(_gunToShoot >= _optionsGameObject.Length)
+                            _gunToShoot = 0;
+                    }
                 }
+
+                _2ndHasShot = false;
             }
         }
     }

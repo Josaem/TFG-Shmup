@@ -11,7 +11,7 @@ public class StopBullet : ProyectileBehavior
 
     protected override void Move()
     {
-        rb.velocity = transform.up.normalized * _speed;
+        rb.velocity = transform.up * _speed;
 
         Invoke(nameof(StopMovement), _timeToStop);
     }

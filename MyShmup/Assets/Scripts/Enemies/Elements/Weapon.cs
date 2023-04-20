@@ -14,7 +14,8 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private WeaponBehavior[] _weaponBehavior;
 
-    private bool _isEnabled = false;
+    [HideInInspector]
+    public bool _isEnabled = false;
     private Gun[] _guns;
     private GunContainer[] _gunsNew;
     private int _weaponBehaviorIndex = 0;

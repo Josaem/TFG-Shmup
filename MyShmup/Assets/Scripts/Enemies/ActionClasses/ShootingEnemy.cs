@@ -71,7 +71,8 @@ public class ShootingEnemy : Enemy
         {
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
-                weapon.EnableWeapon();
+                if(!weapon._isEnabled)
+                    weapon.EnableWeapon();
             }
                        
             if (!_changeAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
@@ -87,7 +88,24 @@ public class ShootingEnemy : Enemy
         {
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
-                weapon.DisableWeapon();
+                bool willBeUsedNext = false;
+
+                //Check if next weapon to use is already active
+                if (_attackIndex + 1 >= _attackPattern.Length)
+                {
+                    foreach (Weapon weaponToEnable in _attackPattern[0]._weapons)
+                        if (weaponToEnable == weapon)
+                            willBeUsedNext = true;
+                }
+                else
+                {
+                    foreach (Weapon weaponToEnable in _attackPattern[_attackIndex + 1]._weapons)
+                        if (weaponToEnable == weapon)
+                            willBeUsedNext = true;
+                }
+
+                if(!willBeUsedNext)
+                    weapon.DisableWeapon();
             }
 
             Invoke(nameof(StartAttacking), _attackPattern[_attackIndex]._delayUntilNextAttack);

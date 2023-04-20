@@ -12,6 +12,7 @@ public class DieEarly : MonoBehaviour
     {
         if (TryGetComponent<Enemy>(out Enemy enemy))
         {
+
             Invoke(nameof(Kill), _deathDelay + enemy._delayUntilActive);
         }
         else

@@ -142,6 +142,7 @@ MonoBehaviour:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
   _stuffToSpawnOnDeath: []
+  _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 0}
@@ -309,6 +310,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 340912407064488155}
     m_Modifications:
+    - target: {fileID: 8652613022629014797, guid: 7946b5975355fbf428888a83ca108390, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9106144099612926239, guid: 7946b5975355fbf428888a83ca108390, type: 3}
       propertyPath: m_SortingOrder
       value: 1

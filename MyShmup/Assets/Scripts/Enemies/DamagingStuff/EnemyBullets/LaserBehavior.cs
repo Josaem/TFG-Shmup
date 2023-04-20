@@ -105,6 +105,6 @@ public class LaserBehavior : MonoBehaviour
     {
         _laserOn = false;
         //Animate here
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

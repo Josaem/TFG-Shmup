@@ -18,7 +18,7 @@ public class SteppingLockBullet : ProyectileBehavior
 
     protected override void Move()
     {
-        rb.velocity = transform.up.normalized * _speed;
+        rb.velocity = transform.up * _speed;
 
         float timeToStep = _startingDistance / _speed;
         Invoke(nameof(StepStop), timeToStep);
@@ -35,7 +35,7 @@ public class SteppingLockBullet : ProyectileBehavior
             Invoke(nameof(StepStop), timeToStep);
         }
 
-        rb.velocity = transform.up.normalized * _speed;
+        rb.velocity = transform.up * _speed;
     }
 
     private void StepStop()
