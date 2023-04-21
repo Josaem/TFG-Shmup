@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8249050788345689822}
-  - component: {fileID: 5845573172937809760}
+  - component: {fileID: 7036981349405900901}
   m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 3232624488557116592}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5845573172937809760
+--- !u!114 &7036981349405900901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,23 +42,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2741666194179464666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fa30817723d114f89cab9bb7773d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfb53592adf96142946ee22ee63c621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunBehavior:
-  - _duration: 0
-    _fireRate: 0.15
-    _bulletSpeed: 3
-    _maxDistance: 20
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 0
-      _dontCenterAngleRotation: 0
-      _resetRotTimer: 0
-      _rotType: 1
-      _rotationAngle: 50
-      _rotationSpeed: 100
-    _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _startActive: 0
+  _waitUntilShooting: 0
+  _speedOfAttack: 3
+  _maxDistance: 20
+  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _pointAtPlayer: 0
+  _rotativeBehavior:
+    _rotateStart: 0
+    _dontCenterAngleRotation: 0
+    _resetRotTimer: 0
+    _resetRot: 0
+    _rotType: 0
+    _rotationAngle: 0
+    _rotationSpeed: 0
+  _fireRate: 0.15
 --- !u!1 &4025931028808657214
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4025931028808657215}
-  - component: {fileID: 4025931028808657184}
+  - component: {fileID: 5153099308992761580}
   m_Layer: 8
   m_Name: Gun (3)
   m_TagString: Untagged
@@ -92,7 +93,7 @@ Transform:
   m_Father: {fileID: 8325695519313357136}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -5}
---- !u!114 &4025931028808657184
+--- !u!114 &5153099308992761580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,23 +102,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4025931028808657214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fa30817723d114f89cab9bb7773d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfb53592adf96142946ee22ee63c621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunBehavior:
-  - _duration: 0
-    _fireRate: 0.1
-    _bulletSpeed: 20
-    _maxDistance: 20
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 0
-      _dontCenterAngleRotation: 0
-      _resetRotTimer: 0
-      _rotType: 0
-      _rotationAngle: 25
-      _rotationSpeed: 100
-    _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _startActive: 0
+  _waitUntilShooting: 0
+  _speedOfAttack: 20
+  _maxDistance: 20
+  _attackObject: {fileID: 0}
+  _pointAtPlayer: 0
+  _rotativeBehavior:
+    _rotateStart: 0
+    _dontCenterAngleRotation: 0
+    _resetRotTimer: 0
+    _resetRot: 0
+    _rotType: 0
+    _rotationAngle: 0
+    _rotationSpeed: 0
+  _fireRate: 0.1
 --- !u!1 &4025931029366077538
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8944302190950771625}
-  - component: {fileID: 8944302190950771624}
+  - component: {fileID: 3591502172679006705}
   m_Layer: 8
   m_Name: Gun (2)
   m_TagString: Untagged
@@ -514,7 +516,7 @@ Transform:
   m_Father: {fileID: 8325695519313357136}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
---- !u!114 &8944302190950771624
+--- !u!114 &3591502172679006705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -523,23 +525,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8944302190950771630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fa30817723d114f89cab9bb7773d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfb53592adf96142946ee22ee63c621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunBehavior:
-  - _duration: 0
-    _fireRate: 0.1
-    _bulletSpeed: 20
-    _maxDistance: 20
-    _pointAtPlayer: 0
-    _rotativeBehavior:
-      _rotateStart: 2
-      _dontCenterAngleRotation: 1
-      _resetRotTimer: 0
-      _rotType: 1
-      _rotationAngle: 50
-      _rotationSpeed: 100
-    _bulletObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _startActive: 0
+  _waitUntilShooting: 0
+  _speedOfAttack: 20
+  _maxDistance: 20
+  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _pointAtPlayer: 0
+  _rotativeBehavior:
+    _rotateStart: 2
+    _dontCenterAngleRotation: 1
+    _resetRotTimer: 0
+    _resetRot: 0
+    _rotType: 1
+    _rotationAngle: 50
+    _rotationSpeed: 100
+  _fireRate: 0.1
 --- !u!1001 &1689432992220280555
 PrefabInstance:
   m_ObjectHideFlags: 0

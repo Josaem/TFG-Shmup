@@ -62,7 +62,10 @@ public class Gun : MonoBehaviour
     {
         _originalRot = transform.localEulerAngles;
         _player = FindObjectOfType<PlayerController>().transform;
-        _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
+        if (GetComponentInParent<WaveObject>() == null)
+            _bulletPool = FindObjectOfType<BulletPool>().transform;
+        else
+            _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
         _playerController = _player.GetComponent<PlayerController>();
     }
 

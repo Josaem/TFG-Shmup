@@ -595,6 +595,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5250240933143949227}
     m_Modifications:
+    - target: {fileID: 7596455132122773545, guid: bc58fd9c0d6d99e41a1c4b2e5bb2dadd, type: 3}
+      propertyPath: _attackObject
+      value: 
+      objectReference: {fileID: 2328251061958230511, guid: 95a5ccb3f5c98144092fde8585c69f70, type: 3}
     - target: {fileID: 8950579642271800344, guid: bc58fd9c0d6d99e41a1c4b2e5bb2dadd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1425,6 +1429,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2975004073945136006, guid: 538c8ea17e7421247a62fea13d42f8ed, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._rotativeBehavior._rotateStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2975004073945136006, guid: 538c8ea17e7421247a62fea13d42f8ed, type: 3}
       propertyPath: _weaponBehavior.Array.data[0]._rotativeBehavior._rotationAngle
       value: 80
       objectReference: {fileID: 0}
@@ -1649,6 +1657,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5250240933223088180}
     m_Modifications:
+    - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
+      propertyPath: _fireRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
+      propertyPath: _speedOfAttack
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2830627989222972229, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _gunBehavior.Array.size
       value: 1
