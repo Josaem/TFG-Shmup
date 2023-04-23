@@ -983,7 +983,7 @@ MonoBehaviour:
     _rotType: 0
     _rotationAngle: 15
     _rotationSpeed: 15
-  _fireRate: 0.04
+  _fireRate: 0.4
 --- !u!1 &99971068492473287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1187,7 @@ MonoBehaviour:
     _rotType: 0
     _rotationAngle: 15
     _rotationSpeed: 15
-  _fireRate: 0.04
+  _fireRate: 0.4
 --- !u!1 &99971068890855145
 GameObject:
   m_ObjectHideFlags: 0

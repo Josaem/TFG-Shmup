@@ -14,7 +14,8 @@ public class Enemy : MonoBehaviour
     private bool _willDieByExplosion;
     private int _stuckNails = 0;
     private int _stuckDrills = 0;
-    private bool _isDead;
+    [HideInInspector]
+    public bool _isDead;
     private bool _deadByWaypoint;
     private int _accumulatedScore;
 
@@ -338,9 +339,9 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                if (_myWave != null && _prioritary)
+                if (_myWave != null && _prioritary && _movementState != EnemyMovementState.Dying)
                 {
-                    _myWave.SetPriorityEnemiesDead();
+                    _myWave.SetPriorityEnemies();
                 }
 
                 if (_specialRequirementsIndex != 0)
@@ -348,8 +349,6 @@ public class Enemy : MonoBehaviour
                     GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
                 }
             }
-
-            
 
             foreach (GameObject spawn in _stuffToSpawnOnDeath)
             {

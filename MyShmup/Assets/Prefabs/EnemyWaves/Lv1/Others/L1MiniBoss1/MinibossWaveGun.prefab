@@ -130,12 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4417356ff37e28540a07bff1f5ad9b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startActive: 1
+  _waitUntilShooting: 0
+  _speedOfAttack: 3
+  _maxDistance: 20
+  _attackObject: {fileID: 4409051570943762180, guid: 62bca06c0bd3e6045af57b848a9531e1, type: 3}
   _timeBetweenWaves: 6
-  _waveSpeed: 6
-  _waveToDie:
-    _section: 0
-    _wave: 0
-  _waveObject: {fileID: 4409051570943762180, guid: 62bca06c0bd3e6045af57b848a9531e1, type: 3}
 --- !u!114 &7430548261946689816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3780293866254882487}
+  - component: {fileID: 2854490933147236554}
   m_Layer: 0
   m_Name: MinibossWaveGun
   m_TagString: Untagged
@@ -187,6 +188,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2854490933147236554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3780293866254882486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81dfb3ad5b0461f4bb89a10573863cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _relative:
+    relative: 1
+    wavesToWait: 3
+  _waveToDie:
+    sectionIndex: 1
+    waveIndex: 6
 --- !u!1 &9035601817879507291
 GameObject:
   m_ObjectHideFlags: 0

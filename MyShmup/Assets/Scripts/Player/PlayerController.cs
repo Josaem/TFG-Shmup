@@ -111,8 +111,11 @@ public class PlayerController : MonoBehaviour
         ResetOptionPositions();
 
         fireAction.started += ctx => {
-            _fireButtonPressed = true;
-            StartShooting();
+            if(!_dead)
+            {
+                _fireButtonPressed = true;
+                StartShooting();
+            }
         };
 
         fireAction.canceled += ctx => {
@@ -130,9 +133,12 @@ public class PlayerController : MonoBehaviour
         };
 
         blockAction.started += ctx => {
-            if(_shieldRemainingCooldown <= 0)
-                _blockActionEnabled = true;
-            EnableBlock();
+            if(!_dead)
+            {
+                if (_shieldRemainingCooldown <= 0)
+                    _blockActionEnabled = true;
+                EnableBlock();
+            }
         };
 
         blockAction.canceled += ctx => {
@@ -517,7 +523,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetHurt()
     {
-        if(!_invincible)
+        if(!_invincible && !_dead)
         {
             GameProperties._life--;
             FindObjectOfType<LifeUI>().SetUpLifebar();
@@ -525,7 +531,7 @@ public class PlayerController : MonoBehaviour
             transform.position = _playerRespawnLocation.position;
 
             _invincible = true;
-            StartCoroutine(StopInvincibility(_deathTime+2f));
+            StartCoroutine(StopInvincibility(_deathTime+1f));
             GetComponent<Collider2D>().enabled = false;
 
             //TODOANIM Animate ship death

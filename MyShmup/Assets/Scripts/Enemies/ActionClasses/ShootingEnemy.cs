@@ -11,10 +11,14 @@ public class ShootingEnemy : Enemy
     private bool _shootOnSpawn;
     [SerializeField]
     protected bool _stopShootOnDead = true;
+    #if UNITY_EDITOR
+    [Help("If change on attack behavior will loop ignoring the first behavior", UnityEditor.MessageType.None)]
+    #endif
     [SerializeField]
     private bool _changeAttackOnEntry;
 
     private int _attackIndex = 0;
+    private bool _changedAttackOnEntry;
 
     //Which weapons attack and for how long
     [System.Serializable]
@@ -23,6 +27,14 @@ public class ShootingEnemy : Enemy
         public Weapon[] _weapons;
         public float _duration;
         public float _delayUntilNextAttack;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        if (_changeAttackOnEntry)
+            _changedAttackOnEntry = true;
     }
 
     public override void Kill()
@@ -47,7 +59,7 @@ public class ShootingEnemy : Enemy
         }
         else
         {
-            _changeAttackOnEntry = false;
+            _changedAttackOnEntry = false;
         }
     }
 
@@ -58,9 +70,9 @@ public class ShootingEnemy : Enemy
             StartAttacking();
         }
 
-        if (_shootOnSpawn && _changeAttackOnEntry)
+        if (_shootOnSpawn && _changedAttackOnEntry)
         {
-            _changeAttackOnEntry = false;
+            _changedAttackOnEntry = false;
             StopAttacking();
         }
     }
@@ -75,7 +87,7 @@ public class ShootingEnemy : Enemy
                     weapon.EnableWeapon();
             }
                        
-            if (!_changeAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
+            if (!_changedAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
             {
                 Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
             }
@@ -113,10 +125,11 @@ public class ShootingEnemy : Enemy
             //Next attack
             _attackIndex++;
 
-            //if no more attacks go to first one
+            //if no more attacks go to first one if not changeattack
             if (_attackIndex >= _attackPattern.Length)
             {
-                _attackIndex = 0;
+                if (_changeAttackOnEntry) _attackIndex = 1;
+                else _attackIndex = 0;
             }
         }
     }

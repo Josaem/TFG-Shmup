@@ -26,7 +26,7 @@ public class WaveObject : MonoBehaviour
         }
     }
 
-    public void SetPriorityEnemies()
+    public int SetBasePriorityEnemies()
     {
         int _priorityEnemyCount = 0;
 
@@ -39,26 +39,23 @@ public class WaveObject : MonoBehaviour
             }
         }
 
-        if (FindObjectOfType<GameManager>() != null)
-        {
-            FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
-        }
+        return _priorityEnemyCount;
     }
 
-    public void SetPriorityEnemiesDead()
+    public void SetPriorityEnemies()
     {
-        int _priorityEnemyCount = -1;
+        int _priorityEnemyCount = 0;
 
         _enemies = GetComponentsInChildren<Enemy>(false);
         foreach (Enemy enemy in _enemies)
         {
-            if (enemy._prioritary)
+            if (enemy._prioritary && !enemy._isDead)
             {
                 _priorityEnemyCount++;
             }
         }
 
-        if(FindObjectOfType<GameManager>() != null)
+        if (FindObjectOfType<GameManager>() != null)
         {
             FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
         }

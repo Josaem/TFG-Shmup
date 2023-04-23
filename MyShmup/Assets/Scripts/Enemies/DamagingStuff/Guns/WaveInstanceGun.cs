@@ -7,9 +7,6 @@ public class WaveInstanceGun : GunContainer
 {
     [SerializeField]
     private float _timeBetweenWaves;
-    
-    [SerializeField]
-    private GameObject _waveObject;
 
     private float _waveTime = 0;
 
@@ -21,7 +18,7 @@ public class WaveInstanceGun : GunContainer
             _waveTime = Time.time + _timeBetweenWaves;
 
             //Shoot a shot
-            WaveAttackBehavior wave = Instantiate(_waveObject,
+            WaveAttackBehavior wave = Instantiate(_attackObject,
                 transform.position, Quaternion.identity, _bulletPool).GetComponent<WaveAttackBehavior>();
             wave._speed = _speedOfAttack;
             wave._maxSize = _maxDistance*2;

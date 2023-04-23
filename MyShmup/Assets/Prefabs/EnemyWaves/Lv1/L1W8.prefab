@@ -1111,7 +1111,7 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
-  _attackObject: {fileID: 0}
+  _attackObject: {fileID: 4409051570943762180, guid: c54a2f81d6a7e9847a3ee53dc218f42c, type: 3}
   _pointAtPlayer: 0
   _rotativeBehavior:
     _rotateStart: 2
@@ -1811,7 +1811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _maxHealth
-      value: 100
+      value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _prioritary

@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 7031750963427097984}
   - component: {fileID: 7031750963427097987}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MoveableGameobject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
     _waypoint: {fileID: 7031750963231736094}
   - _speed: 0.1
     _waypoint: {fileID: 7031750963271796807}
-  - _speed: 3
+  - _speed: 0.6
     _waypoint: {fileID: 531591385}
 --- !u!1001 &1833350375390458432
 PrefabInstance:
@@ -806,6 +806,10 @@ PrefabInstance:
     - target: {fileID: 337733932465906053, guid: 44b76544fbf97e74abb837361273ea54, type: 3}
       propertyPath: _delayUntilActive
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 337733932465906053, guid: 44b76544fbf97e74abb837361273ea54, type: 3}
+      propertyPath: _exitDestination._speed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 337733932465906053, guid: 44b76544fbf97e74abb837361273ea54, type: 3}
       propertyPath: _entryDestination._speed

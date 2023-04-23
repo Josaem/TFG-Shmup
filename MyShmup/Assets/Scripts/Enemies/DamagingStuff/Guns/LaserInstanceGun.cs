@@ -31,6 +31,13 @@ public class LaserInstanceGun : RotativeGuns
     {
         base.DisableGun();
 
-        _currentLaser.GetComponentInChildren<LaserBehavior>().Kill();
+        if (GetComponentInChildren<LaserBehavior>() != null)
+        {
+            _currentLaser.GetComponentInChildren<LaserBehavior>().Kill();
+        }
+        else
+        {
+            Destroy(_currentLaser);
+        }
     }
 }

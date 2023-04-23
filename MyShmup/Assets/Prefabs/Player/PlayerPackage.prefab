@@ -1001,10 +1001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slowSpeed: 200
   _fastSpeed: 350
-  _deathTime: 3
+  _deathTime: 2
   _playerRespawnLocation: {fileID: 6954143849576202830}
   shipOrientation: 3
-  _invincibleTest: 1
+  _invincibleTest: 0
   _dead: 0
   _playerBulletPool: {fileID: 6954143851048406027}
   _optionsGameObject:
@@ -1016,7 +1016,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _1stShotScore: 1
-  _fireActiveTime: 0.4
+  _fireActiveTime: 0.3
   _fireRate1st: 0.1
   _primaryShotPrefab: {fileID: 4409051570943762180, guid: 134f9203567859846933b90aa7351d5c, type: 3}
   _base1stOptionsLocation:
@@ -1024,9 +1024,9 @@ MonoBehaviour:
   - {fileID: 6954143851318854261}
   - {fileID: 6954143850570489159}
   - {fileID: 6954143850183909600}
-  _2ndShotScore: 3
-  _timeFor2ndShotActivation: 0.5
-  _fireRate2nd: 0.5
+  _2ndShotScore: 2
+  _timeFor2ndShotActivation: 0.3
+  _fireRate2nd: 0.07
   _noLockShotDistance: 7
   _noLockObject: {fileID: 3865163978354262748}
   _secondaryShotPrefab: {fileID: 4409051570943762180, guid: c7abeb25ef5c6234788727ba4a317c32, type: 3}

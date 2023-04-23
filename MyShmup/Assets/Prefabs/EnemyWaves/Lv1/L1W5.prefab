@@ -109,7 +109,7 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 20
   _maxDistance: 20
-  _attackObject: {fileID: 0}
+  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
   _pointAtPlayer: 0
   _rotativeBehavior:
     _rotateStart: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b662af960e349d74abb7e61b96eca0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 8
+  _duration: 14
   _bulletPool: {fileID: 0}
 --- !u!1 &5170648935779478831
 GameObject:
@@ -649,6 +649,10 @@ PrefabInstance:
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _prioritary
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _dieInBackground
       value: 1
       objectReference: {fileID: 0}
@@ -808,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _maxHealth
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _prioritary
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _shootOnSpawn

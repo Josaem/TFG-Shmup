@@ -322,6 +322,8 @@ MonoBehaviour:
     _delayUntilNextAttack: 0
   - _weapons:
     - {fileID: 7357682379966355622}
+    - {fileID: 8171969851117901776}
+    - {fileID: 8515394028011658347}
     - {fileID: 7357682379053175275}
     - {fileID: 7357682380098064766}
     _duration: 0

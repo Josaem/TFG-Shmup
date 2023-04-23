@@ -25,7 +25,12 @@ public class LaserBehavior : MonoBehaviour
         DontShowLaser();
 
         //AnimateHere
-        Invoke(nameof(Spawn), _timeToSpawn);
+        if(_laserVisualGuide != null)
+            Invoke(nameof(Spawn), _timeToSpawn);
+        else
+        {
+            Spawn();
+        }
     }
 
     private void Spawn()
@@ -36,7 +41,7 @@ public class LaserBehavior : MonoBehaviour
 
     private void ShowLaser()
     {
-        _laserVisualGuide.SetActive(false);
+        if(_laserVisualGuide != null) _laserVisualGuide.SetActive(false);
         _laserStart.SetActive(true);
         GetComponent<Collider2D>().enabled = true;
         transform.GetChild(0).gameObject.SetActive(true);
@@ -45,7 +50,8 @@ public class LaserBehavior : MonoBehaviour
     private void DontShowLaser()
     {
         _laserStart.SetActive(false);
-        _laserVisualGuide.SetActive(true);
+        if(_laserVisualGuide != null)
+            _laserVisualGuide.SetActive(true);
         _laserEnd.SetActive(false);
         GetComponent<Collider2D>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
@@ -88,7 +94,7 @@ public class LaserBehavior : MonoBehaviour
                     transform.localScale = new Vector2(1, _currentLaserDistance);
                 }
 
-                if (_currentLaserDistance >= hitDistance - 0.1)
+                if (_currentLaserDistance >= hitDistance - 0.2)
                 {
                     _laserEnd.SetActive(true);
                     _laserEnd.transform.localPosition = new Vector2(0, hitDistance);

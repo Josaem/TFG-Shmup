@@ -5,9 +5,19 @@ using UnityEngine;
 public class DieOnWave : MonoBehaviour
 {
     [SerializeField]
+    private RelativeWave _relative;
+
+    [SerializeField]
     private WaveSelector _waveToDie;
 
     private GameManager _myGm;
+
+    [System.Serializable]
+    public class RelativeWave
+    {
+        public bool relative;
+        public int wavesToWait = 0;
+    }
 
     [System.Serializable]
     public class WaveSelector
@@ -18,7 +28,13 @@ public class DieOnWave : MonoBehaviour
 
     private void Start()
     {
-        _myGm = GetComponent<GameManager>();
+        _myGm = FindObjectOfType<GameManager>();
+
+        if (_relative.relative && _myGm != null)
+        {
+            _waveToDie.sectionIndex = _myGm._sectionIndex;
+            _waveToDie.waveIndex = _myGm._waveIndex + _relative.wavesToWait + 1;
+        }
     }
 
     // Start is called before the first frame update

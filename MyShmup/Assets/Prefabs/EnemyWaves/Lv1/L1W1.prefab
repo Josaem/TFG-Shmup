@@ -1775,7 +1775,7 @@ MonoBehaviour:
   _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
-    _pointAtPlayer: 1
+    _pointAtPlayer: 0
     _rotativeBehavior:
       _rotateStart: 0
       _dontCenterAngleRotation: 0
@@ -1784,6 +1784,7 @@ MonoBehaviour:
       _rotType: 0
       _rotationAngle: 0
       _rotationSpeed: 0
+  _isEnabled: 0
 --- !u!1 &6793063932684953484
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,7 +2477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832281848, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _weaponBehavior.Array.data[0]._pointAtPlayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 598402479095371651, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2488,7 +2489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _maxHealth
-      value: 100
+      value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _prioritary

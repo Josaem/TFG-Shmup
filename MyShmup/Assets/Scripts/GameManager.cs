@@ -9,11 +9,11 @@ public class GameManager : MonoBehaviour
     public class Section
     {
         public Orientation _shipOrientation;
+        public Transform _playerStartingPosition;
         public BGSection _backgroundSection;
         public BGObject[] _backgroundObjects;
         public Wave[] _waves;
         public GameObject _endWave;
-        public Transform _playerStartingPosition;
     }
 
     [System.Serializable]
@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
     private int _previousBGIndex = 999;
     private IEnumerator _waitForWave;
     private bool _priorityWave = false;
-    [HideInInspector]
     public int _priorityEnemiesLeft = 0;
     private GameObject _currentWave;
 
@@ -62,10 +61,11 @@ public class GameManager : MonoBehaviour
         {
             if (_priorityEnemiesLeft <= 0)
             {
-                EndWave();
                 if(_waitForWave != null)
                     StopCoroutine(_waitForWave);
                 _priorityWave = false;
+                _priorityEnemiesLeft = 0;
+                EndWave();
             }
         }
 
@@ -145,6 +145,9 @@ public class GameManager : MonoBehaviour
 
     private void SpawnWave()
     {
+        _priorityWave = false;
+        _priorityEnemiesLeft = 0;
+
         Debug.Log("Spawning wave: " + _sectionIndex + "/" + _waveIndex);
 
         //spawnea enemyWave si hay
@@ -164,9 +167,11 @@ public class GameManager : MonoBehaviour
 
         if(IsThereEnemyWave())
         {
-            _currentWave.GetComponent<WaveObject>().SetPriorityEnemies();
+            _priorityEnemiesLeft = 0;
+            _currentWave.GetComponent<WaveObject>().SetBasePriorityEnemies();
             if (_priorityEnemiesLeft > 0)
             {
+                Debug.Log(_priorityEnemiesLeft);
                 _priorityWave = true;
             }
         }
@@ -175,11 +180,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitForWave(float waveDuration)
     {
         yield return new WaitForSeconds(waveDuration);
+        Debug.Log("Wait wave end");
         EndWave();
     }
 
     public void EndWave()
     {
+        _priorityWave = false;
+        _priorityEnemiesLeft = 0;
+
         if (IsThereEnemyWave())
         {
             DespawnWave();
@@ -209,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     private int? SelectNextWave(int selectedWave)
     {
-        if (selectedWave >= _sections[_sectionIndex]._waves.Length)
+        if (_sectionIndex >= _sections.Length || selectedWave >= _sections[_sectionIndex]._waves.Length)
         {
             return null;
         }
@@ -243,15 +252,21 @@ public class GameManager : MonoBehaviour
     private void DespawnWave()
     {
         Debug.Log("Despawning Wave");
-        if(_currentWave != null)
+        if (_currentWave != null)
+        {
             _currentWave.GetComponent<WaveObject>().DespawnWave();
+            _currentWave = null;
+        }
     }
 
     private void DespawnEndWave()
     {
         Debug.Log("Despawning EndWave");
-        if(_currentWave != null)
+        if (_currentWave != null)
+        {
             _currentWave.GetComponent<WaveObject>().DespawnWave();
+            _currentWave = null;
+        }
     }
 
     private bool IsThereEndWave()
