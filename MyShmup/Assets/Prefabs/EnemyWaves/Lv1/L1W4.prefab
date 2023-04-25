@@ -55,6 +55,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4900529983540857073}
     m_Modifications:
+    - target: {fileID: 4691102501416777035, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _attackObject
+      value: 
+      objectReference: {fileID: 8082528032167631070, guid: 1c9713e70084dba42a2051389a38ca10, type: 3}
+    - target: {fileID: 4691102501416777035, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _speedOfAttack
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483172866962589840, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _attackObject
+      value: 
+      objectReference: {fileID: 8082528032167631070, guid: 1c9713e70084dba42a2051389a38ca10, type: 3}
+    - target: {fileID: 6483172866962589840, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: _speedOfAttack
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682378713284075, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357682379662811102, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 7357682380253607057, guid: e52860d17f83549489f8ad35e8ce3573, type: 3}
       propertyPath: m_RootOrder
       value: 1

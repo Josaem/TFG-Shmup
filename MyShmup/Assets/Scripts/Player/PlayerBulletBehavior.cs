@@ -34,7 +34,7 @@ public class PlayerBulletBehavior : MonoBehaviour
         {
             if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.TakeDamage(_damage, _isPrimary, collision.transform.position);
+                enemy.TakeDamage(_damage, _isPrimary, collision.ClosestPoint(transform.position));
             }
             rb.angularVelocity = 0;
             _isDead = true;

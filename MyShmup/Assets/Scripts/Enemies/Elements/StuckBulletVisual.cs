@@ -7,6 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 public class StuckBulletVisual : MonoBehaviour
 {
     [SerializeField]
+    private float _textDistanceFromObject = 1;
+    [SerializeField]
     private int _max1stShown = 50;
     [SerializeField]
     private int _max2ndShown = 30;
@@ -28,6 +30,8 @@ public class StuckBulletVisual : MonoBehaviour
     private bool _textActive;
     private int _accumulatedScore = 0;
     private Transform _player;
+    private GameObject _stuck1stPool;
+    private GameObject _stuck2ndPool;
 
     private void Start()
     {
@@ -35,10 +39,15 @@ public class StuckBulletVisual : MonoBehaviour
         HideText();
         _willDieFromExploVisual.enabled = false;
         _player = FindObjectOfType<PlayerController>().transform;
+        _stuck1stPool = new GameObject("Stuck1stPool");
+        _stuck2ndPool = new GameObject("Stuck2ndPool");
     }
 
     private void Update()
     {
+        _stuck1stPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        _stuck2ndPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
         if (_timeWhereTextActive > 0) _timeWhereTextActive = Mathf.Max(_timeWhereTextActive - Time.deltaTime, 0f);
         else if(_textActive)
         {
@@ -49,14 +58,16 @@ public class StuckBulletVisual : MonoBehaviour
         if (_1stCounter > _max1stShown)
         {
             _1stCounter--;
-            Destroy(gameObject.transform.GetChild(0).GetChild(0).gameObject);
+            Destroy(_stuck1stPool.transform.GetChild(0).gameObject);
         }
 
         if (_2ndCounter > _max2ndShown)
         {
             _2ndCounter--;
-            Destroy(gameObject.transform.GetChild(1).GetChild(0).gameObject);
+            Destroy(_stuck2ndPool.transform.GetChild(0).gameObject);
         }
+
+        _willDieFromExploVisual.transform.rotation = Quaternion.identity;
     }
 
     public void GotHit(bool isPrimary, Vector3 bulletPos, int accumulatedScore)
@@ -69,12 +80,12 @@ public class StuckBulletVisual : MonoBehaviour
         if (isPrimary)
         {
             _1stCounter++;
-            Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), transform.GetChild(0));
+            Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck1stPool.transform);
         }
         else
         {
             _2ndCounter++;
-            Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), transform.GetChild(1));
+            Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck2ndPool.transform);
         }
 
         ShowText();
@@ -85,6 +96,10 @@ public class StuckBulletVisual : MonoBehaviour
         _textActive = true;
         _timeWhereTextActive = _timeToShowText;
         _floatingText.text = _accumulatedScore.ToString();
+
+        if(transform.position.y > 3.6) _floatingText.transform.position = new Vector2(transform.position.x, transform.position.y - _textDistanceFromObject / 2);
+        else _floatingText.transform.position = new Vector2(transform.position.x, transform.position.y + _textDistanceFromObject/2 + 0.5f);
+        _floatingText.transform.rotation = Quaternion.identity;
     }
 
     private void HideText()
@@ -96,11 +111,18 @@ public class StuckBulletVisual : MonoBehaviour
     {
         if(!gotKilled)
         {
-            foreach(Transform child in transform.GetChild(0))
+            foreach(Transform child in _stuck1stPool.transform)
             {
                 Destroy(child.gameObject);
             }
 
+            foreach (Transform child in _stuck2ndPool.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            _1stCounter = 0;
+            _2ndCounter = 0;
             _accumulatedScore = 0;
             ShowText();
         }
@@ -146,6 +168,11 @@ public class StuckBulletVisual : MonoBehaviour
     public void EnemyWillDieByExplosion()
     {
         _willDieFromExploVisual.enabled = true;
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 
     /*

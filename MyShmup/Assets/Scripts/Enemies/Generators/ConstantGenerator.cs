@@ -17,7 +17,6 @@ public class ConstantGenerator : Generator
     {
         public GameObject _enemy;
         public float _genDelay;
-        public Transform _spawnPos;
     }
 
     protected override void ManageSpawn()
