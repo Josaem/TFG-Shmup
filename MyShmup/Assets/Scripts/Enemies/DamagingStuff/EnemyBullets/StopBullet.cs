@@ -9,8 +9,9 @@ public class StopBullet : ProyectileBehavior
     [SerializeField]
     protected float _timeToDieAfterStop = 0.2f;
 
-    protected override void Move()
+    public override void Move(float speed)
     {
+        _speed = speed;
         rb.velocity = transform.up * _speed;
 
         Invoke(nameof(StopMovement), _timeToStop);

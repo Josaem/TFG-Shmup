@@ -68,7 +68,8 @@ public class WaveObject : MonoBehaviour
         //If alive kills them
         foreach (Enemy enemy in _enemies)
         {
-            enemy.Kill();
+            if(enemy._dieByWave)
+                enemy.Kill();
         }
 
         //If alive kills them

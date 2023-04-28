@@ -38,9 +38,7 @@ public class WaypointShootingEnemy : ShootingEnemy
                 {
                     if (_dieOnLastWaypoint)
                     {
-                        _movementState = EnemyMovementState.Dying;
-                        if(_stopShootOnDead)
-                            StopAttackingPermanently();
+                        Kill();
                     }
                     else
                     {

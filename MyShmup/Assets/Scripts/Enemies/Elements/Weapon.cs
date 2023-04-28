@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class Weapon : MonoBehaviour
 {
@@ -16,8 +17,7 @@ public class Weapon : MonoBehaviour
 
     [HideInInspector]
     public bool _isEnabled = false;
-    private Gun[] _guns;
-    private GunContainer[] _gunsNew;
+    private GunContainer[] _guns;
     private int _weaponBehaviorIndex = 0;
 
     private PlayerController _playerController;
@@ -26,6 +26,8 @@ public class Weapon : MonoBehaviour
     private Vector3 _originalTransform;
     private Vector3 _originalRot;
     private float _rotTime = 0;
+    private bool _hasLockedPlayer;
+    private Vector3 _singleLockPos;
 
     //Duration of gun activation, where the weapon shoots
     [System.Serializable]
@@ -34,6 +36,7 @@ public class Weapon : MonoBehaviour
         public float _duration;
         public float _delayUntilNextAttack;
         public PointTowardsPlayer _pointAtPlayer = PointTowardsPlayer.None;
+        public float _pointAtPlayerSpeed = 10;
         public RotativeBehavior _rotativeBehavior;
     }
 
@@ -65,14 +68,14 @@ public class Weapon : MonoBehaviour
     {
         None,
         Instant,
-        Slow
+        Slow,
+        Single
     };
 
     // Start is called before the first frame update
     void Start()
     {
-        _guns = GetComponentsInChildren<Gun>();
-        _gunsNew = GetComponentsInChildren<GunContainer>();
+        _guns = GetComponentsInChildren<GunContainer>();
 
         _playerController = FindObjectOfType<PlayerController>();
 
@@ -117,7 +120,7 @@ public class Weapon : MonoBehaviour
         if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._resetRot)
             ResetPivotRotation();
 
-        ResetWeaponRotation();
+        if(_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer != PointTowardsPlayer.Slow) ResetWeaponRotation();
         ManageTargetting();
 
         StartWeaponBehavior();
@@ -125,15 +128,11 @@ public class Weapon : MonoBehaviour
 
     private void StartWeaponBehavior()
     {
+        _hasLockedPlayer = false;
         if(_isEnabled)
         {
-            foreach(Gun gun in _guns)
-            {
-                if(gun != null)
-                    gun.EnableShooting();
-            }
-
-            foreach (GunContainer gun in _gunsNew)
+            ManageTargetting();
+            foreach (GunContainer gun in _guns)
             {
                 if (gun != null)
                     gun.EnableGun();
@@ -148,12 +147,7 @@ public class Weapon : MonoBehaviour
 
     private void EndWeaponBehavior()
     {
-        foreach (Gun gun in _guns)
-        {
-            gun.DisableShooting();
-        }
-
-        foreach (GunContainer gun in _gunsNew)
+        foreach (GunContainer gun in _guns)
         {
             if (gun != null)
                 gun.DisableGun();
@@ -282,9 +276,22 @@ public class Weapon : MonoBehaviour
         {
             transform.up = _playerController.transform.position - transform.position;
         }
+        else if (_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer == PointTowardsPlayer.Single)
+        {
+            if (!_hasLockedPlayer)
+            {
+                _singleLockPos = _playerController.transform.position;
+                _hasLockedPlayer = true;
+            }
+
+            transform.up = _singleLockPos - transform.position;
+        }
         else
         {
-
+            Vector3 dir = _playerController.transform.position - transform.position;
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+            Quaternion q = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+            transform.rotation = Quaternion.Lerp(transform.rotation, q, _weaponBehavior[_weaponBehaviorIndex]._pointAtPlayerSpeed * Time.deltaTime);
         }
     }
 

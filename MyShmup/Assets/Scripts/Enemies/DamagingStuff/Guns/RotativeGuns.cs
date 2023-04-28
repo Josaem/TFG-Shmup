@@ -6,10 +6,14 @@ public class RotativeGuns : GunContainer
 {
     public PointTowardsPlayer _pointAtPlayer = PointTowardsPlayer.None;
     [SerializeField]
+    private float _pointAtPlayerSpeed = 10;
+    [SerializeField]
     protected RotativeBehavior _rotativeBehavior;
-
+    
     private Vector3 _originalRot;
     private float _rotTime = 0;
+    private bool _hasLockedPlayer;
+    private Vector3 _singleLockPos; 
 
     [System.Serializable]
     protected class RotativeBehavior
@@ -40,7 +44,8 @@ public class RotativeGuns : GunContainer
     {
         None,
         Instant,
-        Slow
+        Slow,
+        Single
     };
 
     protected override void Start()
@@ -58,6 +63,8 @@ public class RotativeGuns : GunContainer
 
         if (_rotativeBehavior._resetRot)
             ResetRotation();
+
+        _hasLockedPlayer = false;
     }
 
     protected override void ManageTargetting()
@@ -173,9 +180,22 @@ public class RotativeGuns : GunContainer
         {
             transform.up = _playerController.transform.position - transform.position;
         }
+        else if (_pointAtPlayer == PointTowardsPlayer.Single)
+        {
+            if(!_hasLockedPlayer)
+            {
+                _singleLockPos = _playerController.transform.position;
+                _hasLockedPlayer = true;
+            }
+
+            transform.up = _singleLockPos - transform.position;
+        }
         else
         {
-
+            Vector3 dir = _playerController.transform.position - transform.position;
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+            Quaternion q = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+            transform.rotation = Quaternion.Lerp(transform.rotation, q, _pointAtPlayerSpeed * Time.deltaTime);
         }
     }
 }

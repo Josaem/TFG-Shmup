@@ -39,9 +39,9 @@ public class ShootingEnemy : Enemy
 
     public override void Kill()
     {
-        base.Kill();
-        if(_stopShootOnDead)
+        if (_stopShootOnDead)
             StopAttackingPermanently();
+        base.Kill();
     }
 
     protected override void Die()

@@ -16,8 +16,9 @@ public class SteppingLockBullet : ProyectileBehavior
 
     private int _stepIndex = 0;
 
-    protected override void Move()
+    public override void Move(float speed)
     {
+        _speed = speed;
         rb.velocity = transform.up * _speed;
 
         float timeToStep = _startingDistance / _speed;

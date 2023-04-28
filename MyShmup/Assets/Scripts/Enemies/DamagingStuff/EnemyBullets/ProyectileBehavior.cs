@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class ProyectileBehavior : MonoBehaviour
 {
     protected Rigidbody2D rb;
-    public float _maxDistance = 20;
-    public float _speed = 5;
+    protected float _maxDistance = 20;
+    protected float _speed = 5;
 
     private Vector2 _originalPos;
 
@@ -17,17 +17,14 @@ public class ProyectileBehavior : MonoBehaviour
         _originalPos = transform.position;
     }
 
-    protected virtual void Start()
-    {
-        SetDeath();
-        Move();        
-    }
+    protected virtual void Start(){ }
 
     protected virtual void Update(){ }
 
-    protected virtual void Move()
+    public virtual void Move(float speed)
     {
-        rb.velocity = transform.up * _speed;
+        _speed = speed;
+        rb.velocity = transform.up * speed;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -39,8 +36,9 @@ public class ProyectileBehavior : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected virtual void SetDeath()
+    public virtual void SetDeath(float maxDistance)
     {
+        _maxDistance = maxDistance;
         float timeToDie = _maxDistance / _speed;
         Invoke(nameof(Die), timeToDie);
     }

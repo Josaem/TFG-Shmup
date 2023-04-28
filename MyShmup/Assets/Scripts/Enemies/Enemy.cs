@@ -21,8 +21,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Wave Dependent")]
     public bool _prioritary = false;
-    [SerializeField]
-    private WaveSelector _dieOnWave;
+    public bool _dieByWave = true;
     private GameManager _myGM;
 
     [Header("Extra")]
@@ -85,13 +84,6 @@ public class Enemy : MonoBehaviour
         Unspawned
     };
 
-    [System.Serializable]
-    private class WaveSelector
-    {
-        public int _section;
-        public int _wave;
-    }
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -145,11 +137,6 @@ public class Enemy : MonoBehaviour
                 }
                 break;
         }
-
-        if (_myGM != null && (_myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
-        {
-            Kill();
-        }
     }
 
     public void MoveToInitialPosition()
@@ -196,17 +183,13 @@ public class Enemy : MonoBehaviour
 
     public virtual void Kill()
     {
-        if ((_dieOnWave._section == 0 && _dieOnWave._wave == 0)
-            || (_myGM != null && _myGM._sectionIndex == _dieOnWave._section && _myGM._waveIndex == _dieOnWave._wave))
+        _movementState = EnemyMovementState.Dying;
+        if(_dieInBackground)
         {
-            _movementState = EnemyMovementState.Dying;
-            if(_dieInBackground)
-            {
-                _invincible = true;
-                GetComponent<Collider2D>().enabled = false;
-                if (_collisionsWithPlayer != null)
-                    _collisionsWithPlayer.SetActive(false);
-            }
+            _invincible = true;
+            GetComponent<Collider2D>().enabled = false;
+            if (_collisionsWithPlayer != null)
+                _collisionsWithPlayer.SetActive(false);
         }
     }
 

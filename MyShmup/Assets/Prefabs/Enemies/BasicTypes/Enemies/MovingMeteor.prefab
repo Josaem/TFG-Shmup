@@ -318,7 +318,7 @@ GameObject:
   m_Layer: 8
   m_Name: ExitWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -466,10 +466,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 300
   _baseScore: 100
+  _isDead: 0
   _prioritary: 0
-  _dieOnWave:
-    _section: 0
-    _wave: 0
+  _dieByWave: 1
   _specialRequirementsIndex: 0
   _delayUntilActive: 0
   _delayUntilFirstAction: 0
@@ -479,6 +478,7 @@ MonoBehaviour:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
   _stuffToSpawnOnDeath: []
+  _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 3000036882000659740}
@@ -509,7 +509,7 @@ GameObject:
   m_Layer: 8
   m_Name: EntryWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
