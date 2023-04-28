@@ -75,7 +75,9 @@ public class WaveObject : MonoBehaviour
         //If alive kills them
         foreach(Generator generator in GetComponentsInChildren<Generator>())
         {
-            generator.EndSpawner();
+            if (generator._dieThisWave)
+                generator.DisableSpawner();
+            generator.KillSpawner();
         }
     }
 
