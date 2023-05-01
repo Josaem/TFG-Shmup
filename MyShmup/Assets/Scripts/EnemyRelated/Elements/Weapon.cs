@@ -75,8 +75,6 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _guns = GetComponentsInChildren<GunContainer>();
-
         _playerController = FindObjectOfType<PlayerController>();
 
         _originalTransform = transform.localEulerAngles;
@@ -101,6 +99,7 @@ public class Weapon : MonoBehaviour
     public void EnableWeapon()
     {
         _isEnabled = true;
+        _guns = GetComponentsInChildren<GunContainer>();
 
         Invoke(nameof(InitializeWeapon), _delayUntilShooting);
     }

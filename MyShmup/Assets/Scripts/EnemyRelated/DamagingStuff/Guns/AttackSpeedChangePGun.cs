@@ -6,7 +6,9 @@ public class AttackSpeedChangePGun : RotativeGuns
 {
     public float _fireRate = 1;
     public float _finalSpeed = 10;
-    public float _speedToLerp = 1;
+    public float _attackDuration = 1;
+    [SerializeField]
+    private AnimationCurve _speedCurve;
 
     private float _lerpedSpeed;
     private float _lerpedTime;
@@ -18,10 +20,21 @@ public class AttackSpeedChangePGun : RotativeGuns
     {
         base.Start();
         _lerpedSpeed = _speedOfAttack;
+        _lerpedTime = 0;
+    }
+
+    protected override void Attack()
+    {
+        base.Attack();
+        _lerpedSpeed = _speedOfAttack;
+        _lerpedTime = 0;
     }
 
     protected override void ManageShooting()
     {
+        _lerpedTime += Time.deltaTime;
+        _lerpedSpeed = Mathf.Lerp(_speedOfAttack, _finalSpeed, _speedCurve.Evaluate(_lerpedTime/_attackDuration));
+
         if (_fireRate > 0)
         {
             //If cooldown between shots has passed
@@ -37,9 +50,6 @@ public class AttackSpeedChangePGun : RotativeGuns
                 bullet.SetDeath(_maxDistance);
             }
         }
-
-        _lerpedTime += Time.deltaTime * _speedToLerp;
-        _lerpedSpeed = Mathf.Lerp(_speedOfAttack, _finalSpeed, _lerpedTime);
     }
 
     public override void DisableGun()

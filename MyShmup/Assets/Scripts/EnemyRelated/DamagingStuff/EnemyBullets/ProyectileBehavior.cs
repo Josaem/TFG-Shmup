@@ -8,18 +8,33 @@ public class ProyectileBehavior : MonoBehaviour
     protected Rigidbody2D rb;
     protected float _maxDistance = 20;
     protected float _speed = 5;
+    [SerializeField]
+    protected bool _traverseTerrain;
+    [SerializeField]
+    protected bool _traversePlayer;
 
     private Vector2 _originalPos;
+    private bool _canDieFromBounds = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         _originalPos = transform.position;
+        Invoke(nameof(AllowBoundsDeath), 3f);
+    }
+
+    private void AllowBoundsDeath()
+    {
+        _canDieFromBounds = true;
     }
 
     protected virtual void Start(){ }
 
-    protected virtual void Update(){ }
+    protected virtual void Update()
+    {
+        if(_canDieFromBounds && Mathf.Abs(transform.position.x + transform.localScale.x/2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6)
+            Die();
+    }
 
     public virtual void Move(float speed)
     {
@@ -32,14 +47,22 @@ public class ProyectileBehavior : MonoBehaviour
         if(collision.gameObject.GetComponent<PlayerController>() != null)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
+            if(!_traversePlayer)
+                Destroy(gameObject);
         }
-        Destroy(gameObject);
+        else if(!_traverseTerrain)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public virtual void SetDeath(float maxDistance)
     {
         _maxDistance = maxDistance;
-        float timeToDie = _maxDistance / _speed;
+        float speed = _speed;
+        if (speed == 0)
+            speed = 1;
+        float timeToDie = _maxDistance / speed;
         Invoke(nameof(Die), timeToDie);
     }
 

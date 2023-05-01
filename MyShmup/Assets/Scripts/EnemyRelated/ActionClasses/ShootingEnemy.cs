@@ -40,13 +40,13 @@ public class ShootingEnemy : Enemy
     public override void Kill()
     {
         if (_stopShootOnDead)
-            StopAttackingPermanently();
+            StopAttacking();
         base.Kill();
     }
 
     protected override void Die()
     {
-        StopAttackingPermanently();
+        StopAttacking();
         base.Die();
     }
 
@@ -69,11 +69,10 @@ public class ShootingEnemy : Enemy
         {
             StartAttacking();
         }
-
-        if (_shootOnSpawn && _changedAttackOnEntry)
+        else if (_changedAttackOnEntry)
         {
             _changedAttackOnEntry = false;
-            StopAttacking();
+            NextAttack();
         }
     }
 
@@ -83,18 +82,17 @@ public class ShootingEnemy : Enemy
         {
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
-                if(!weapon._isEnabled)
-                    weapon.EnableWeapon();
+                weapon.EnableWeapon();
             }
                        
             if (!_changedAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
             {
-                Invoke(nameof(StopAttacking), _attackPattern[_attackIndex]._duration);
+                Invoke(nameof(NextAttack), _attackPattern[_attackIndex]._duration);
             }
         }
     }
 
-    private void StopAttacking()
+    private void NextAttack()
     {
         if(_attackPattern.Length != 0)
         {
@@ -102,19 +100,24 @@ public class ShootingEnemy : Enemy
             {
                 bool willBeUsedNext = false;
 
-                //Check if next weapon to use is already active
-                if (_attackIndex + 1 >= _attackPattern.Length)
+                if (_attackPattern[_attackIndex]._delayUntilNextAttack == 0)
                 {
-                    foreach (Weapon weaponToEnable in _attackPattern[0]._weapons)
-                        if (weaponToEnable == weapon)
-                            willBeUsedNext = true;
+                    //Check if next weapon to use is already active
+                    if (_attackIndex + 1 >= _attackPattern.Length)
+                    {
+                        foreach (Weapon weaponToEnable in _attackPattern[0]._weapons)
+                            if (weaponToEnable == weapon)
+                                willBeUsedNext = true;
+                    }
+                    else
+                    {
+                        foreach (Weapon weaponToEnable in _attackPattern[_attackIndex + 1]._weapons)
+                            if (weaponToEnable == weapon)
+                                willBeUsedNext = true;
+                    }
                 }
                 else
-                {
-                    foreach (Weapon weaponToEnable in _attackPattern[_attackIndex + 1]._weapons)
-                        if (weaponToEnable == weapon)
-                            willBeUsedNext = true;
-                }
+                    willBeUsedNext = false;
 
                 if(!willBeUsedNext)
                     weapon.DisableWeapon();
@@ -134,7 +137,7 @@ public class ShootingEnemy : Enemy
         }
     }
 
-    protected void StopAttackingPermanently()
+    protected void StopAttacking()
     {
         if (_attackPattern.Length != 0)
         {

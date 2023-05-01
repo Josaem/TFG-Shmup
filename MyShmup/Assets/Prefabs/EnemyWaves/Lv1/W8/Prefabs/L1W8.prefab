@@ -704,7 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathDelay: 16
+  _deathDelay: 12
 --- !u!1 &929909671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,7 +3373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3253095118438038529}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 2.5, z: 0}
+  m_LocalPosition: {x: 6, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3473,7 +3473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathDelay: 16
+  _deathDelay: 12
 --- !u!1 &3807678825106210363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3594,7 +3594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3931690342273179884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -2.5, z: 0}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4297,7 +4297,7 @@ MonoBehaviour:
   _prioritary: 0
   _dieByWave: 1
   _specialRequirementsIndex: 0
-  _delayUntilActive: 0
+  _delayUntilActive: 3
   _delayUntilFirstAction: 0
   _spawnInBackground: 0
   _dieInBackground: 0
@@ -5969,7 +5969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6492601472040586136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26, y: -7, z: 0}
+  m_LocalPosition: {x: 40, y: -6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5988,10 +5988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e29e387d896a74e93c11ad2d813d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delayUntilSpawn: 1
+  _delayUntilSpawn: 14
   _dieThisWave: 1
   _objectsToGenerate:
-  - _enemy: {fileID: 3371083459882622798, guid: af7d3efbd65e2a94984b5d6a80cd1f46, type: 3}
+  - _enemy: {fileID: 3589600230758570197, guid: e42c87a906e92f44480889e1f99ef913, type: 3}
     _genDelay: 1
 --- !u!114 &6277669025190174460
 MonoBehaviour:
@@ -6005,7 +6005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathDelay: 16
+  _deathDelay: 26
 --- !u!1 &6524974651345055853
 GameObject:
   m_ObjectHideFlags: 0
@@ -6175,7 +6175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b662af960e349d74abb7e61b96eca0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 25
+  _duration: 32
   _bulletPool: {fileID: 0}
 --- !u!1 &7431669455418520410
 GameObject:
@@ -6703,7 +6703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8735160752013986297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26, y: 7, z: 0}
+  m_LocalPosition: {x: 40, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6722,10 +6722,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e29e387d896a74e93c11ad2d813d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delayUntilSpawn: 1
+  _delayUntilSpawn: 14
   _dieThisWave: 1
   _objectsToGenerate:
-  - _enemy: {fileID: 5457463310150618326, guid: 6defd3a93b645c1439241c978a4734aa, type: 3}
+  - _enemy: {fileID: 6035139237705334104, guid: 2c67fd45e7425324fb4ceabee489cb7a, type: 3}
     _genDelay: 1
 --- !u!114 &7377931878981261103
 MonoBehaviour:
@@ -6739,7 +6739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathDelay: 16
+  _deathDelay: 26
 --- !u!1 &9220892762927533980
 GameObject:
   m_ObjectHideFlags: 0
@@ -6895,19 +6895,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540391430221568433, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 540391430221568433, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 540391431781973744, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 540391431781973744, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 540391431886278505, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_Name
@@ -6939,7 +6939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970394, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 540391431903970395, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: _maxHealth
@@ -7237,7 +7237,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540391430221568433, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 540391430221568433, guid: cb2fe683893298446b5d520470e1bf68, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7475,7 +7475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf35e7d40f46149b759eea081a7d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathDelay: 17
+  _deathDelay: 16
 --- !u!114 &3598359256514302789 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 540391431886278507, guid: cb2fe683893298446b5d520470e1bf68, type: 3}

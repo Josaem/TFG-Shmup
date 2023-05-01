@@ -21,19 +21,28 @@ public class GunContainer : MonoBehaviour
     protected virtual void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
-       
-        if(GetComponentInParent<WaveObject>() == null)
+
+        if (GetComponentInParent<CustomBulletPool>() != null)
+            _bulletPool = GetComponentInParent<CustomBulletPool>()._newBP;
+
+        if (_bulletPool == null)
         {
-            _bulletPool = FindObjectOfType<BulletPool>().transform;
-        }
-        else
-        {
-            _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
+            if (GetComponentInParent<WaveObject>() == null)
+            {
+                _bulletPool = FindObjectOfType<BulletPool>().transform;
+            }
+            else
+            {
+                _bulletPool = GetComponentInParent<WaveObject>()._bulletPool.transform;
+            }
         }
 
         if(_startActive)
         {
-            EnableGun();
+            if (_waitUntilShooting != 0)
+                Invoke(nameof(Attack), _waitUntilShooting);
+            else
+                Attack();
         }
     }
 
@@ -48,7 +57,10 @@ public class GunContainer : MonoBehaviour
 
     public void EnableGun()
     {
-        Invoke(nameof(Attack), _waitUntilShooting);
+        if (_waitUntilShooting != 0)
+            Invoke(nameof(Attack), _waitUntilShooting);
+        else
+            Attack();
     }
 
     protected virtual void Attack()

@@ -25,7 +25,7 @@ public class LaserBehavior : MonoBehaviour
         DontShowLaser();
 
         //AnimateHere
-        if(_laserVisualGuide != null)
+        if(_laserVisualGuide != null && _timeToSpawn != 0)
             Invoke(nameof(Spawn), _timeToSpawn);
         else
         {

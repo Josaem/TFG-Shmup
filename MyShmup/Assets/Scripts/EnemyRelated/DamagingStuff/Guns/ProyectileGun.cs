@@ -8,6 +8,7 @@ public class ProyectileGun : RotativeGuns
 
     protected float _timeUntilShooting = 0;
 
+
     protected override void ManageShooting()
     {
         if (_fireRate > 0)
@@ -16,7 +17,7 @@ public class ProyectileGun : RotativeGuns
             if (Time.time > _timeUntilShooting)
             {
                 _timeUntilShooting = Time.time + _fireRate;
-
+                
                 //Shoot a shot
                 ProyectileBehavior bullet = Instantiate(_attackObject,
                     transform.position, transform.rotation,

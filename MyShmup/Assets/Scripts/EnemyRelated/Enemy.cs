@@ -87,7 +87,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        Invoke(nameof(Spawn), _delayUntilActive);
         _myWave = GetComponentInParent<WaveObject>();
         _currentHealth = _maxHealth;
         UpdateHealthVisuals();
@@ -101,6 +100,11 @@ public class Enemy : MonoBehaviour
             if (_collisionsWithPlayer != null)
                 _collisionsWithPlayer.SetActive(false);
         }
+
+        if (_delayUntilActive != 0)
+            Invoke(nameof(Spawn), _delayUntilActive);
+        else
+            Spawn();
     }
 
     protected virtual void Spawn()
@@ -154,7 +158,10 @@ public class Enemy : MonoBehaviour
             }
 
             _movementState = EnemyMovementState.Moving;
-            Invoke(nameof(StartAction), _delayUntilFirstAction);
+            if (_delayUntilFirstAction != 0)
+                Invoke(nameof(StartAction), _delayUntilFirstAction);
+            else
+                StartAction();
         }
     }
 
@@ -168,7 +175,10 @@ public class Enemy : MonoBehaviour
         }
 
         _movementState = EnemyMovementState.Moving;
-        Invoke(nameof(StartAction), _delayUntilFirstAction);
+        if (_delayUntilFirstAction != 0)
+            Invoke(nameof(StartAction), _delayUntilFirstAction);
+        else
+            StartAction();
     }
 
     public virtual void StartAction()
