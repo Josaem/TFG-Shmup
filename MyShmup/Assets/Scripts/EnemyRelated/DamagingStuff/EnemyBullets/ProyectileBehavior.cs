@@ -20,7 +20,6 @@ public class ProyectileBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         _originalPos = transform.position;
-        Invoke(nameof(AllowBoundsDeath), 3f);
     }
 
     private void AllowBoundsDeath()
@@ -32,8 +31,13 @@ public class ProyectileBehavior : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(_canDieFromBounds && Mathf.Abs(transform.position.x + transform.localScale.x/2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6)
+        if (!_canDieFromBounds && Mathf.Abs(transform.position.x) < 9 && Mathf.Abs(transform.position.y) < 5)
+            AllowBoundsDeath();
+
+        if (_canDieFromBounds && (Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6))
+        {
             Die();
+        }
     }
 
     public virtual void Move(float speed)

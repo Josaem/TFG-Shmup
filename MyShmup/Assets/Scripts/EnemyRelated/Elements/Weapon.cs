@@ -28,6 +28,9 @@ public class Weapon : MonoBehaviour
     private float _rotTime = 0;
     private bool _hasLockedPlayer;
     private Vector3 _singleLockPos;
+    private IEnumerator _initWeapon;
+    private IEnumerator _startWeapon;
+    private IEnumerator _endWeapon;
 
     //Duration of gun activation, where the weapon shoots
     [System.Serializable]
@@ -50,6 +53,7 @@ public class Weapon : MonoBehaviour
         public RotType _rotType;
         public float _rotationAngle;
         public float _rotationSpeed;
+        public AnimationCurve _rotCurve;
     }
 
     private enum RotateStart
@@ -61,7 +65,8 @@ public class Weapon : MonoBehaviour
     protected enum RotType
     {
         Pingpong,
-        Repeat
+        Repeat,
+        Curve
     };
 
     public enum PointTowardsPlayer
@@ -101,14 +106,28 @@ public class Weapon : MonoBehaviour
         _isEnabled = true;
         _guns = GetComponentsInChildren<GunContainer>();
 
-        Invoke(nameof(InitializeWeapon), _delayUntilShooting);
+        _initWeapon = InitWeapon(_delayUntilShooting);
+        StartCoroutine(_initWeapon);
     }
 
     public void DisableWeapon()
     {
         _isEnabled = false;
+        if(_initWeapon != null)
+            StopCoroutine(_initWeapon);
+        if (_endWeapon != null)
+            StopCoroutine(_endWeapon);
+        if (_startWeapon != null)
+            StopCoroutine(_startWeapon);
 
         EndWeaponBehavior();
+    }
+
+    private IEnumerator InitWeapon(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        InitializeWeapon();
     }
 
     private void InitializeWeapon()
@@ -121,6 +140,13 @@ public class Weapon : MonoBehaviour
 
         if(_weaponBehavior[_weaponBehaviorIndex]._pointAtPlayer != PointTowardsPlayer.Slow) ResetWeaponRotation();
         ManageTargetting();
+
+        StartWeaponBehavior();
+    }
+
+    private IEnumerator StartWeapon(float time)
+    {
+        yield return new WaitForSeconds(time);
 
         StartWeaponBehavior();
     }
@@ -139,9 +165,17 @@ public class Weapon : MonoBehaviour
 
             if (_weaponBehavior[_weaponBehaviorIndex]._duration != 0)
             {
-                Invoke(nameof(EndWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._duration);
+                _endWeapon = EndWeapon(_weaponBehavior[_weaponBehaviorIndex]._duration);
+                StartCoroutine(_endWeapon);
             }
         }
+    }
+
+    private IEnumerator EndWeapon(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        EndWeaponBehavior();
     }
 
     private void EndWeaponBehavior()
@@ -157,11 +191,13 @@ public class Weapon : MonoBehaviour
             if (_weaponBehaviorIndex + 1 >= _weaponBehavior.Length)
             {
                 _weaponBehaviorIndex = 0;
-                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex]._delayUntilNextAttack);
+                _startWeapon = StartWeapon(_weaponBehavior[_weaponBehaviorIndex]._delayUntilNextAttack);
+                StartCoroutine(_startWeapon);
             }
             else
             {
-                Invoke(nameof(StartWeaponBehavior), _weaponBehavior[_weaponBehaviorIndex++]._delayUntilNextAttack);
+                _startWeapon = StartWeapon(_weaponBehavior[_weaponBehaviorIndex++]._delayUntilNextAttack);
+                StartCoroutine(_startWeapon);
             }
         }
     }
@@ -203,66 +239,82 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._dontCenterAngleRotation)
+            float rotSpeed = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed;
+            float rotAngle = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle;
+            bool dontCenterAngleRot = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._dontCenterAngleRotation;
+            RotateStart rotateStart = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotateStart;
+            RotType rotType = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotType;
+            AnimationCurve rotCurve = _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotCurve;
+
+            if (dontCenterAngleRot)
             {
-                if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
+                if (rotateStart == RotateStart.Right)
                 {
-                    if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                            _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * rotSpeed, rotAngle));
+                    }
+                    else if(rotType == RotType.Repeat)
+                    {
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.Repeat(_rotTime * rotSpeed, rotAngle));
                     }
                     else
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.Repeat(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                            _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            -Mathf.Lerp(_originalRot.z - rotAngle /2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
                 else
                 {
-                    if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed, rotAngle));
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed, rotAngle));
                     }
                     else
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                            _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
-
             }
             else
             {
-                if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotateStart == RotateStart.Right)
+                if (rotateStart == RotateStart.Right)
                 {
-                    if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
-                        - _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
                     }
                     else
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
-                        - _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2));
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            -(Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                                    - rotAngle / 2));
                     }
                 }
                 else
                 {
-                    if (_weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
-                        - _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
                     }
                     else
                     {
-                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationSpeed,
-                        _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle)
-                        - _weaponBehavior[_weaponBehaviorIndex]._rotativeBehavior._rotationAngle / 2);
+                        _weaponPivot.transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                                    - rotAngle / 2);
                     }
                 }
             }

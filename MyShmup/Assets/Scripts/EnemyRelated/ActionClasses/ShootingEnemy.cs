@@ -12,13 +12,15 @@ public class ShootingEnemy : Enemy
     [SerializeField]
     protected bool _stopShootOnDead = true;
     #if UNITY_EDITOR
-    [Help("If change on attack behavior will loop ignoring the first behavior", UnityEditor.MessageType.None)]
+    [Help("If change on attack behavior will loop ignoring the first behavior\nThe duration of the pattern will delay when it changes behavior", UnityEditor.MessageType.None)]
     #endif
     [SerializeField]
     private bool _changeAttackOnEntry;
 
+    private float _timeToChangeAttack;
+
+    private bool _skipForChangeOnEntry = true;
     private int _attackIndex = 0;
-    private bool _changedAttackOnEntry;
 
     //Which weapons attack and for how long
     [System.Serializable]
@@ -27,14 +29,6 @@ public class ShootingEnemy : Enemy
         public Weapon[] _weapons;
         public float _duration;
         public float _delayUntilNextAttack;
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-
-        if (_changeAttackOnEntry)
-            _changedAttackOnEntry = true;
     }
 
     public override void Kill()
@@ -50,16 +44,22 @@ public class ShootingEnemy : Enemy
         base.Die();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+
+        _timeToChangeAttack = _attackPattern[_attackIndex]._duration;
+        if (!_changeAttackOnEntry)
+            _skipForChangeOnEntry = false;
+    }
+
     protected override void Spawn()
     {
         base.Spawn();
+
         if(_shootOnSpawn)
         {
             StartAttacking();
-        }
-        else
-        {
-            _changedAttackOnEntry = false;
         }
     }
 
@@ -67,12 +67,17 @@ public class ShootingEnemy : Enemy
     {
         if (!_shootOnSpawn)
         {
-            StartAttacking();
+            if (_delayUntilFirstAction != 0)
+                Invoke(nameof(StartAttacking), _delayUntilFirstAction);
+            else
+                StartAttacking();
         }
-        else if (_changedAttackOnEntry)
+        else if (_changeAttackOnEntry)
         {
-            _changedAttackOnEntry = false;
-            NextAttack();
+            if (_timeToChangeAttack != 0)
+                Invoke(nameof(NextAttack), _timeToChangeAttack);
+            else
+                NextAttack();
         }
     }
 
@@ -84,8 +89,8 @@ public class ShootingEnemy : Enemy
             {
                 weapon.EnableWeapon();
             }
-                       
-            if (!_changedAttackOnEntry && _attackPattern[_attackIndex]._duration != 0)
+
+            if (!_skipForChangeOnEntry && _attackPattern[_attackIndex]._duration != 0)
             {
                 Invoke(nameof(NextAttack), _attackPattern[_attackIndex]._duration);
             }
@@ -94,8 +99,11 @@ public class ShootingEnemy : Enemy
 
     private void NextAttack()
     {
-        if(_attackPattern.Length != 0)
+        if (_attackPattern.Length != 0)
         {
+            if (_changeAttackOnEntry)
+                _skipForChangeOnEntry = false;
+
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
                 bool willBeUsedNext = false;
@@ -123,17 +131,29 @@ public class ShootingEnemy : Enemy
                     weapon.DisableWeapon();
             }
 
-            Invoke(nameof(StartAttacking), _attackPattern[_attackIndex]._delayUntilNextAttack);
+            float _currentDelay = _attackPattern[_attackIndex]._delayUntilNextAttack;
 
-            //Next attack
             _attackIndex++;
 
             //if no more attacks go to first one if not changeattack
             if (_attackIndex >= _attackPattern.Length)
             {
-                if (_changeAttackOnEntry) _attackIndex = 1;
+                if (_changeAttackOnEntry && _attackPattern.Length > 1)
+                {
+                    _attackIndex = 1;
+                }
                 else _attackIndex = 0;
             }
+
+            if (_currentDelay != 0)
+            {
+
+                Invoke(nameof(StartAttacking), _currentDelay);
+            }
+            else
+            {
+                StartAttacking();
+            }  
         }
     }
 

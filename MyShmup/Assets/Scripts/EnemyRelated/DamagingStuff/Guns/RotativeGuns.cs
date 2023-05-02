@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class RotativeGuns : GunContainer
@@ -25,6 +26,7 @@ public class RotativeGuns : GunContainer
         public RotType _rotType;
         public float _rotationAngle;
         public float _rotationSpeed;
+        public AnimationCurve _rotCurve;
     }
 
     protected enum RotateStart
@@ -37,7 +39,8 @@ public class RotativeGuns : GunContainer
     protected enum RotType
     {
         Pingpong,
-        Repeat
+        Repeat,
+        Curve
     };
 
     public enum PointTowardsPlayer
@@ -108,66 +111,82 @@ public class RotativeGuns : GunContainer
         }
         else
         {
-            if (_rotativeBehavior._dontCenterAngleRotation)
+            float rotSpeed = _rotativeBehavior._rotationSpeed;
+            float rotAngle = _rotativeBehavior._rotationAngle;
+            bool dontCenterAngleRot = _rotativeBehavior._dontCenterAngleRotation;
+            RotateStart rotateStart = _rotativeBehavior._rotateStart;
+            RotType rotType = _rotativeBehavior._rotType;
+            AnimationCurve rotCurve = _rotativeBehavior._rotCurve;
+
+            if (dontCenterAngleRot)
             {
-                if (_rotativeBehavior._rotateStart == RotateStart.Right)
+                if (rotateStart == RotateStart.Right)
                 {
-                    if (_rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * _rotativeBehavior._rotationSpeed,
-                            _rotativeBehavior._rotationAngle));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.PingPong(_rotTime * rotSpeed, rotAngle));
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.Repeat(_rotTime * rotSpeed, rotAngle));
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -Mathf.Repeat(_rotTime * _rotativeBehavior._rotationSpeed,
-                            _rotativeBehavior._rotationAngle));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            -Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
                 else
                 {
-                    if (_rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _rotativeBehavior._rotationSpeed,
-                        _rotativeBehavior._rotationAngle));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed, rotAngle));
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed, rotAngle));
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _rotativeBehavior._rotationSpeed,
-                            _rotativeBehavior._rotationAngle));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
-
             }
             else
             {
-                if (_rotativeBehavior._rotateStart == RotateStart.Right)
+                if (rotateStart == RotateStart.Right)
                 {
-                    if (_rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * _rotativeBehavior._rotationSpeed,
-                        _rotativeBehavior._rotationAngle)
-                        - _rotativeBehavior._rotationAngle / 2));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * _rotativeBehavior._rotationSpeed,
-                        _rotativeBehavior._rotationAngle)
-                        - _rotativeBehavior._rotationAngle / 2));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            -(Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                                    - rotAngle / 2));
                     }
                 }
                 else
                 {
-                    if (_rotativeBehavior._rotType == RotType.Pingpong)
+                    if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * _rotativeBehavior._rotationSpeed,
-                        _rotativeBehavior._rotationAngle)
-                        - _rotativeBehavior._rotationAngle / 2);
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
+                    }
+                    else if (rotType == RotType.Repeat)
+                    {
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * _rotativeBehavior._rotationSpeed,
-                        _rotativeBehavior._rotationAngle)
-                        - _rotativeBehavior._rotationAngle / 2);
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                                    - rotAngle / 2);
                     }
                 }
             }

@@ -97,7 +97,7 @@ GameObject:
   m_Layer: 0
   m_Name: EntryWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -128,7 +128,7 @@ GameObject:
   m_Layer: 0
   m_Name: ExitWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -193,18 +193,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9e0641937875544ba697da8492cefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startEnabled: 0
   _delayUntilShooting: 1
   _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 1
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 1
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
+      _resetRot: 0
       _rotType: 0
       _rotationAngle: 40
       _rotationSpeed: 77
+  _isEnabled: 0
 --- !u!1 &3400551837802783426
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,10 +551,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 200
   _baseScore: 100
+  _isDead: 0
   _prioritary: 1
-  _dieOnWave:
-    _section: 0
-    _wave: 0
+  _dieByWave: 1
   _specialRequirementsIndex: 0
   _delayUntilActive: 1
   _delayUntilFirstAction: 0
@@ -560,6 +563,7 @@ MonoBehaviour:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
   _stuffToSpawnOnDeath: []
+  _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 0}
@@ -580,6 +584,7 @@ MonoBehaviour:
   _changeAttackOnEntry: 0
   _horizontal: 0
   _speed: 0.7
+  _maxFollow: 0
 --- !u!50 &804274889203958391
 Rigidbody2D:
   serializedVersion: 4

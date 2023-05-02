@@ -158,10 +158,7 @@ public class Enemy : MonoBehaviour
             }
 
             _movementState = EnemyMovementState.Moving;
-            if (_delayUntilFirstAction != 0)
-                Invoke(nameof(StartAction), _delayUntilFirstAction);
-            else
-                StartAction();
+            StartAction();
         }
     }
 
