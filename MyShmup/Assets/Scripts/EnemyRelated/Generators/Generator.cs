@@ -11,7 +11,7 @@ public class Generator : MonoBehaviour
     private float _delayUntilSpawn = 0;
     public bool _dieThisWave = true;
 
-    private bool _enabled = false;
+    protected bool _enabled = false;
     private bool _isDying = false;
     protected GameManager _myGM;
 

@@ -13,7 +13,7 @@ public class WaveInstanceGun : GunContainer
     protected override void ManageShooting()
     {
         //If cooldown between shots has passed
-        if (Time.time > _waveTime)
+        if (Time.time > _waveTime && _active)
         {
             _waveTime = Time.time + _timeBetweenWaves;
 
@@ -23,5 +23,11 @@ public class WaveInstanceGun : GunContainer
             wave._speed = _speedOfAttack;
             wave._maxSize = _maxDistance*2;
         }
+    }
+
+    protected override void Attack()
+    {
+        base.Attack();
+        _waveTime = 0;
     }
 }

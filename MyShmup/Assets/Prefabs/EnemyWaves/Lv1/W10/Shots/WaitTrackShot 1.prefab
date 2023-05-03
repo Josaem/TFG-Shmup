@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 670026588578149590}
   - component: {fileID: 4946687591313873731}
   m_Layer: 11
-  m_Name: WaitTrackShot
+  m_Name: WaitTrackShot 1
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   _steps: 1
   _startingDistance: 0
   _stepDistance: 0
-  _stepTime: 3
+  _stepTime: 2
   _rotationSpeed: 0
   _lock: 1
   _lockOnLastStep: 0

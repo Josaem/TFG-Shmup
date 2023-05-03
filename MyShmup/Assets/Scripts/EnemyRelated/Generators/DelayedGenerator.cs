@@ -25,7 +25,7 @@ public class DelayedGenerator : Generator
 
     protected override void ManageSpawn()
     {
-        if(_allowSpawn && GetComponentsInChildren<Enemy>().Length == 0)
+        if(_enabled && _allowSpawn && GetComponentsInChildren<Enemy>().Length == 0)
         {
             Invoke(nameof(SpawnEnemies), _waitUntilSpawn);
             _allowSpawn = false;

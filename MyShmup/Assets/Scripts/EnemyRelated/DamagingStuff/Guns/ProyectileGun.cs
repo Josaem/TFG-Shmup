@@ -8,10 +8,9 @@ public class ProyectileGun : RotativeGuns
 
     protected float _timeUntilShooting = 0;
 
-
     protected override void ManageShooting()
     {
-        if (_fireRate > 0)
+        if (_fireRate > 0 && _active)
         {
             //If cooldown between shots has passed
             if (Time.time > _timeUntilShooting)
@@ -28,9 +27,9 @@ public class ProyectileGun : RotativeGuns
         }
     }
 
-    public override void DisableGun()
+    protected override void Attack()
     {
-        base.DisableGun();
+        base.Attack();
         _timeUntilShooting = 0;
     }
 }

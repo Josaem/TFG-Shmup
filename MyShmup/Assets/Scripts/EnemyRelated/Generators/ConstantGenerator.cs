@@ -21,12 +21,15 @@ public class ConstantGenerator : Generator
 
     protected override void ManageSpawn()
     {
-        foreach(ObjectToGenerate genObject in _objectsToGenerate)
+        if(_enabled)
         {
-            if (Time.time > _spawnTime + genObject._genDelay)
+            foreach (ObjectToGenerate genObject in _objectsToGenerate)
             {
-                Instantiate(genObject._enemy, transform);
-                _spawnTime = Time.time;
+                if (Time.time > _spawnTime + genObject._genDelay)
+                {
+                    Instantiate(genObject._enemy, transform);
+                    _spawnTime = Time.time;
+                }
             }
         }
     }

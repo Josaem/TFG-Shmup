@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2956890066147903651}
   - component: {fileID: 3043241080427379887}
   m_Layer: 11
-  m_Name: BigEnemyShotTrail
+  m_Name: BigEnemyShotTrail 1
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610293112243239705, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: _delayUntilShooting
-      value: 0.25
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6610293112243239705, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: _weaponBehavior.Array.data[0]._duration
@@ -378,7 +378,7 @@ PrefabInstance:
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _attackObject
       value: 
-      objectReference: {fileID: 4409051570943762180, guid: 9fc83a65bc9b7c34e928fb1bfb3befb5, type: 3}
+      objectReference: {fileID: 4409051570943762180, guid: fcd02cb08be866244a206ff0e0294041, type: 3}
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _speedOfAttack
       value: 7

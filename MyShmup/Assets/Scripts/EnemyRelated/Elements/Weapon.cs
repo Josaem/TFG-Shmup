@@ -180,10 +180,13 @@ public class Weapon : MonoBehaviour
 
     private void EndWeaponBehavior()
     {
-        foreach (GunContainer gun in _guns)
+        if(_guns != null)
         {
-            if (gun != null)
-                gun.DisableGun();
+            foreach (GunContainer gun in _guns)
+            {
+                if (gun != null)
+                    gun.DisableGun();
+            }
         }
 
         if(_isEnabled)
@@ -354,5 +357,15 @@ public class Weapon : MonoBehaviour
     private void ResetPivotRotation()
     {
         _weaponPivot.localEulerAngles = _originalRot;
+    }
+
+    private void OnDestroy()
+    {
+        if (_initWeapon != null)
+            StopCoroutine(_initWeapon);
+        if (_endWeapon != null)
+            StopCoroutine(_endWeapon);
+        if (_startWeapon != null)
+            StopCoroutine(_startWeapon);
     }
 }

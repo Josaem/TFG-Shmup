@@ -9,11 +9,13 @@ public class GunContainer : MonoBehaviour
     public float _waitUntilShooting;
     public float _speedOfAttack = 3;
     public float _maxDistance = 20;
+    [SerializeField]
+    private bool _useGeneralBulletPool;
 
     [SerializeField]
     protected GameObject _attackObject;
 
-    private bool _active = false;
+    protected bool _active = false;
 
     protected PlayerController _playerController;
     protected Transform _bulletPool;
@@ -27,9 +29,9 @@ public class GunContainer : MonoBehaviour
 
         if (_bulletPool == null)
         {
-            if (GetComponentInParent<WaveObject>() == null)
+            if (_useGeneralBulletPool || GetComponentInParent<WaveObject>() == null)
             {
-                _bulletPool = FindObjectOfType<BulletPool>().transform;
+                _bulletPool = GameObject.FindWithTag("GeneralBulletPool").transform;
             }
             else
             {
