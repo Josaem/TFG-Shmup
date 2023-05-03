@@ -93,10 +93,10 @@ public class Enemy : MonoBehaviour
         _myGM = FindObjectOfType<GameManager>();
         _stuckBulletVisual = GetComponentInChildren<StuckBulletVisual>();
         _player = FindObjectOfType<PlayerController>();
+        GetComponent<Collider2D>().enabled = false;
 
         if (_spawnInBackground)
         {
-            GetComponent<Collider2D>().enabled = false;
             if (_collisionsWithPlayer != null)
                 _collisionsWithPlayer.SetActive(false);
         }
@@ -110,6 +110,10 @@ public class Enemy : MonoBehaviour
     protected virtual void Spawn()
     {
         _movementState = EnemyMovementState.Entering;
+        if(!_spawnInBackground)
+        {
+            GetComponent<Collider2D>().enabled = true;
+        }
     }
 
     // Update is called once per frame
