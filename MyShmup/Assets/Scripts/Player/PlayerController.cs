@@ -195,7 +195,12 @@ public class PlayerController : MonoBehaviour
             {
                 _hitboxSprite.color = _shieldNotOnCooldownColor;
             }
-        }    
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
 
         //If not shooting reset option positions
         if (!_1stShotEnabled && !_2ndShotEnabled)
@@ -207,18 +212,6 @@ public class PlayerController : MonoBehaviour
         {
             RotateOptions();
         }
-
-        var rotation = Quaternion.AngleAxis(90, Vector3.up);
-        var forward = Vector3.forward;
-
-
-        Debug.DrawRay(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(-3, Vector3.forward) * transform.right * 20, Color.green);
-        Debug.DrawRay(transform.TransformPoint(-Vector3.up * transform.localScale.y / 2), Quaternion.AngleAxis(2, Vector3.forward) * -transform.right * 20, Color.green);
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
     }
 
     public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>();

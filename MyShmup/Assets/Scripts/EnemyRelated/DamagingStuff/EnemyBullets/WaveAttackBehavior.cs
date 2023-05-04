@@ -10,12 +10,28 @@ public class WaveAttackBehavior : MonoBehaviour
     [HideInInspector]
     public Transform _followTarget;
 
+    private float _growthTime = 0;
+    private bool _spawned = false;
+
+    private void Start()
+    {
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+    }
+
     private void FixedUpdate()
     {
+        if(!_spawned)
+        {
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            _spawned = true;
+        }
+
+        _growthTime += Time.deltaTime;
+
         if(_followTarget != null )
             transform.position = _followTarget.transform.position;
 
-        transform.localScale += new Vector3(Time.fixedDeltaTime * _speed, Time.fixedDeltaTime * _speed, 0);
+        transform.localScale = new Vector3( _growthTime * _speed, _growthTime * _speed, 1);
 
         if (Mathf.Abs(transform.localScale.x) > _maxSize || Mathf.Abs(transform.localScale.y) > _maxSize)
         {
@@ -25,7 +41,7 @@ public class WaveAttackBehavior : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<PlayerController>() != null && Vector2.Distance(collision.transform.position, transform.position) > transform.localScale.x / 2 - 0.5)
+        if(collision.gameObject.GetComponent<PlayerController>() != null && Vector2.Distance(collision.transform.position, transform.position) > transform.localScale.x - 0.5)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
             collision.gameObject.GetComponent<PlayerController>().ResetShield(_cooldownDivider);

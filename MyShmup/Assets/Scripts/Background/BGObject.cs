@@ -36,7 +36,7 @@ public class BGObject : MonoBehaviour
         _myGM = FindObjectsOfType<GameManager>()[0];
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(_dying && _safeToTransition)
         {

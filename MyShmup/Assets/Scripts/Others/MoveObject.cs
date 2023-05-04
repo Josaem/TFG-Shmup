@@ -31,8 +31,7 @@ public class MoveObject : MonoBehaviour
         public Transform _waypoint;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         switch(_scrollType)
         {

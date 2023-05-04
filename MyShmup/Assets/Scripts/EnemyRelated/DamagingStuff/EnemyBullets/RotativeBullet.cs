@@ -9,7 +9,7 @@ public class RotativeBullet : ProyectileBehavior
 
     private void FixedUpdate()
     {
-        transform.Rotate(0, 0, _rot * Time.fixedDeltaTime);
+        transform.Rotate(0, 0, _rot * Time.deltaTime);
         rb.velocity = transform.up * _speed;
     }
 }

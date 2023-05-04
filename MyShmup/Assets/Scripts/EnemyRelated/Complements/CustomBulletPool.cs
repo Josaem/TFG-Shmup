@@ -15,10 +15,13 @@ public class CustomBulletPool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_newBP != null)
-            _newBP.position = transform.position;
-
         if(transform.childCount == 0)
             Destroy(_newBP.gameObject);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_newBP != null)
+            _newBP.position = transform.position;
     }
 }

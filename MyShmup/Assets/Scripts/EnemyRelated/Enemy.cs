@@ -116,13 +116,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
-        switch(_movementState)
+        switch (_movementState)
         {
             case EnemyMovementState.Entering:
-                if(_entryDestination._waypoint != null)
+                if (_entryDestination._waypoint != null)
                 {
                     MoveToInitialPosition();
                 }
@@ -146,6 +145,9 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+
+    // Update is called once per frame
+    protected virtual void Update(){ }
 
     public void MoveToInitialPosition()
     {

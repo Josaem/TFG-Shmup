@@ -53,9 +53,6 @@ public class StuckBulletVisual : MonoBehaviour
 
     private void Update()
     {
-        _stuck1stPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        _stuck2ndPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
-
         if (_timeWhereTextActive > 0) _timeWhereTextActive = Mathf.Max(_timeWhereTextActive - Time.deltaTime, 0f);
         else if(_textActive)
         {
@@ -74,6 +71,12 @@ public class StuckBulletVisual : MonoBehaviour
             _2ndCounter--;
             Destroy(_stuck2ndPool.transform.GetChild(0).gameObject);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        _stuck1stPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        _stuck2ndPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
         _willDieFromExploVisual.transform.rotation = Quaternion.identity;
     }

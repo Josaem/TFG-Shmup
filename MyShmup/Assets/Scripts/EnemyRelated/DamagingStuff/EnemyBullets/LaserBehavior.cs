@@ -57,7 +57,7 @@ public class LaserBehavior : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(_laserOn)
         {
