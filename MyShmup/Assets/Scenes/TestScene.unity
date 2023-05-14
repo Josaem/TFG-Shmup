@@ -725,7 +725,8 @@ GameObject:
   - component: {fileID: 1870230569}
   - component: {fileID: 1870230568}
   - component: {fileID: 1870230570}
-  m_Layer: 7
+  - component: {fileID: 1870230571}
+  m_Layer: 11
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,6 +826,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1870230571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870230567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e38e8144e3bb749be88f17596f9d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1942992438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,6 +1123,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6954143849367745110, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143849367745111, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143849367745111, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143849367745111, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143849367745111, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6954143849437853018, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: m_Name
       value: PlayerPackage
@@ -1156,6 +1189,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6954143849437853019, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143849801965405, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: _deathTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
+      propertyPath: _invincibleTest
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6954143850450981557, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _fastSpeed;
     private Vector2 _movementValues;
     private bool _slowMovement = false;
+    private bool _canMove = true;
 
     [Header("PlayerStatus")]
     [SerializeField] private float _deathTime;
@@ -78,7 +79,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Visuals")]
     [SerializeField] private SpriteRenderer _playerSprite;
-    [SerializeField] private SpriteRenderer _shieldSprite;
     [SerializeField] private SpriteRenderer _hitboxSprite;
     private float _gunRotSpeed = 5f;
     private float _gunRotAmplitude = 0.5f;
@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
     private float _gunRotTime = 0;
     private SpriteRenderer[] _playerSprites;
     private Animator[] _optionsAnimator;
+    private Animator _shipAnimator;
+    private Animator _hitboxAnimator;
 
     [Header("Dependecies")]
     [SerializeField] private Rigidbody2D _rb;
@@ -113,13 +115,6 @@ public class PlayerController : MonoBehaviour
     {
         _timeUntil2ndShotEnabled = _timeFor2ndShotActivation;
         _optionsFollow = new Vector2[_base1stOptionsLocation.Length];
-
-        for (int i = 0; i < _base1stOptionsLocation.Length; i++)
-        {
-            _optionsFollow[i] = _base1stOptionsLocation[i].transform.position;
-        }
-
-        ResetOptionPositions();
 
         fireAction.started += ctx => {
             if(!_dead)
@@ -161,22 +156,29 @@ public class PlayerController : MonoBehaviour
             }
         };
 
-        _shieldSprite.enabled = false;
-
         _noLockObject.position = transform.right * _noLockShotDistance;
-
-        if (_invincibleTest) _invincible = true;
 
         _nextShieldCooldown = _blockCooldown;
 
         ChangeOrientation(shipOrientation);
 
         _optionsAnimator = new Animator[_optionsGameObject.Length];
-
         for (int i = 0; i < _optionsGameObject.Length; i++)
         {
             _optionsAnimator[i] = _optionsGameObject[i].GetComponentInChildren<Animator>();
         }
+        _shipAnimator = _playerSprite.GetComponent<Animator>();
+        _hitboxAnimator = _hitboxSprite.GetComponent<Animator>();
+
+        DisableShip();
+        HideShip();
+
+        foreach (GameObject option in _optionsGameObject)
+            option.transform.localPosition = Vector2.zero;
+
+        HideOptions();
+        HideHitbox();
+        StartCoroutine(SpawnShip(_deathTime));
     }
 
     private void Update()
@@ -218,16 +220,22 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-
-        //If not shooting reset option positions
-        if (!_1stShotEnabled && !_2ndShotEnabled)
-        {
-            ResetOptionPositions();
-        }
+        if(_canMove)
+            Move();
         else
+            _rb.velocity = Vector2.zero;
+
+        if (!_dead)
         {
-            RotateOptions();
+            //If not shooting reset option positions
+            if (!_1stShotEnabled && !_2ndShotEnabled)
+            {
+                ResetOptionPositions();
+            }
+            else
+            {
+                RotateOptions();
+            } 
         }
 
         MoveOptions();
@@ -237,27 +245,20 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (!_dead)
-        {
-            if (_movementValues.x > 0.1)
-                _movementValues.x = 1;
-            if (_movementValues.x < - 0.1)
-                _movementValues.x = -1;
-            if (_movementValues.y > 0.1)
-                _movementValues.y = 1;
-            if (_movementValues.y < -0.1)
-                _movementValues.y = -1;
+        if (_movementValues.x > 0.1)
+            _movementValues.x = 1;
+        if (_movementValues.x < - 0.1)
+            _movementValues.x = -1;
+        if (_movementValues.y > 0.1)
+            _movementValues.y = 1;
+        if (_movementValues.y < -0.1)
+            _movementValues.y = -1;
 
-            //TODOANIM play moving anim
-            if (_slowMovement)
-                _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues.normalized;
-            else
-                _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues.normalized;
-        }
+        //TODOANIM play moving anim
+        if (_slowMovement)
+            _rb.velocity = _slowSpeed * Time.deltaTime * _movementValues.normalized;
         else
-        {
-            _rb.velocity = Vector2.zero;
-        }
+            _rb.velocity = _fastSpeed * Time.deltaTime * _movementValues.normalized;
     }
 
     private void StartShooting()
@@ -507,7 +508,6 @@ public class PlayerController : MonoBehaviour
         {
             _shieldRemainingTime = _blockDuration;
             _nextShieldCooldown = _blockCooldown;
-            _shieldSprite.enabled = true;
             _invincible = true;
             EnableBlockVisual();
         }
@@ -515,13 +515,12 @@ public class PlayerController : MonoBehaviour
 
     private void DisableBlock()
     {
+        DisableBlockVisual();
         _shieldRemainingTime = 0;
         _shieldRemainingCooldown = _nextShieldCooldown;
-        _shieldSprite.enabled = false;
         _invincible = false;
 
         _hitboxSprite.color = _shieldOnCooldownColor;
-        DisableBlockVisual();
     }
 
     public void ResetShield(float cooldownDivider)
@@ -542,59 +541,116 @@ public class PlayerController : MonoBehaviour
 
     public void GetHurt()
     {
-        if(!_invincible && !_dead)
+        if(!_invincible && !_dead && !_invincibleTest)
         {
             GameProperties._life--;
             FindObjectOfType<LifeUI>().SetUpLifebar();
 
-            transform.position = _playerRespawnLocation.position;
+            DisableShip();
 
-            _invincible = true;
-            StartCoroutine(StopInvincibility(_deathTime+1f));
-            GetComponent<Collider2D>().enabled = false;
+            OptionsToCenter();
+            foreach(Animator option in _optionsAnimator)
+            {
+                option.Play("OptionDespawnAnim");
+            }
+            Invoke(nameof(HideOptions), _optionsAnimator[0].GetCurrentAnimatorStateInfo(0).length);
 
-            //TODOANIM Animate ship death
-            HideShip();
-            StartCoroutine(Respawn(_deathTime));
+            _hitboxAnimator.Play("PlayerHitboxDespawnAnim");
+            Invoke(nameof(HideHitbox), _hitboxAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-            _dead = true;
-            CancelShooting();
+            _shipAnimator.Play("ShipDeathAnim");
+            Invoke(nameof(HideShip), _shipAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+            StartCoroutine(SpawnShip(_deathTime));
+            
             //TODOUI Use Credit screen
         }
     }
 
-    private IEnumerator Respawn(float time)
+    private void DisableShip()
     {
-        yield return new WaitForSeconds(time);
+        _invincible = true;
+        _dead = true;
+        CancelShooting();
+        _canMove = false;
+    }
 
-        _dead = false;
-        GetComponent<Collider2D>().enabled = true;
+    private void HideHitbox()
+    {
+        _hitboxSprite.enabled = false;
+    }
+
+    private void ShowHitbox()
+    {
+        _hitboxSprite.enabled = true;
+        _hitboxAnimator.Play("PlayerHitboxSpawnAnim");
+    }
+
+    private IEnumerator SpawnShip(float time)
+    {
+        yield return new WaitForSeconds(1.5f);
+
         ShowShip();
+
+        yield return new WaitForSeconds(_shipAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        _canMove = true;
+        _dead = false;
+
+        ShowHitbox();
+        ShowOptions();
+
+        yield return new WaitForSeconds(time);
+        _invincible = false;
+        _shipAnimator.Play("PlayerIdleAnim");
     }
 
     private void HideShip()
     {
-        foreach(var sprite in _playerSprites)
+        transform.position = new Vector2(-15, 15);
+    }
+
+    private void OptionsToCenter()
+    {
+        foreach (Vector2 optionFollow in _optionsFollow)
         {
-            sprite.enabled = false;
+            for (int i = 0; i < _base1stOptionsLocation.Length; i++)
+            {
+                _optionsFollow[i] = transform.position;
+            }
+        }
+    }
+
+    private void HideOptions()
+    {
+        foreach (GameObject option in _optionsGameObject)
+        {
+            option.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        }
+    }
+
+    private void ShowOptions()
+    {
+        foreach (GameObject option in _optionsGameObject)
+        {
+            option.transform.localPosition = Vector2.zero;
+            option.GetComponentInChildren<SpriteRenderer>().enabled = true;
+            option.GetComponentInChildren<Animator>().Play("OptionSpawnAnim");
         }
     }
 
     private void ShowShip()
     {
-        foreach (var sprite in _playerSprites)
-        {
-            if(sprite != _shieldSprite)
-                sprite.enabled = true;
-        }
+        transform.position = _playerRespawnLocation.position;
+
+        _shipAnimator.Play("PlayerEntryAnim");
     }
 
     private void EnableBlockVisual()
     {
         if(!_dead)
         {
-            _playerSprite.enabled = false;
-            _shieldSprite.enabled = true;
+            _shipAnimator.Play("PlayerShieldAnim");
         }
     }
 
@@ -602,8 +658,8 @@ public class PlayerController : MonoBehaviour
     {
         if(!_dead)
         {
-            _playerSprite.enabled = true;
-            _shieldSprite.enabled = false;
+            if (!_shipAnimator.GetCurrentAnimatorStateInfo(0).IsName("Out") && !_shipAnimator.IsInTransition(0))
+                _shipAnimator.Play("PlayerShieldOutAnim");
         }
     }
 
