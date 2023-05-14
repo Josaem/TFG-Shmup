@@ -199,7 +199,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
@@ -295,7 +295,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -385,7 +385,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -441,10 +441,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 300
   _baseScore: 100
+  _isDead: 0
   _prioritary: 0
-  _dieOnWave:
-    _section: 99
-    _wave: 0
+  _dieByWave: 1
   _specialRequirementsIndex: 0
   _delayUntilActive: 0
   _delayUntilFirstAction: 0
@@ -454,6 +453,7 @@ MonoBehaviour:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
   _stuffToSpawnOnDeath: []
+  _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 3000036882000659740}
@@ -464,7 +464,10 @@ MonoBehaviour:
     _speed: 10
     _waypoint: {fileID: 0}
   _invincible: 0
-  _attackPattern: []
+  _attackPattern:
+  - _weapons: []
+    _duration: 0
+    _delayUntilNextAttack: 0
   _shootOnSpawn: 0
   _stopShootOnDead: 1
   _changeAttackOnEntry: 0

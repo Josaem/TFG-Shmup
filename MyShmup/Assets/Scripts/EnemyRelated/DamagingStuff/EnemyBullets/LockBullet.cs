@@ -11,13 +11,17 @@ public class LockBullet : ProyectileBehavior
     private float _lockTime = 6;
 
     private Transform _player;
+#if UNITY_EDITOR
+    [Help("Time to stop locking, if 0 locks infinitely", UnityEditor.MessageType.None)]
+#endif
     private bool _locking = true;
 
     protected override void Start()
     {
         base.Start();
         _player = FindObjectOfType<PlayerController>().transform;
-        Invoke(nameof(StopLock), _lockTime);
+        if(_lockTime != 0)
+            Invoke(nameof(StopLock), _lockTime);
     }
 
     public override void Move(float speed)

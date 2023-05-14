@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ProyectileGun : RotativeGuns
 {
+#if UNITY_EDITOR
+    [Help("If maxDistance is 0 the bullet doesn't die by timer", UnityEditor.MessageType.None)]
+#endif
     public float _fireRate;
 
     protected float _timeUntilShooting = 0;
@@ -22,7 +25,10 @@ public class ProyectileGun : RotativeGuns
                     transform.position, transform.rotation,
                     _bulletPool).GetComponent<ProyectileBehavior>();
                 bullet.Move(_speedOfAttack);
-                bullet.SetDeath(_maxDistance);
+                if(_maxDistance > 0)
+                {
+                    bullet.SetDeath(_maxDistance);
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ public class DieEarly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (TryGetComponent<Enemy>(out Enemy enemy))
+        if (TryGetComponent(out Enemy enemy))
         {
 
             Invoke(nameof(Kill), _deathDelay + enemy._delayUntilActive);
@@ -23,7 +23,7 @@ public class DieEarly : MonoBehaviour
 
     private void Kill()
     {
-        if(TryGetComponent<Enemy>(out Enemy enemy))
+        if(TryGetComponent(out Enemy enemy))
         {
             if (enemy.HasDeathWaypoint())
             {
@@ -34,7 +34,7 @@ public class DieEarly : MonoBehaviour
                 enemy.DieByWaypoint();
             }
         }
-        else if (TryGetComponent<Generator>(out Generator generator))
+        else if (TryGetComponent(out Generator generator))
         {
             generator.DisableSpawner();
             generator.KillSpawner();

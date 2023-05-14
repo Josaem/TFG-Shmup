@@ -19,11 +19,11 @@ public class LaserInstanceGun : RotativeGuns
             transform.position, transform.rotation,
             _bulletPool);
 
-        if(TryGetComponent<LaserBehavior>(out LaserBehavior laser))
+        LaserBehavior laser = _currentLaser.GetComponentInChildren<LaserBehavior>();
+
+        if (laser != null)
         {
-            laser._laserSpeed = _speedOfAttack;
-            laser._maxDistance = _maxDistance;
-            laser._timeToSpawn = _guideTime;
+            laser.Spawn(_speedOfAttack, _maxDistance, _guideTime);
         }
     }
 

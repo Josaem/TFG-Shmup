@@ -9,6 +9,7 @@ public class PlayerBulletBehavior : MonoBehaviour
     [SerializeField] private float _maxDistance = 20;
     public int _damage = 1;
     [SerializeField] private bool _isPrimary;
+    [SerializeField] private GameObject _hitVisual;
 
     private bool _isDead = false;
     private Vector2 _originalPos;
@@ -32,12 +33,13 @@ public class PlayerBulletBehavior : MonoBehaviour
     {
         if(!_isDead)
         {
-            if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
+            if (collision.gameObject.TryGetComponent(out Enemy enemy))
             {
                 enemy.TakeDamage(_damage, _isPrimary, collision.ClosestPoint(transform.position));
             }
             rb.angularVelocity = 0;
             _isDead = true;
+            Instantiate(_hitVisual, collision.ClosestPoint(transform.position), transform.rotation);
             Destroy(gameObject);
         } 
     }

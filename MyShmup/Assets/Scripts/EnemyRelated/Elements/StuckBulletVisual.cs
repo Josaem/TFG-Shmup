@@ -30,25 +30,24 @@ public class StuckBulletVisual : MonoBehaviour
     private bool _textActive;
     private int _accumulatedScore = 0;
     private Transform _player;
+    private Transform _enemyTransform;
+
     private GameObject _stuck1stPool;
     private GameObject _stuck2ndPool;
 
     private void Start()
     {
+        _enemyTransform = transform.parent;
         _floatingText = GetComponentInChildren<TMP_Text>();
         HideText();
         _willDieFromExploVisual.enabled = false;
         _player = FindObjectOfType<PlayerController>().transform;
-        Transform stuckPools = GameObject.FindWithTag("StuckPools").transform;
 
         _stuck1stPool = new GameObject("Stuck1stPool");
         _stuck2ndPool = new GameObject("Stuck2ndPool");
 
-        if(stuckPools != null)
-        {
-            _stuck1stPool.transform.SetParent(stuckPools);
-            _stuck2ndPool.transform.SetParent(stuckPools);
-        }
+        _stuck1stPool.transform.SetParent(transform);
+        _stuck2ndPool.transform.SetParent(transform);
     }
 
     private void Update()
@@ -75,9 +74,6 @@ public class StuckBulletVisual : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _stuck1stPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        _stuck2ndPool.transform.SetPositionAndRotation(transform.position, transform.rotation);
-
         _willDieFromExploVisual.transform.rotation = Quaternion.identity;
     }
 
@@ -88,16 +84,22 @@ public class StuckBulletVisual : MonoBehaviour
         Vector3 relativePos = transform.position - _player.transform.position;
         float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
 
+        Vector3 inverseScale = new (1f / _enemyTransform.localScale.x, 1f / _enemyTransform.localScale.y, 1f);
+
+        Transform bullet;
+
         if (isPrimary)
         {
             _1stCounter++;
-            Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck1stPool.transform);
+            bullet = Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck1stPool.transform).transform;
         }
         else
         {
             _2ndCounter++;
-            Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck2ndPool.transform);
+            bullet = Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck2ndPool.transform).transform;
         }
+
+        bullet.localScale = Vector3.Scale(bullet.localScale, inverseScale);
 
         ShowText();
     }

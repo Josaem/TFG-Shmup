@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class LaserBehavior : MonoBehaviour
 {
-    public float _laserSpeed;
-    public float _maxDistance = 20;
-    public float _timeToSpawn = 0.5f;
+    private float _laserSpeed;
+    private float _maxDistance = 20;
 
     [SerializeField]
     private LayerMask _layerMask;
@@ -20,28 +19,31 @@ public class LaserBehavior : MonoBehaviour
     private float _currentLaserDistance = 0;
     private bool _laserOn;
 
-    private void Start()
+    public void Spawn(float speed, float distance, float guideTime)
     {
-        DontShowLaser();
+        _laserSpeed = speed;
+        _maxDistance = distance;
+
+        DontShowLaser();          
 
         //AnimateHere
-        if(_laserVisualGuide != null && _timeToSpawn != 0)
-            Invoke(nameof(Spawn), _timeToSpawn);
+        if (_laserVisualGuide != null && guideTime != 0)
+        {
+            _laserVisualGuide.SetActive(true);
+            Invoke(nameof(ShowLaser), guideTime);
+        }
         else
         {
-            Spawn();
+            ShowLaser();
         }
-    }
-
-    private void Spawn()
-    {
-        ShowLaser();
-        _laserOn = true;
     }
 
     private void ShowLaser()
     {
-        if(_laserVisualGuide != null) _laserVisualGuide.SetActive(false);
+        _laserOn = true;
+
+        if (_laserVisualGuide != null) _laserVisualGuide.SetActive(false);
+
         _laserStart.SetActive(true);
         GetComponent<Collider2D>().enabled = true;
         transform.GetChild(0).gameObject.SetActive(true);
@@ -50,8 +52,6 @@ public class LaserBehavior : MonoBehaviour
     private void DontShowLaser()
     {
         _laserStart.SetActive(false);
-        if(_laserVisualGuide != null)
-            _laserVisualGuide.SetActive(true);
         _laserEnd.SetActive(false);
         GetComponent<Collider2D>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
@@ -59,9 +59,9 @@ public class LaserBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_laserOn)
+        if (_laserOn)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, _maxDistance, _layerMask);
+            /*RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, _maxDistance, _layerMask);
 
             if (hit.collider == null)
             {
@@ -73,7 +73,34 @@ public class LaserBehavior : MonoBehaviour
 
                     if (hit.collider == null)
                     {
-                        transform.localScale = new Vector2(1, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _laserSpeed));
+                        transform.localScale = new Vector2(transform.localScale.x, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _laserSpeed));
+                        _currentLaserDistance = _maxDistance;
+                        _laserEnd.SetActive(false);
+                    }
+                }
+            }*/
+
+            Vector2 raycastDirection = transform.TransformDirection(Vector2.up);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, _maxDistance, _layerMask);
+            Debug.DrawRay(transform.position, raycastDirection * 40, Color.green);
+
+            if (hit.collider == null)
+            {
+                Vector2 left = transform.position - transform.right * transform.localScale.x / 2;
+
+                hit = Physics2D.Raycast(left, raycastDirection, _maxDistance, _layerMask);
+                Debug.DrawRay(left, raycastDirection * 40, Color.green);
+
+                if (hit.collider == null)
+                {
+                    Vector2 right = transform.position + transform.right * transform.localScale.x / 2;
+                    hit = Physics2D.Raycast(right, raycastDirection, _maxDistance, _layerMask);
+                    Debug.DrawRay(right, raycastDirection * 40, Color.green);
+
+                    if (hit.collider == null)
+                    {
+                        transform.localScale = new Vector2(transform.localScale.x, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _laserSpeed));
                         _currentLaserDistance = _maxDistance;
                         _laserEnd.SetActive(false);
                     }
@@ -86,12 +113,12 @@ public class LaserBehavior : MonoBehaviour
                 if (_currentLaserDistance > hitDistance)
                 {
                     _currentLaserDistance = hitDistance;
-                    transform.localScale = new Vector2(1, _currentLaserDistance);
+                    transform.localScale = new Vector2(transform.localScale.x, _currentLaserDistance);
                 }
                 else
                 {
                     _currentLaserDistance = Mathf.Lerp(transform.localScale.y, hitDistance, Time.deltaTime * _laserSpeed);
-                    transform.localScale = new Vector2(1, _currentLaserDistance);
+                    transform.localScale = new Vector2(transform.localScale.x, _currentLaserDistance);
                 }
 
                 if (_currentLaserDistance >= hitDistance - 0.2)

@@ -48,7 +48,7 @@ public class DieOnWave : MonoBehaviour
 
     private void Kill()
     {
-        if (TryGetComponent<Enemy>(out Enemy enemy))
+        if (TryGetComponent(out Enemy enemy))
         {
             if (enemy.HasDeathWaypoint())
             {
@@ -59,7 +59,7 @@ public class DieOnWave : MonoBehaviour
                 enemy.DieByWaypoint();
             }
         }
-        else if (TryGetComponent<Generator>(out Generator generator))
+        else if (TryGetComponent(out Generator generator))
         {
             generator.DisableSpawner();
             generator.KillSpawner();

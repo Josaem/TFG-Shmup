@@ -11,4 +11,12 @@ public class HurtPlayer : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        {
+            collision.gameObject.GetComponent<PlayerController>().GetHurt();
+        }
+    }
 }

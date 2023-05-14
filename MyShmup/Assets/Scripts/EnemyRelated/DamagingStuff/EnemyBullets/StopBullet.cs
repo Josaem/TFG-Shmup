@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class StopBullet : ProyectileBehavior
 {
+#if UNITY_EDITOR
+    [Help("Dies after time max distance", UnityEditor.MessageType.None)]
+#endif
+
     [SerializeField]
     protected float _timeToStop = 2;
-    [SerializeField]
-    protected float _timeToDieAfterStop = 0.2f;
 
     public override void Move(float speed)
     {
@@ -20,7 +22,10 @@ public class StopBullet : ProyectileBehavior
     private void StopMovement()
     {
         rb.velocity = Vector2.zero;
+    }
 
-        Invoke(nameof(Die), _timeToDieAfterStop);
+    public override void SetDeath(float maxDistance)
+    {
+        Invoke(nameof(Die), maxDistance);
     }
 }

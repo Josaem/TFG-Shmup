@@ -1,5 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1656185039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656185040}
+  - component: {fileID: 1656185041}
+  - component: {fileID: 850793021595431681}
+  m_Layer: 0
+  m_Name: Gun2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1656185040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656185039}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351131209864229750}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!114 &1656185041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656185039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfb53592adf96142946ee22ee63c621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startActive: 0
+  _waitUntilShooting: 0
+  _speedOfAttack: 3
+  _maxDistance: 15
+  _useGeneralBulletPool: 0
+  _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
+  _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
+  _rotativeBehavior:
+    _rotateStart: 0
+    _dontCenterAngleRotation: 0
+    _resetRotTimer: 0
+    _resetRot: 0
+    _startRotationInCenter: 0
+    _rotType: 0
+    _rotationAngle: 15
+    _rotationSpeed: 5
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  _fireRate: 0.2
+--- !u!114 &850793021595431681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656185039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e240f90605d2489428f3537b8a3db091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _repeatOnLastWaypoint: 1
+  _scrollType: 1
+  _scrollX: 0
+  _scrollY: 0
+  _waypoints:
+  - _speed: 2
+    _waypoint: {fileID: 3023330478808123735}
+  - _speed: 2
+    _waypoint: {fileID: 4974676515458818675}
 --- !u!1 &351131209556803676
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,7 +106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131209556803651
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +120,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -150}
 --- !u!114 &351131209556803650
 MonoBehaviour:
@@ -48,16 +138,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131209864229751
 GameObject:
@@ -88,6 +187,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 351131211360298937}
+  - {fileID: 1656185040}
   - {fileID: 351131210866706521}
   - {fileID: 351131210307606630}
   - {fileID: 351131209556803651}
@@ -125,11 +225,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351131210043567695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.62, y: -3.47, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 351131210474133089}
+  - {fileID: 2849326302611478628}
   - {fileID: 351131210827942446}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -146,8 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistance: 20
-  _speed: 3
+  _traverseTerrain: 0
+  _traversePlayer: 0
+  _whatTohit:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!58 &351131210043567692
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -201,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131210065146957
 Transform:
   m_ObjectHideFlags: 0
@@ -215,7 +319,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25}
 --- !u!114 &351131210065146956
 MonoBehaviour:
@@ -233,16 +337,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131210307606631
 GameObject:
@@ -260,7 +373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131210307606630
 Transform:
   m_ObjectHideFlags: 0
@@ -274,7 +387,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120}
 --- !u!114 &351131210307606629
 MonoBehaviour:
@@ -292,16 +405,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131210359312295
 GameObject:
@@ -319,7 +441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131210359312294
 Transform:
   m_ObjectHideFlags: 0
@@ -333,7 +455,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -205}
 --- !u!114 &351131210359312293
 MonoBehaviour:
@@ -351,16 +473,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131210474133090
 GameObject:
@@ -462,7 +593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131210657159201
 Transform:
   m_ObjectHideFlags: 0
@@ -476,7 +607,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -115}
 --- !u!114 &351131210657159200
 MonoBehaviour:
@@ -494,16 +625,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131210827942447
 GameObject:
@@ -536,7 +676,7 @@ Transform:
   m_Children:
   - {fileID: 351131209864229750}
   m_Father: {fileID: 351131210043567693}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &351131210827942445
 MonoBehaviour:
@@ -556,14 +696,23 @@ MonoBehaviour:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
-      _rotateStart: 1
+      _rotateStart: 0
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 0
       _rotationSpeed: 60
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  _isEnabled: 0
 --- !u!1 &351131210866706522
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131210866706521
 Transform:
   m_ObjectHideFlags: 0
@@ -594,7 +743,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!114 &351131210866706520
 MonoBehaviour:
@@ -612,16 +761,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131211224047297
 GameObject:
@@ -639,7 +797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &351131211224047296
 Transform:
   m_ObjectHideFlags: 0
@@ -653,7 +811,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -655}
 --- !u!114 &351131211224047303
 MonoBehaviour:
@@ -671,16 +829,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 1
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 60
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
 --- !u!1 &351131211360298938
 GameObject:
@@ -692,6 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 351131211360298937}
   - component: {fileID: 351131211360298936}
+  - component: {fileID: 6383297419221270967}
   m_Layer: 0
   m_Name: Gun1
   m_TagString: Untagged
@@ -706,14 +874,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351131211360298938}
-  m_LocalRotation: {x: -0, y: -0, z: -0.5, w: 0.8660254}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 351131209864229750}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &351131211360298936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,14 +898,139 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 15
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 1014e5ac17a5f9f45b1ba6596a3fcc98, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
-    _rotateStart: 1
+    _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
-    _rotationAngle: 0
-    _rotationSpeed: 60
+    _rotationAngle: 15
+    _rotationSpeed: 5
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.2
+--- !u!114 &6383297419221270967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351131211360298938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e240f90605d2489428f3537b8a3db091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _repeatOnLastWaypoint: 1
+  _scrollType: 1
+  _scrollX: 0
+  _scrollY: 0
+  _waypoints:
+  - _speed: 2
+    _waypoint: {fileID: 4974676515458818675}
+  - _speed: 2
+    _waypoint: {fileID: 3023330478808123735}
+--- !u!1 &833133689364915795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3023330478808123735}
+  m_Layer: 0
+  m_Name: Wp (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3023330478808123735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833133689364915795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2849326302611478628}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5624957990675621013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2849326302611478628}
+  m_Layer: 0
+  m_Name: Waypoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2849326302611478628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624957990675621013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4974676515458818675}
+  - {fileID: 3023330478808123735}
+  m_Father: {fileID: 351131210043567693}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6514816522303573666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4974676515458818675}
+  m_Layer: 0
+  m_Name: Wp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4974676515458818675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514816522303573666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2849326302611478628}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,6 +1,7 @@
 using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class PathShootingEnemy : ShootingEnemy
@@ -16,14 +17,18 @@ public class PathShootingEnemy : ShootingEnemy
     private bool _dieOnLastWaypoint;
 
     private float distanceTravelled;
+    private VertexPath _path;
+    private Transform _transform;
 
     protected override void Start()
     {
         base.Start();
+        _transform = transform;
         if (_pathCreator != null)
         {
             // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
             _pathCreator.pathUpdated += OnPathChanged;
+            _path = _pathCreator.path;
         }
     }
 
@@ -32,12 +37,14 @@ public class PathShootingEnemy : ShootingEnemy
         if (_pathCreator != null)
         {
             distanceTravelled += _speed * Time.deltaTime;
-            transform.position = _pathCreator.path.GetPointAtDistance(distanceTravelled, _endOfPathInstruction);
-            if(_rotateTowardsPath)
-                transform.up = _pathCreator.path.GetDirectionAtDistance(distanceTravelled, _endOfPathInstruction);
+            _transform.position = _path.GetPointAtDistance(distanceTravelled, _endOfPathInstruction);
+            if (_rotateTowardsPath)
+            {
+                _transform.up = _path.GetDirectionAtDistance(distanceTravelled, _endOfPathInstruction);
+            }
         }
 
-        if(distanceTravelled >= _pathCreator.path.length && _dieOnLastWaypoint)
+        if(distanceTravelled >= _path.length && _dieOnLastWaypoint)
         {
             DieByWaypoint();
         }
@@ -47,6 +54,6 @@ public class PathShootingEnemy : ShootingEnemy
     // is as close as possible to its position on the old path
     void OnPathChanged()
     {
-        distanceTravelled = _pathCreator.path.GetClosestDistanceAlongPath(transform.position);
+        distanceTravelled = _path.GetClosestDistanceAlongPath(transform.position);
     }
 }

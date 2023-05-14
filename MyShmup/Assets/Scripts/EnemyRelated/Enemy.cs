@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Phase _nextPhase;
     [SerializeField]
+    private GameObject[] _stuffToSpawnOnKill;
+    [SerializeField]
     private GameObject[] _stuffToSpawnOnDeath;
     [SerializeField]
     private GameObject[] _stuffToSpawnOnSceneOnDeath;
@@ -346,14 +348,14 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            foreach (GameObject spawn in _stuffToSpawnOnDeath)
-            {
-                Instantiate(spawn, transform.position, Quaternion.identity);               
-            }
-
             foreach (GameObject spawn in _stuffToSpawnOnSceneOnDeath)
             {
                 Instantiate(spawn);
+            }
+
+            foreach (GameObject spawn in _stuffToSpawnOnDeath)
+            {
+                Instantiate(spawn, transform.position, Quaternion.identity);
             }
 
             foreach (Enemy enemy in _enemiesToKillOnDeath)
@@ -367,6 +369,10 @@ public class Enemy : MonoBehaviour
             if(!_deadByWaypoint)
             {
                 AddScore();
+                foreach (GameObject spawn in _stuffToSpawnOnKill)
+                {
+                    Instantiate(spawn, transform.position, Quaternion.identity);
+                }
                 //Animate death
             }
 

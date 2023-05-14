@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayerMask;
     private InputAction fireAction;
     private bool _fireButtonPressed = false;
+    private Vector2[] _optionsFollow;
 
     [Header("MainShot")]
     public int _1stShotScore = 1;
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Visuals")]
+    [SerializeField] private SpriteRenderer _playerSprite;
     [SerializeField] private SpriteRenderer _shieldSprite;
     [SerializeField] private SpriteRenderer _hitboxSprite;
     private float _gunRotSpeed = 5f;
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
     private float _gunRotAmplitudeOffset = 0.5f;
     private float _gunRotTime = 0;
     private SpriteRenderer[] _playerSprites;
+    private Animator[] _optionsAnimator;
 
     [Header("Dependecies")]
     [SerializeField] private Rigidbody2D _rb;
@@ -108,6 +112,13 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _timeUntil2ndShotEnabled = _timeFor2ndShotActivation;
+        _optionsFollow = new Vector2[_base1stOptionsLocation.Length];
+
+        for (int i = 0; i < _base1stOptionsLocation.Length; i++)
+        {
+            _optionsFollow[i] = _base1stOptionsLocation[i].transform.position;
+        }
+
         ResetOptionPositions();
 
         fireAction.started += ctx => {
@@ -159,6 +170,13 @@ public class PlayerController : MonoBehaviour
         _nextShieldCooldown = _blockCooldown;
 
         ChangeOrientation(shipOrientation);
+
+        _optionsAnimator = new Animator[_optionsGameObject.Length];
+
+        for (int i = 0; i < _optionsGameObject.Length; i++)
+        {
+            _optionsAnimator[i] = _optionsGameObject[i].GetComponentInChildren<Animator>();
+        }
     }
 
     private void Update()
@@ -206,12 +224,13 @@ public class PlayerController : MonoBehaviour
         if (!_1stShotEnabled && !_2ndShotEnabled)
         {
             ResetOptionPositions();
-            _gunRotTime = 0;
         }
         else
         {
             RotateOptions();
         }
+
+        MoveOptions();
     }
 
     public void OnMove(InputValue value) => _movementValues = value.Get<Vector2>();
@@ -272,8 +291,10 @@ public class PlayerController : MonoBehaviour
                 {
                     //Shoot a shot
                     Instantiate(_primaryShotPrefab,
-                        _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
+                        _optionsGameObject[i].transform.position, _base1stOptionsLocation[i].transform.rotation,
                         _playerBulletPool);
+
+                    ShootAnimation(_optionsAnimator[i]);
                 }
             }
         }
@@ -375,6 +396,8 @@ public class PlayerController : MonoBehaviour
                             _optionsGameObject[i].transform.position, _optionsGameObject[i].transform.rotation,
                             _playerBulletPool);
 
+                        ShootAnimation(_optionsAnimator[i]);
+
                         _2ndHasShot = true;
 
                         _gunToShoot++;
@@ -391,10 +414,10 @@ public class PlayerController : MonoBehaviour
 
     private void ResetOptionPositions()
     {
-        for (int i = 0; i < _optionsGameObject.Length; i++)
+        for (int i = 0; i < _base1stOptionsLocation.Length; i++)
         {
-            //TODOANIM make options move instead of teleport
-            _optionsGameObject[i].transform.SetPositionAndRotation(_base1stOptionsLocation[i].transform.position, _base1stOptionsLocation[i].transform.rotation);
+            _optionsFollow[i] = _base1stOptionsLocation[i].transform.position;
+            _optionsGameObject[i].transform.rotation = _base1stOptionsLocation[i].transform.rotation;
         }
     }
 
@@ -404,50 +427,51 @@ public class PlayerController : MonoBehaviour
 
         if(!_2ndShotEnabled)
         {
-            _optionsGameObject[0].transform.position = Vector3.Lerp(_base1stOptionsLocation[1].position,
+            
+            _optionsFollow[0] = Vector3.Lerp(_base1stOptionsLocation[1].position,
                 _base1stOptionsLocation[0].position,
-                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
 
-            _optionsGameObject[1].transform.position = Vector3.Lerp(_base1stOptionsLocation[0].position,
+            _optionsFollow[1] = Vector3.Lerp(_base1stOptionsLocation[0].position,
                 _base1stOptionsLocation[1].position,
-                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
+
+            _optionsFollow[2] = _base1stOptionsLocation[2].transform.position;
+
+            _optionsFollow[3] = _base1stOptionsLocation[3].transform.position;
+
+            for (int i = 0; i < _optionsGameObject.Length; i++)
+            {
+                _optionsGameObject[i].transform.rotation = _base1stOptionsLocation[i].transform.rotation;
+            }
         }
         else
         {
-            _optionsGameObject[0].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsFollow[0] = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTime + 0.25f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 0.25f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
 
-            _optionsGameObject[1].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsFollow[1] = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 0.5f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
 
-            _optionsGameObject[2].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsFollow[2] = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTime + 0.75f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 0.75f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
 
-            _optionsGameObject[3].transform.position = Vector3.Lerp(_base2ndOptionsLocation[0].position,
+            _optionsFollow[3] = Vector3.Lerp(_base2ndOptionsLocation[0].position,
                 _base2ndOptionsLocation[2].position,
-                (Mathf.Sin((_gunRotTime + 1f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset));
+                Mathf.Sin((_gunRotTime + 1f) * _gunRotSpeed) * _gunRotAmplitude + _gunRotAmplitudeOffset);
         }
     }
 
-    /*
-    TODO
-    Player explosion
-        enemyKill = 0
-        accumulated shots = 0
-        accumulated drills = 0
-
-        look in area for enemies
-            if shot count != 0 || drill count != 0
-                check if kill
-                    enemyKill++
-                    accumulated shots += enemy shots
-                    accumulated drills += enemy drills
-                enemy Take Damage By explosion
-        add score * drill * shots * kill    
-     */
+    private void MoveOptions()
+    {
+        for (int i = 0; i < _optionsGameObject.Length; i++)
+        {
+            _optionsGameObject[i].transform.position = Vector3.Lerp(_optionsGameObject[i].transform.position, _optionsFollow[i], Time.deltaTime * 5);
+        }
+    }
 
     private void ExplodeBullets()
     {
@@ -485,6 +509,7 @@ public class PlayerController : MonoBehaviour
             _nextShieldCooldown = _blockCooldown;
             _shieldSprite.enabled = true;
             _invincible = true;
+            EnableBlockVisual();
         }
     }
 
@@ -496,6 +521,7 @@ public class PlayerController : MonoBehaviour
         _invincible = false;
 
         _hitboxSprite.color = _shieldOnCooldownColor;
+        DisableBlockVisual();
     }
 
     public void ResetShield(float cooldownDivider)
@@ -558,7 +584,25 @@ public class PlayerController : MonoBehaviour
     {
         foreach (var sprite in _playerSprites)
         {
-            sprite.enabled = true;
+            if(sprite != _shieldSprite)
+                sprite.enabled = true;
+        }
+    }
+
+    private void EnableBlockVisual()
+    {
+        if(!_dead)
+        {
+            _playerSprite.enabled = false;
+            _shieldSprite.enabled = true;
+        }
+    }
+
+    private void DisableBlockVisual()
+    {
+        if(!_dead)
+        {
+            _playerSprite.enabled = true;
             _shieldSprite.enabled = false;
         }
     }
@@ -583,5 +627,10 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 break;
         }
+    }
+
+    private void ShootAnimation(Animator gun)
+    {
+        gun.Play("GunShooting");
     }
 }

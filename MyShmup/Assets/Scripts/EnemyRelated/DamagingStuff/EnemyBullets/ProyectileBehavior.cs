@@ -12,6 +12,8 @@ public class ProyectileBehavior : MonoBehaviour
     protected bool _traverseTerrain;
     [SerializeField]
     protected bool _traversePlayer;
+    [SerializeField]
+    protected LayerMask _whatTohit;
 
     private Vector2 _originalPos;
     private bool _canDieFromBounds = false;
@@ -34,7 +36,8 @@ public class ProyectileBehavior : MonoBehaviour
         if (!_canDieFromBounds && Mathf.Abs(transform.position.x) < 9 && Mathf.Abs(transform.position.y) < 5)
             AllowBoundsDeath();
 
-        if (_canDieFromBounds && (Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6))
+        if (_canDieFromBounds && ((Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6)
+            || (Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 50 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 40)))
         {
             Die();
         }
@@ -48,13 +51,18 @@ public class ProyectileBehavior : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<PlayerController>() != null)
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
             collision.gameObject.GetComponent<PlayerController>().GetHurt();
-            if(!_traversePlayer)
+            if (!_traversePlayer)
                 Destroy(gameObject);
         }
-        else if(!_traverseTerrain)
+        
+        if (_whatTohit == (_whatTohit | (1 << collision.gameObject.layer)))
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 7 && !_traverseTerrain)
         {
             Destroy(gameObject);
         }

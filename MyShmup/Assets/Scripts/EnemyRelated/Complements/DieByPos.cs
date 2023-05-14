@@ -61,11 +61,11 @@ public class DieByPos : MonoBehaviour
 
     private void Kill()
     {
-        if(TryGetComponent<Enemy>(out Enemy enemy))
+        if(TryGetComponent(out Enemy enemy))
         {
             enemy.DieByWaypoint();
         }
-        else if (TryGetComponent<Generator>(out Generator generator))
+        else if (TryGetComponent(out Generator generator))
         {
             generator.DisableSpawner();
             generator.KillSpawner();

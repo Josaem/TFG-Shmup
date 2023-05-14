@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class RotativeGuns : GunContainer
 {
+    #if UNITY_EDITOR
+    [Help("_resetRot refers to the pointAtPlayer rotation, while _resetRotTimer refers to the rotate behavior", UnityEditor.MessageType.None)]
+    #endif
     public PointTowardsPlayer _pointAtPlayer = PointTowardsPlayer.None;
     [SerializeField]
     private float _pointAtPlayerSpeed = 10;
@@ -13,6 +16,7 @@ public class RotativeGuns : GunContainer
     
     private Vector3 _originalRot;
     private float _rotTime = 0;
+    private float _rotOffset = 0;
     private bool _hasLockedPlayer;
     private Vector3 _singleLockPos; 
 
@@ -23,6 +27,7 @@ public class RotativeGuns : GunContainer
         public bool _dontCenterAngleRotation;
         public bool _resetRotTimer;
         public bool _resetRot;
+        public bool _startRotationInCenter;
         public RotType _rotType;
         public float _rotationAngle;
         public float _rotationSpeed;
@@ -62,12 +67,20 @@ public class RotativeGuns : GunContainer
         base.Attack();
 
         if (_rotativeBehavior._resetRotTimer)
-            _rotTime = 0;
+        {
+            _rotTime = 0;            
+        }
+
+        if (_rotativeBehavior._startRotationInCenter)
+            _rotOffset = 0.5f;
+        else _rotOffset = 0;
 
         if (_rotativeBehavior._resetRot)
-            ResetRotation();
+            ResetRotation();        
 
         _hasLockedPlayer = false;
+
+        ManageTargetting();
     }
 
     protected override void ManageTargetting()
@@ -118,6 +131,11 @@ public class RotativeGuns : GunContainer
             RotType rotType = _rotativeBehavior._rotType;
             AnimationCurve rotCurve = _rotativeBehavior._rotCurve;
 
+            if (rotType == RotType.Curve)
+            {
+                rotSpeed /= 100;
+            }
+
             if (dontCenterAngleRot)
             {
                 if (rotateStart == RotateStart.Right)
@@ -132,8 +150,8 @@ public class RotativeGuns : GunContainer
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
-                            -Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
+                        transform.localEulerAngles = new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z, _originalRot.z - rotAngle, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
                 else
@@ -148,8 +166,8 @@ public class RotativeGuns : GunContainer
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
-                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed)));
+                        transform.localEulerAngles = new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z, _originalRot.z + rotAngle, rotCurve.Evaluate(_rotTime * rotSpeed)));
                     }
                 }
             }
@@ -159,16 +177,16 @@ public class RotativeGuns : GunContainer
                 {
                     if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.PingPong(_rotTime * rotSpeed + _rotOffset, rotAngle) - rotAngle / 2));
                     }
                     else if (rotType == RotType.Repeat)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2));
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, -(Mathf.Repeat(_rotTime * rotSpeed + _rotOffset, rotAngle) - rotAngle / 2));
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
-                            -(Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                        transform.localEulerAngles = new Vector3(0, 0,
+                            -(Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed + _rotOffset))
                                     - rotAngle / 2));
                     }
                 }
@@ -176,16 +194,16 @@ public class RotativeGuns : GunContainer
                 {
                     if (rotType == RotType.Pingpong)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.PingPong(_rotTime * rotSpeed + _rotOffset, rotAngle) - rotAngle / 2);
                     }
                     else if (rotType == RotType.Repeat)
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed, rotAngle) - rotAngle / 2);
+                        transform.localEulerAngles = _originalRot + new Vector3(0, 0, Mathf.Repeat(_rotTime * rotSpeed + _rotOffset, rotAngle) - rotAngle / 2);
                     }
                     else
                     {
-                        transform.localEulerAngles = _originalRot + new Vector3(0, 0,
-                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed))
+                        transform.localEulerAngles = new Vector3(0, 0,
+                            Mathf.Lerp(_originalRot.z - rotAngle / 2, _originalRot.z + rotAngle / 2, rotCurve.Evaluate(_rotTime * rotSpeed + _rotOffset))
                                     - rotAngle / 2);
                     }
                 }

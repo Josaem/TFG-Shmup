@@ -115,7 +115,7 @@ MonoBehaviour:
   _steps: 1
   _startingDistance: 0
   _stepDistance: 0
-  _stepTime: 3
+  _stepTime: 2
   _rotationSpeed: 0
   _lock: 1
   _lockOnLastStep: 0

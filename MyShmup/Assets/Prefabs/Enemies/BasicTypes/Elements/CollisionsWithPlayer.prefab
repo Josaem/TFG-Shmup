@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 427593387702954033}
   - component: {fileID: 8400618008088274635}
   - component: {fileID: 1487523090083945051}
-  m_Layer: 7
+  m_Layer: 15
   m_Name: Collision
   m_TagString: Damage
   m_Icon: {fileID: 0}
