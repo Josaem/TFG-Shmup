@@ -62,13 +62,19 @@ public class StuckBulletVisual : MonoBehaviour
         if (_1stCounter > _max1stShown)
         {
             _1stCounter--;
-            Destroy(_stuck1stPool.transform.GetChild(0).gameObject);
+
+            Animator bullet = _stuck1stPool.GetComponentInChildren<Animator>();
+            bullet.Play("DestroyStuckBulletAnim");
+            Destroy(bullet.gameObject, bullet.GetCurrentAnimatorStateInfo(0).length);
         }
 
         if (_2ndCounter > _max2ndShown)
         {
             _2ndCounter--;
-            Destroy(_stuck2ndPool.transform.GetChild(0).gameObject);
+
+            Animator bullet = _stuck2ndPool.GetComponentInChildren<Animator>();
+            bullet.Play("DestroyStuckBulletAnim");
+            Destroy(bullet.gameObject, bullet.GetCurrentAnimatorStateInfo(0).length);
         }
     }
 
@@ -86,20 +92,21 @@ public class StuckBulletVisual : MonoBehaviour
 
         Vector3 inverseScale = new (1f / _enemyTransform.localScale.x, 1f / _enemyTransform.localScale.y, 1f);
 
-        Transform bullet;
+        SpriteRenderer bullet;
 
         if (isPrimary)
         {
             _1stCounter++;
-            bullet = Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck1stPool.transform).transform;
+            bullet = Instantiate(_primaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck1stPool.transform).GetComponentInChildren<SpriteRenderer>();
         }
         else
         {
             _2ndCounter++;
-            bullet = Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck2ndPool.transform).transform;
+            bullet = Instantiate(_secondaryBulletVisual, bulletPos, Quaternion.AngleAxis(angle, Vector3.forward), _stuck2ndPool.transform).GetComponentInChildren<SpriteRenderer>();
         }
 
-        bullet.localScale = Vector3.Scale(bullet.localScale, inverseScale);
+        bullet.transform.localScale = Vector3.Scale(bullet.transform.localScale, inverseScale);
+        bullet.sortingOrder = Random.Range(0, 2);
 
         ShowText();
     }
@@ -122,25 +129,28 @@ public class StuckBulletVisual : MonoBehaviour
 
     public void GotExploded(bool gotKilled, int enemiesDead, int accumulatedScore)
     {
-        if(!gotKilled)
+        _willDieFromExploVisual.enabled = false;
+
+        foreach (Animator child in _stuck1stPool.GetComponentsInChildren<Animator>())
         {
-            foreach(Transform child in _stuck1stPool.transform)
-            {
-                Destroy(child.gameObject);
-            }
-
-            foreach (Transform child in _stuck2ndPool.transform)
-            {
-                Destroy(child.gameObject);
-            }
-
-            _1stCounter = 0;
-            _2ndCounter = 0;
-            _accumulatedScore = 0;
-            ShowText();
+            child.Play("KillWithStuckBulletAnim");
+            Destroy(child.gameObject, child.GetCurrentAnimatorStateInfo(0).length);
         }
-        else
+
+        foreach (Animator child in _stuck2ndPool.GetComponentsInChildren<Animator>())
         {
+            child.Play("KillWithStuckBulletAnim");
+            Destroy(child.gameObject, child.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        _1stCounter = 0;
+        _2ndCounter = 0;
+        _accumulatedScore = 0;
+        ShowText();
+
+        if (gotKilled)
+        {
+            //TODO Spawn explosion
             ExplosionText visual = Instantiate(_exploTextVisual, transform.position, Quaternion.identity).GetComponent<ExplosionText>();
             visual._enemiesKilled = enemiesDead;
             visual._score = accumulatedScore;
@@ -181,6 +191,7 @@ public class StuckBulletVisual : MonoBehaviour
     public void EnemyWillDieByExplosion()
     {
         _willDieFromExploVisual.enabled = true;
+        _willDieFromExploVisual.GetComponent<Animator>().Play("WillDieFromExploEntryAnim");
     }
 
     private void OnDestroy()
@@ -189,8 +200,18 @@ public class StuckBulletVisual : MonoBehaviour
         Destroy(_stuck2ndPool);
     }
 
-    /*
-     * Si matas con explosion, muestra texto con explosion y lo deja en pantalla poco tiempo -> spawnear un prefab que se autodestruye a los pocos segundos
-     * 
-     */
+    public float TimeToDieByExplo()
+    {
+        if(_stuck1stPool.transform.childCount > 0)
+        {
+            return _stuck1stPool.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        }
+            
+        if(_stuck2ndPool.transform.childCount > 0)
+        {
+            return _stuck2ndPool.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        }
+
+        return 0;
+    }
 }

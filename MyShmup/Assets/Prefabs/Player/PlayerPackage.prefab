@@ -1003,7 +1003,7 @@ MonoBehaviour:
   _deathTime: 2
   _playerRespawnLocation: {fileID: 6954143849576202830}
   shipOrientation: 3
-  _invincibleTest: 1
+  _invincibleTest: 0
   _dead: 0
   _playerBulletPool: {fileID: 6954143851048406027}
   _optionsGameObject:
@@ -1040,7 +1040,6 @@ MonoBehaviour:
   _shieldOnCooldownColor: {r: 1, g: 0, b: 0, a: 0.7058824}
   _shieldNotOnCooldownColor: {r: 1, g: 1, b: 1, a: 1}
   _playerSprite: {fileID: 6954143849367745111}
-  _shieldSprite: {fileID: 0}
   _hitboxSprite: {fileID: 6954143849801965405}
   _rb: {fileID: 6954143850170903134}
 --- !u!114 &6954143850170903135

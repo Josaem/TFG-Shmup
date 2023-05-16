@@ -34,7 +34,7 @@ public class PathShootingEnemy : ShootingEnemy
 
     public override void Move()
     {
-        if (_pathCreator != null)
+        if (_pathCreator != null && _pathCreator.path != null)
         {
             distanceTravelled += _speed * Time.deltaTime;
             _transform.position = _path.GetPointAtDistance(distanceTravelled, _endOfPathInstruction);

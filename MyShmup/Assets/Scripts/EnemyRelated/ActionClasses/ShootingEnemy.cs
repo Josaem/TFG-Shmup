@@ -48,7 +48,8 @@ public class ShootingEnemy : Enemy
     {
         base.Start();
 
-        _timeToChangeAttack = _attackPattern[_attackIndex]._duration;
+        if(_attackPattern.Length != 0)
+            _timeToChangeAttack = _attackPattern[_attackIndex]._duration;
         if (!_changeAttackOnEntry)
             _skipForChangeOnEntry = false;
     }

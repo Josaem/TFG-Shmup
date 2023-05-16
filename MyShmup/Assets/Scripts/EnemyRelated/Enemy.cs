@@ -269,7 +269,7 @@ public class Enemy : MonoBehaviour
             {
                 UpdateScore(deadAmount);
                 _stuckBulletVisual.GotExploded(true, deadAmount, _accumulatedScore);
-                Die();
+                Invoke(nameof(Die), _stuckBulletVisual.TimeToDieByExplo());
             }
             else
             {
@@ -393,12 +393,12 @@ public class Enemy : MonoBehaviour
         if (_myWave != null)
         {
             nextPhase = Instantiate(_nextPhase._phaseObject,
-                Vector2.zero, Quaternion.identity, _myWave.transform);
+                transform.position, Quaternion.identity, _myWave.transform);
         }
         else
         {
             nextPhase = Instantiate(_nextPhase._phaseObject,
-                Vector2.zero, Quaternion.identity);
+                transform.position, Quaternion.identity);
         }
 
         Enemy[] enemies = nextPhase.GetComponentsInChildren<Enemy>();

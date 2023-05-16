@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class ProyectileBehavior : MonoBehaviour
 {
     protected Rigidbody2D rb;
+    [SerializeField]
     protected float _maxDistance = 20;
     protected float _speed = 5;
     [SerializeField]

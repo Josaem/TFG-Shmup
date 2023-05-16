@@ -480,6 +480,9 @@ public class PlayerController : MonoBehaviour
 
         Enemy[] enemies = FindObjectsOfType<Enemy>();
 
+        List<Enemy> enemiesToKillList = new List<Enemy>();
+        List<Enemy> enemiesToDamageList = new List<Enemy>();
+
         foreach (Enemy enemy in enemies)
         {
             if(enemy.GetNails() != 0 || enemy.GetDrills() != 0)
@@ -487,11 +490,18 @@ public class PlayerController : MonoBehaviour
                 if (enemy.GetIfDiesFromExplo())
                 {
                     enemiesKilled++;
+                    enemiesToKillList.Add(enemy);
                 }
+                else
+                {
+                    enemiesToDamageList.Add(enemy);
+                }
+                enemy.GetComponentInChildren<StuckBulletVisual>().GetComponentInChildren<Animator>().Play("WillDieFromExploExitAnim");
             }
         }
 
-        foreach (Enemy enemy in enemies)
+        //We explode bullets on enemies that will not die
+        foreach (Enemy enemy in enemiesToDamageList)
         {
             if (enemy.GetNails() != 0 || enemy.GetDrills() != 0)
             {
@@ -499,6 +509,25 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //We wait for anim to end before killing
+        foreach (Enemy enemy in enemiesToKillList)
+        {
+            if (enemy.GetNails() != 0 || enemy.GetDrills() != 0)
+            {
+                StartCoroutine(DamageEnemiesByExplosion(enemy, enemiesKilled, _optionsAnimator[0].GetCurrentAnimatorStateInfo(0).length));
+            }
+        }
+        
+    }
+
+    private IEnumerator DamageEnemiesByExplosion(Enemy enemy, int enemiesKilled, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (enemy.GetNails() != 0 || enemy.GetDrills() != 0)
+        {
+            enemy.TakeDamageByExplosion(enemiesKilled);
+        }
     }
 
     private void EnableBlock()
