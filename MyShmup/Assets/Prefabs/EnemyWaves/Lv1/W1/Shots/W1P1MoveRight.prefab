@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 670026588578149590}
   - component: {fileID: 8750318499068904437}
   m_Layer: 11
-  m_Name: L1W1MoveRight
+  m_Name: W1P1MoveRight
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   _whatTohit:
     serializedVersion: 2
     m_Bits: 0
-  _rot: -20
+  _rot: -100
 --- !u!114 &670026588578149590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6990696921711767401}
   - component: {fileID: 8151396439241189241}
-  - component: {fileID: 7878669725022294499}
+  - component: {fileID: 1991687920205519868}
   m_Layer: 11
   m_Name: ShotSprite
   m_TagString: Untagged
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &7878669725022294499
+--- !u!95 &1991687920205519868
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0

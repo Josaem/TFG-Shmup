@@ -55,6 +55,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private WaypointMovement _exitDestination;
 
+    [Header("Visuals")]
+    [SerializeField]
+    private GameObject _explosionAnim;
+
     protected int _currentHealth;
     protected WaveObject _myWave;
     protected EnemyMovementState _movementState = EnemyMovementState.Unspawned;
@@ -373,7 +377,8 @@ public class Enemy : MonoBehaviour
                 {
                     Instantiate(spawn, transform.position, Quaternion.identity);
                 }
-                //Animate death
+
+                Instantiate(_explosionAnim, transform.position, Quaternion.identity);
             }
 
             if(_clearBulletsOnDeath)

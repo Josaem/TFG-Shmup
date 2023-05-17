@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyHitAfterAnimation : MonoBehaviour
+public class DestroyAfterAnimation : MonoBehaviour
 {
     private Animator animator;
     public float delay = 0.0f;

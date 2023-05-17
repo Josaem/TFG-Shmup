@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &934768710
 Transform:
   m_ObjectHideFlags: 0
@@ -161,18 +161,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9e0641937875544ba697da8492cefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startEnabled: 0
   _delayUntilShooting: 0
   _weaponBehavior:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 0
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
+      _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 0
       _rotationSpeed: 0
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  _isEnabled: 0
 --- !u!1 &1867577826
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 1801597046511522698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1210296007283546613}
@@ -309,8 +320,8 @@ SpriteRenderer:
   m_SortingLayerID: -568448467
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.96968555, a: 1}
+  m_Sprite: {fileID: 1094619055, guid: 102ec40adc154c14fb8759538dbcf54e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -403,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1210296007283546613
 Transform:
   m_ObjectHideFlags: 0
@@ -549,10 +560,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 1000
   _baseScore: 100
+  _isDead: 0
   _prioritary: 0
-  _dieOnWave:
-    _section: 0
-    _wave: 0
+  _dieByWave: 1
   _specialRequirementsIndex: 0
   _delayUntilActive: 0
   _delayUntilFirstAction: 0
@@ -561,7 +571,9 @@ MonoBehaviour:
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnKill: []
   _stuffToSpawnOnDeath: []
+  _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
   _clearBulletsOnDeath: 0
   _collisionsWithPlayer: {fileID: 0}
@@ -571,6 +583,7 @@ MonoBehaviour:
   _exitDestination:
     _speed: 2
     _waypoint: {fileID: 598402479095371651}
+  _explosionAnim: {fileID: 8362862734410541828, guid: 67a9e0643c2d9084493af826595db0f1, type: 3}
   _invincible: 0
   _attackPattern:
   - _weapons:

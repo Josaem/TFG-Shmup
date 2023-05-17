@@ -82,6 +82,12 @@ public class ProyectileBehavior : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        Animator bullet = GetComponentInChildren<Animator>();
+        if (bullet != null)
+        {
+            bullet.Play("FadeBulletAnim");
+            Destroy(gameObject, bullet.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else Destroy(gameObject);
     }
 }
