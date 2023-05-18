@@ -88,7 +88,10 @@ public class ShootingEnemy : Enemy
         {
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
-                weapon.EnableWeapon();
+                if (!weapon._isUsedNext)
+                    weapon.EnableWeapon();
+                else
+                    weapon._isUsedNext = false;
             }
 
             if (!_skipForChangeOnEntry && _attackPattern[_attackIndex]._duration != 0)
@@ -107,28 +110,24 @@ public class ShootingEnemy : Enemy
 
             foreach (Weapon weapon in _attackPattern[_attackIndex]._weapons)
             {
-                bool willBeUsedNext = false;
-
                 if (_attackPattern[_attackIndex]._delayUntilNextAttack == 0)
                 {
                     //Check if next weapon to use is already active
                     if (_attackIndex + 1 >= _attackPattern.Length)
                     {
-                        foreach (Weapon weaponToEnable in _attackPattern[0]._weapons)
-                            if (weaponToEnable == weapon)
-                                willBeUsedNext = true;
+                        foreach (Weapon weaponToDisable in _attackPattern[0]._weapons)
+                            if (weapon == weaponToDisable)
+                                weapon._isUsedNext = true;
                     }
                     else
                     {
-                        foreach (Weapon weaponToEnable in _attackPattern[_attackIndex + 1]._weapons)
-                            if (weaponToEnable == weapon)
-                                willBeUsedNext = true;
+                        foreach (Weapon weaponToDisable in _attackPattern[_attackIndex + 1]._weapons)
+                            if (weapon == weaponToDisable)
+                                weapon._isUsedNext = true;
                     }
                 }
-                else
-                    willBeUsedNext = false;
 
-                if(!willBeUsedNext)
+                if(!weapon._isUsedNext)
                     weapon.DisableWeapon();
             }
 

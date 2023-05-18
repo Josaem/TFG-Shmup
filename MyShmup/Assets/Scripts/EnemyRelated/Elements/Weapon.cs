@@ -20,6 +20,8 @@ public class Weapon : MonoBehaviour
     private GunContainer[] _guns;
     private int _weaponBehaviorIndex = 0;
 
+    public bool _isUsedNext = false;
+
     private PlayerController _playerController;
 
     private Transform _weaponPivot;

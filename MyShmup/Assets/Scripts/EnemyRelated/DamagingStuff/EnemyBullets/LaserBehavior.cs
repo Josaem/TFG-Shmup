@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LaserBehavior : MonoBehaviour
 {
@@ -16,13 +17,17 @@ public class LaserBehavior : MonoBehaviour
     [SerializeField]
     private GameObject _laserEnd;
 
-    private float _currentLaserDistance = 0;
+    private Collider2D _myCollider;
+    private int _numObjectsInsideTrigger;
+    private float _targetDistance;
     private bool _laserOn;
 
     public void Spawn(float speed, float distance, float guideTime)
     {
+        _myCollider = GetComponent<Collider2D>();
         _laserSpeed = speed;
         _maxDistance = distance;
+        _targetDistance = _maxDistance;
 
         DontShowLaser();          
 
@@ -45,6 +50,7 @@ public class LaserBehavior : MonoBehaviour
         if (_laserVisualGuide != null) _laserVisualGuide.SetActive(false);
 
         _laserStart.SetActive(true);
+        _laserEnd.SetActive(true);
         GetComponent<Collider2D>().enabled = true;
         transform.GetChild(0).gameObject.SetActive(true);
     }
@@ -61,75 +67,70 @@ public class LaserBehavior : MonoBehaviour
     {
         if (_laserOn)
         {
-            /*RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, _maxDistance, _layerMask);
-
-            if (hit.collider == null)
+            Vector3 newScale = transform.lossyScale;
+            if (transform.lossyScale.y < _targetDistance)
             {
-                hit = Physics2D.Raycast(transform.TransformPoint(-Vector3.right * transform.localScale.x / 2), transform.up, _maxDistance, _layerMask);
-
-                if (hit.collider == null)
-                {
-                    hit = Physics2D.Raycast(transform.TransformPoint(Vector3.right * transform.localScale.x / 2), transform.up, _maxDistance, _layerMask);
-
-                    if (hit.collider == null)
-                    {
-                        transform.localScale = new Vector2(transform.localScale.x, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _laserSpeed));
-                        _currentLaserDistance = _maxDistance;
-                        _laserEnd.SetActive(false);
-                    }
-                }
-            }*/
-
-            Vector2 raycastDirection = transform.TransformDirection(Vector2.up);
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, _maxDistance, _layerMask);
-            Debug.DrawRay(transform.position, raycastDirection * 40, Color.green);
-
-            if (hit.collider == null)
+                newScale.y += _laserSpeed * Time.deltaTime;
+                transform.localScale = newScale;
+            }
+            else
             {
-                Vector2 left = transform.position - transform.right * transform.localScale.x / 2;
-
-                hit = Physics2D.Raycast(left, raycastDirection, _maxDistance, _layerMask);
-                Debug.DrawRay(left, raycastDirection * 40, Color.green);
-
-                if (hit.collider == null)
-                {
-                    Vector2 right = transform.position + transform.right * transform.localScale.x / 2;
-                    hit = Physics2D.Raycast(right, raycastDirection, _maxDistance, _layerMask);
-                    Debug.DrawRay(right, raycastDirection * 40, Color.green);
-
-                    if (hit.collider == null)
-                    {
-                        transform.localScale = new Vector2(transform.localScale.x, Mathf.Lerp(transform.localScale.y, 20, Time.deltaTime * _laserSpeed));
-                        _currentLaserDistance = _maxDistance;
-                        _laserEnd.SetActive(false);
-                    }
-                }
+                newScale.y = _targetDistance;
+                transform.localScale = newScale;
             }
 
-            if (hit.collider != null)
-            {
-                float hitDistance = hit.distance;
-                if (_currentLaserDistance > hitDistance)
-                {
-                    _currentLaserDistance = hitDistance;
-                    transform.localScale = new Vector2(transform.localScale.x, _currentLaserDistance);
-                }
-                else
-                {
-                    _currentLaserDistance = Mathf.Lerp(transform.localScale.y, hitDistance, Time.deltaTime * _laserSpeed);
-                    transform.localScale = new Vector2(transform.localScale.x, _currentLaserDistance);
-                }
+            _laserEnd.transform.localPosition = new Vector2(0, transform.localScale.y);
+        }
+    }
 
-                if (_currentLaserDistance >= hitDistance - 0.2)
-                {
-                    _laserEnd.SetActive(true);
-                    _laserEnd.transform.localPosition = new Vector2(0, hitDistance);
-                }
-                else
-                {
-                    _laserEnd.SetActive(false);
-                }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (((1 << other.gameObject.layer) & _layerMask) != 0)
+        {
+            // Increment the count when an object enters the trigger
+            _numObjectsInsideTrigger++;
+
+            Vector2 contactPoint = other.ClosestPoint(transform.position);
+
+            Vector2 localContactPoint = transform.InverseTransformPoint(contactPoint);
+
+            Vector3 toObject = contactPoint - (Vector2)transform.position;
+            float yPosition = Vector3.Dot(toObject, transform.up);
+
+            float contactDistance = yPosition; //localContactPoint.y;
+
+            if (contactDistance < _targetDistance)
+                _targetDistance = Mathf.Min(_targetDistance, contactDistance);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (((1 << other.gameObject.layer) & _layerMask) != 0)
+        {
+            Vector2 contactPoint = other.ClosestPoint(transform.position);
+
+            Vector2 localContactPoint = transform.InverseTransformPoint(contactPoint);
+
+            Vector3 toObject = contactPoint - (Vector2)transform.position;
+            float yPosition = Vector3.Dot(toObject, transform.up);
+
+            float contactDistance = yPosition; // localContactPoint.y;
+
+            if (contactDistance < _targetDistance)
+                _targetDistance = Mathf.Min(_targetDistance, contactDistance);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (((1 << other.gameObject.layer) & _layerMask) != 0)
+        {
+            // Decrement the count when an object exits the trigger
+            _numObjectsInsideTrigger--;
+            if (_numObjectsInsideTrigger == 0)
+            {
+                _targetDistance = _maxDistance;
             }
         }
     }

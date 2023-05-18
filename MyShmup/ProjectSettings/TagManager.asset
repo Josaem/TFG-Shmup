@@ -51,6 +51,9 @@ TagManager:
   - name: BackgroundAttacks
     uniqueID: 2991179707
     locked: 0
+  - name: StuckBullets
+    uniqueID: 1693484233
+    locked: 0
   - name: Enemies
     uniqueID: 3726518829
     locked: 0

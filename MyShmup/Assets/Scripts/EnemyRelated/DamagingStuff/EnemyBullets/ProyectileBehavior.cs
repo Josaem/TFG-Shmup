@@ -19,6 +19,11 @@ public class ProyectileBehavior : MonoBehaviour
     private Vector2 _originalPos;
     private bool _canDieFromBounds = false;
 
+    private float _initialScaleX = 0.1f;
+    private float _targetScaleX = 1f;
+    private float _initialScaleY = 0.1f;
+    private float _targetScaleY = 1f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,7 +35,31 @@ public class ProyectileBehavior : MonoBehaviour
         _canDieFromBounds = true;
     }
 
-    protected virtual void Start(){ }
+    protected virtual void Start(){
+        _targetScaleX = transform.localScale.x;
+        _targetScaleY = transform.localScale.y;
+
+        Vector3 initialScale = transform.localScale;
+        initialScale.x = _initialScaleX;
+        initialScale.y = _initialScaleY;
+        transform.localScale = initialScale;
+
+        StartCoroutine(GrowProjectile());
+    }
+
+    private IEnumerator GrowProjectile()
+    {
+        float growthRate = _speed * Time.deltaTime;
+
+        while (transform.localScale.x < _targetScaleX && transform.localScale.y < _targetScaleY)
+        {
+            Vector3 currentScale = transform.localScale;
+            currentScale.x += growthRate;
+            currentScale.y += growthRate;
+            transform.localScale = currentScale;
+            yield return null;
+        }
+    }
 
     protected virtual void Update()
     {

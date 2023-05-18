@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8722660865436480561}
   - component: {fileID: 5730500518191483536}
   m_Layer: 0
-  m_Name: W1P2Shot
+  m_Name: ArrowComplex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

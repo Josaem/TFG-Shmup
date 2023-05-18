@@ -158,7 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4562792810861278242}
   m_Layer: 11
-  m_Name: LaserW2
+  m_Name: LaserTiny
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

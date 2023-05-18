@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 522224510936030132}
   - component: {fileID: 1911714169602870918}
   m_Layer: 11
-  m_Name: Phase2Up
+  m_Name: ArrowUp
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

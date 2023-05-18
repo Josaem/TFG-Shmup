@@ -106,7 +106,7 @@ public class StuckBulletVisual : MonoBehaviour
         }
 
         bullet.transform.localScale = Vector3.Scale(bullet.transform.localScale, inverseScale);
-        bullet.sortingOrder = Random.Range(0, 2);
+        bullet.sortingOrder = Random.Range(0, 100);
 
         ShowText();
     }
