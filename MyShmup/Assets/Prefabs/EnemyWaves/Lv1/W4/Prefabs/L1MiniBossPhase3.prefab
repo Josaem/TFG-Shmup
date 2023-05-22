@@ -49,16 +49,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.17
 --- !u!1 &622926800177472776
 GameObject:
@@ -144,15 +153,24 @@ MonoBehaviour:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 1
       _dontCenterAngleRotation: 1
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 80
       _rotationSpeed: 3
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &1012173365254330009
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,16 +253,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &1926281501868282638
 GameObject:
@@ -298,15 +325,24 @@ MonoBehaviour:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 2
       _dontCenterAngleRotation: 1
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 80
       _rotationSpeed: 3
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &2067008808334389487
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,16 +391,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &2207884377635825650
 GameObject:
@@ -382,7 +427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2621681267284686208
 Transform:
   m_ObjectHideFlags: 0
@@ -499,16 +544,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &2729399036968225534
 GameObject:
@@ -526,7 +580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7555133013399798056
 Transform:
   m_ObjectHideFlags: 0
@@ -643,16 +697,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &3261596315139425290
 GameObject:
@@ -702,16 +765,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &3608284548750993414
 GameObject:
@@ -762,16 +834,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &3890799116844059046
 GameObject:
@@ -798,8 +879,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3890799116844059046}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.73000014, y: 2.27, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8361859082787532305}
@@ -843,11 +924,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 219538343
+  m_SortingLayer: 7
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 422188694, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -883,7 +964,7 @@ Transform:
   m_GameObject: {fileID: 4159302349824281214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1666818527856526957}
@@ -927,11 +1008,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 219538343
+  m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9083636, a: 1}
+  m_Sprite: {fileID: 1371630988, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -993,15 +1074,24 @@ MonoBehaviour:
   - _duration: 1
     _delayUntilNextAttack: 1
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 2
       _dontCenterAngleRotation: 1
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 80
       _rotationSpeed: 3
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &4653112518688220360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,16 +1140,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &4786335060055878091
 GameObject:
@@ -1077,7 +1176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8105544444585423236
 Transform:
   m_ObjectHideFlags: 0
@@ -1085,9 +1184,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4786335060055878091}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.2, z: 1}
+  m_LocalScale: {x: 2, y: 0.20000003, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6191390884913298283}
@@ -1161,7 +1260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4874665214689218178
 Transform:
   m_ObjectHideFlags: 0
@@ -1245,7 +1344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8368161533290698950
 Transform:
   m_ObjectHideFlags: 0
@@ -1361,16 +1460,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &6753744531874514074
 GameObject:
@@ -1420,16 +1528,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 5906367612225407706, guid: af3eb33ab0b5ab146b7a5ad6cf2c5623, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _guideTime: 0.5
 --- !u!1 &6873078813148038783
 GameObject:
@@ -1483,15 +1600,24 @@ MonoBehaviour:
   - _duration: 5
     _delayUntilNextAttack: 7
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 2
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 1
+      _startRotationInCenter: 0
       _rotType: 1
       _rotationAngle: 100
       _rotationSpeed: 100
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &8042651611691227020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,7 +1668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8482277605804665026
 Transform:
   m_ObjectHideFlags: 0
@@ -1659,7 +1785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106405591870
 Transform:
   m_ObjectHideFlags: 0
@@ -1743,7 +1869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106415387019
 Transform:
   m_ObjectHideFlags: 0
@@ -1835,14 +1961,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188106458189970}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.24995762, w: 0.96825683}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8897188107008531868}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 8897188106698171733}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.95}
 --- !u!212 &8897188106458189968
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1881,11 +2007,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 219538343
+  m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9083636, a: 1}
+  m_Sprite: {fileID: 161230045, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1911,7 +2037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106459998333
 Transform:
   m_ObjectHideFlags: 0
@@ -2031,15 +2157,24 @@ MonoBehaviour:
   - _duration: 5
     _delayUntilNextAttack: 7
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 1
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 1
+      _startRotationInCenter: 0
       _rotType: 1
       _rotationAngle: 100
       _rotationSpeed: 100
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &8897188106488335153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2056,7 +2191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106488335152
 Transform:
   m_ObjectHideFlags: 0
@@ -2065,8 +2200,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188106488335153}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.73000014, y: 2.27, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188108019856611}
@@ -2113,8 +2248,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 161230045, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2140,7 +2275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106551680884
 Transform:
   m_ObjectHideFlags: 0
@@ -2235,8 +2370,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188106633065513}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 7, z: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188107528113365}
@@ -2249,7 +2384,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188106633065513}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2381,16 +2516,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188106698171734
 GameObject:
@@ -2423,6 +2567,7 @@ Transform:
   - {fileID: 8897188107484218610}
   - {fileID: 8897188107686716668}
   - {fileID: 8897188106674755134}
+  - {fileID: 8897188106458189969}
   m_Father: {fileID: 8897188107008531868}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2442,7 +2587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106711789365
 Transform:
   m_ObjectHideFlags: 0
@@ -2559,7 +2704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106747758199
 Transform:
   m_ObjectHideFlags: 0
@@ -2643,7 +2788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188106753645119
 Transform:
   m_ObjectHideFlags: 0
@@ -2770,7 +2915,7 @@ Transform:
   m_GameObject: {fileID: 8897188106894424696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188106482950326}
@@ -2814,11 +2959,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 219538343
+  m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9083636, a: 1}
+  m_Sprite: {fileID: 2133148059, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2877,16 +3022,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188107008531869
 GameObject:
@@ -2918,7 +3072,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8897188106698171733}
-  - {fileID: 8897188106458189969}
   m_Father: {fileID: 8897188108288628307}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -2940,15 +3093,24 @@ MonoBehaviour:
   - _duration: 1
     _delayUntilNextAttack: 1
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 1
       _dontCenterAngleRotation: 1
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 80
       _rotationSpeed: 3
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &8897188107010348249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,16 +3160,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.17
 --- !u!1 &8897188107129851343
 GameObject:
@@ -3061,15 +3232,24 @@ MonoBehaviour:
   - _duration: 0
     _delayUntilNextAttack: 0
     _pointAtPlayer: 0
+    _pointAtPlayerSpeed: 10
     _rotativeBehavior:
       _rotateStart: 0
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 0
       _rotationSpeed: 0
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &8897188107286296314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,16 +3299,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188107357526615
 GameObject:
@@ -3146,7 +3335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188107357526614
 Transform:
   m_ObjectHideFlags: 0
@@ -3155,8 +3344,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188107357526615}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.73000014, y: 2.27, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188107286296313}
@@ -3203,8 +3392,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 422188694, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3263,16 +3452,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188107528113366
 GameObject:
@@ -3362,7 +3560,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188107607499217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3421,16 +3619,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 0
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 0
     _rotationSpeed: 0
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188107726294341
 GameObject:
@@ -3481,16 +3688,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188107786752963
 GameObject:
@@ -3508,7 +3724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188107786752962
 Transform:
   m_ObjectHideFlags: 0
@@ -3600,14 +3816,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188107843101807}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 7, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188108288628307}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &8897188107843101805
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3646,11 +3862,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.012523014, g: 1, b: 0.0047169924, a: 1}
+  m_SortingLayerID: -568448467
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 96518254, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3709,16 +3925,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188108019856620
 GameObject:
@@ -3769,16 +3994,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188108071337072
 GameObject:
@@ -3796,7 +4030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897188108071337079
 Transform:
   m_ObjectHideFlags: 0
@@ -3806,7 +4040,7 @@ Transform:
   m_GameObject: {fileID: 8897188108071337072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.73000014, y: 2.27, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8897188107010348248}
@@ -3853,8 +4087,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 2133148059, guid: a678da97f89a96444b761abf825b0c80, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3888,7 +4122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8897188108221448043}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3907,8 +4141,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8897188108288628307}
-  - component: {fileID: 8897188108288628305}
   - component: {fileID: 8897188108288628304}
+  - component: {fileID: 2942353766509562526}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -3941,32 +4175,6 @@ Transform:
   m_Father: {fileID: 8897188106373879984}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8897188108288628305
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8897188108288628316}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4, y: 7}
-  m_EdgeRadius: 0
 --- !u!114 &8897188108288628304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3981,10 +4189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 700
   _baseScore: 100
+  _isDead: 0
   _prioritary: 1
-  _dieOnWave:
-    _section: 0
-    _wave: 0
+  _dieByWave: 1
   _specialRequirementsIndex: 0
   _delayUntilActive: 2
   _delayUntilFirstAction: 0
@@ -3993,6 +4200,7 @@ MonoBehaviour:
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnKill: []
   _stuffToSpawnOnDeath:
   - {fileID: 3780293866254882486, guid: 98b6a1f9b60055146843a761d6377445, type: 3}
   _stuffToSpawnOnSceneOnDeath: []
@@ -4005,6 +4213,7 @@ MonoBehaviour:
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 8897188108316959085}
+  _explosionAnim: {fileID: 8362862734410541828, guid: 67a9e0643c2d9084493af826595db0f1, type: 3}
   _invincible: 0
   _attackPattern:
   - _weapons:
@@ -4026,6 +4235,34 @@ MonoBehaviour:
   _horizontal: 0
   _speed: 0
   _maxFollow: 0
+--- !u!60 &2942353766509562526
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897188108288628316}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.7143841, y: 2.2806249}
+      - {x: -3.7395124, y: 0.019843668}
+      - {x: 1.7255998, y: -2.0689864}
 --- !u!1 &8897188108316959086
 GameObject:
   m_ObjectHideFlags: 0
@@ -4106,16 +4343,25 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 50
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
+  _pointAtPlayerSpeed: 10
   _rotativeBehavior:
     _rotateStart: 0
     _dontCenterAngleRotation: 1
     _resetRotTimer: 0
     _resetRot: 0
+    _startRotationInCenter: 0
     _rotType: 0
     _rotationAngle: 75
     _rotationSpeed: 10
+    _rotCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   _fireRate: 0.05
 --- !u!1 &8897188108437159832
 GameObject:
@@ -4236,6 +4482,14 @@ PrefabInstance:
     - target: {fileID: 3145328374690357501, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}
       propertyPath: m_Name
       value: BulletAbsorber
+      objectReference: {fileID: 0}
+    - target: {fileID: 3910095889888282657, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3910095889888282657, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}

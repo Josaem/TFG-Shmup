@@ -23,6 +23,7 @@ public class ProyectileBehavior : MonoBehaviour
     private float _targetScaleX = 1f;
     private float _initialScaleY = 0.1f;
     private float _targetScaleY = 1f;
+    private float _timeAlive;
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class ProyectileBehavior : MonoBehaviour
     }
 
     protected virtual void Start(){
+        if(_speed == 0)
+        {
+            _speed = 5f;
+        }
+
         _targetScaleX = transform.localScale.x;
         _targetScaleY = transform.localScale.y;
 
@@ -63,14 +69,33 @@ public class ProyectileBehavior : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!_canDieFromBounds && Mathf.Abs(transform.position.x) < 9 && Mathf.Abs(transform.position.y) < 5)
+        _timeAlive += Time.deltaTime;
+        if (!_canDieFromBounds && HasEnteredScreen())
             AllowBoundsDeath();
 
-        if (_canDieFromBounds && ((Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 10 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 6)
-            || (Mathf.Abs(transform.position.x + transform.localScale.x / 2) > 50 || Mathf.Abs(transform.position.y + transform.localScale.y / 2) > 40)))
+        if (_canDieFromBounds && IsOffscreen())
         {
             Die();
         }
+
+        if (_timeAlive >= 15)
+            AllowBoundsDeath();
+    }
+
+    private bool HasEnteredScreen()
+    {
+        if (transform.position.x < 9 && transform.position.x > -9
+            && transform.position.y < 5 && transform.position.y > -5)
+            return true;
+        return false;
+    }
+
+    private bool IsOffscreen()
+    {
+        if (transform.position.x > 13 || transform.position.x < -13 ||
+            transform.position.y > 8 || transform.position.y < -8)
+            return true;
+        return false;
     }
 
     public virtual void Move(float speed)
@@ -88,8 +113,7 @@ public class ProyectileBehavior : MonoBehaviour
             if (!_traversePlayer)
                 Destroy(gameObject);
         }
-        
-        if (_whatTohit == (_whatTohit | (1 << collision.gameObject.layer)))
+        else if (((1 << collision.gameObject.layer) & _whatTohit) != 0)
         {
             Destroy(gameObject);
         }
@@ -101,12 +125,15 @@ public class ProyectileBehavior : MonoBehaviour
 
     public virtual void SetDeath(float maxDistance)
     {
-        _maxDistance = maxDistance;
-        float speed = _speed;
-        if (speed == 0)
-            speed = 1;
-        float timeToDie = _maxDistance / speed;
-        Invoke(nameof(Die), timeToDie);
+        if (_maxDistance != 0)
+        {
+            _maxDistance = maxDistance;
+            float speed = _speed;
+            if (speed == 0)
+                speed = 1;
+            float timeToDie = _maxDistance / speed;
+            Invoke(nameof(Die), timeToDie);
+        }
     }
 
     public void Die()

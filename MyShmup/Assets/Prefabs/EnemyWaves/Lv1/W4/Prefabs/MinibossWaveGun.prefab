@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2647859008172052009
 Transform:
   m_ObjectHideFlags: 0
@@ -134,6 +134,7 @@ MonoBehaviour:
   _waitUntilShooting: 0
   _speedOfAttack: 3
   _maxDistance: 20
+  _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 62bca06c0bd3e6045af57b848a9531e1, type: 3}
   _timeBetweenWaves: 6
 --- !u!114 &7430548261946689816
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e240f90605d2489428f3537b8a3db091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _repeatOnLastWaypoint: 0
   _scrollType: 1
   _scrollX: 0
   _scrollY: 0

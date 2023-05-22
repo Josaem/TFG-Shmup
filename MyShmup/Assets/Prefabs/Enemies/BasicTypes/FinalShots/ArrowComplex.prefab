@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ad744b8d2446c4383636f2dbcd2833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistance: 20
+  _maxDistance: 0
   _traverseTerrain: 0
   _traversePlayer: 0
   _whatTohit:

@@ -24,15 +24,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061239796236018657}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 536241447073229214}
   m_Father: {fileID: 3474793818184319016}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &1226451483768613658
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,10 +72,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.96968555, a: 1}
+  m_Sprite: {fileID: 1094619055, guid: 102ec40adc154c14fb8759538dbcf54e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -164,7 +164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1709900075106746413
 Transform:
   m_ObjectHideFlags: 0
@@ -290,10 +290,18 @@ MonoBehaviour:
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 0
+      _startRotationInCenter: 0
       _rotType: 0
       _rotationAngle: 20
       _rotationSpeed: 400
+      _rotCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &1709900076056398217
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,7 +437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &536241447073229214
 Transform:
   m_ObjectHideFlags: 0
@@ -439,7 +447,7 @@ Transform:
   m_GameObject: {fileID: 5206705686478441507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1844324881400070399}
@@ -484,10 +492,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.008547783, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 1094619055, guid: 102ec40adc154c14fb8759538dbcf54e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -623,7 +631,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &3609733930687004920
 MonoBehaviour:
@@ -650,6 +658,7 @@ MonoBehaviour:
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnKill: []
   _stuffToSpawnOnDeath: []
   _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
@@ -661,6 +670,7 @@ MonoBehaviour:
   _exitDestination:
     _speed: 5
     _waypoint: {fileID: 2303374526062323688}
+  _explosionAnim: {fileID: 0}
   _invincible: 0
   _attackPattern:
   - _weapons:
@@ -673,6 +683,7 @@ MonoBehaviour:
   _pathCreator: {fileID: 8266696788790678021}
   _endOfPathInstruction: 2
   _speed: 3
+  _rotateTowardsPath: 1
   _dieOnLastWaypoint: 1
 --- !u!50 &5531045564012960411
 Rigidbody2D:
@@ -819,6 +830,10 @@ PrefabInstance:
     - target: {fileID: 2830627989222972235, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: m_Name
       value: BasicGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830627990395729142, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}

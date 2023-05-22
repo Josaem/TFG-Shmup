@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistance: 20
+  _maxDistance: 0
   _traverseTerrain: 0
   _traversePlayer: 0
   _whatTohit:
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -429742975
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b0db3a09a5853d44877edf22bccc204, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
