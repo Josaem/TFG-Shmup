@@ -55,7 +55,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -449,6 +449,10 @@ PrefabInstance:
     - target: {fileID: 6610293112243239707, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_Name
       value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610293112678204372, guid: f1508106f275db648a253daf73f035e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6610293112678204373, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_IsActive

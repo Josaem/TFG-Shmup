@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4562792810861278242}
   - component: {fileID: 8611242605688926261}
   - component: {fileID: 3563018598751939271}
-  - component: {fileID: 2956890066147903651}
   - component: {fileID: 3043241080427379887}
+  - component: {fileID: 1909223617550986572}
   m_Layer: 11
-  m_Name: BigEnemyShot
+  m_Name: RoundBullets
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4409051570943762180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6990696921711767401}
@@ -74,24 +74,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &2956890066147903651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4409051570943762180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxDistance: 0
-  _traverseTerrain: 0
-  _traversePlayer: 1
-  _whatTohit:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &3043241080427379887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +86,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e38e8144e3bb749be88f17596f9d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1909223617550986572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409051570943762180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxDistance: 20
+  _traverseTerrain: 1
+  _traversePlayer: 0
+  _whatTohit:
+    serializedVersion: 2
+    m_Bits: 32904
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6990696921711767401}
   - component: {fileID: 8151396439241189241}
+  - component: {fileID: 1701780184310839220}
   m_Layer: 11
   m_Name: ShotSprite
   m_TagString: Untagged
@@ -130,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 4490666116320044795}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4562792810861278242}
@@ -177,7 +178,7 @@ SpriteRenderer:
   m_SortingLayerID: -429742975
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0b0db3a09a5853d44877edf22bccc204, type: 3}
+  m_Sprite: {fileID: 21300000, guid: adc609c3eb1d7fa4baebc6bef2685132, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -188,6 +189,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1701780184310839220
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490666116320044795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 556a43544557201459e6bd4f8a3411af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &6821254914922593071
 GameObject:
   m_ObjectHideFlags: 0
