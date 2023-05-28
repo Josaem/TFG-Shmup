@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8611242605688926261}
   - component: {fileID: -5012560126495252067}
   - component: {fileID: 670026588578149590}
-  - component: {fileID: 6428359952963510923}
+  - component: {fileID: 714927893384321758}
   m_Layer: 11
   m_Name: LockShot
   m_TagString: Damage
@@ -83,9 +83,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.0027882573, y: 0.6500701}
-      - {x: -0.48630044, y: -0.18086177}
-      - {x: 0.46847138, y: -0.17527843}
+    - - {x: 0.0027882573, y: 0.81558675}
+      - {x: -0.37433323, y: -0.1321804}
+      - {x: 0.35163605, y: -0.13633329}
 --- !u!114 &670026588578149590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e38e8144e3bb749be88f17596f9d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6428359952963510923
+--- !u!114 &714927893384321758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,14 +107,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4409051570943762180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1829e4ce4d7979f46a3dd172809d12c9, type: 3}
+  m_Script: {fileID: 11500000, guid: db1df6d74848dfa438e3f33a3990a538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 8
   _traverseTerrain: 0
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 8
+  _rotationSpeed: 5
+  _lockTime: 5
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,8 +143,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4490666116320044795}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4562792810861278242}
@@ -186,10 +189,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -429742975
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.7337055, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6f61b054d35e22148aa13225d1c4a1b1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -21,6 +21,7 @@ public class LaserBehavior : MonoBehaviour
     private int _numObjectsInsideTrigger;
     private float _targetDistance;
     private bool _laserOn;
+    private float _laserEndBasePos;
 
     public void Spawn(float speed, float distance, float guideTime)
     {
@@ -28,6 +29,7 @@ public class LaserBehavior : MonoBehaviour
         _laserSpeed = speed;
         _maxDistance = distance;
         _targetDistance = _maxDistance;
+        _laserEndBasePos = transform.localPosition.y;
 
         DontShowLaser();          
 
@@ -79,7 +81,7 @@ public class LaserBehavior : MonoBehaviour
                 transform.localScale = newScale;
             }
 
-            _laserEnd.transform.localPosition = new Vector2(0, transform.localScale.y);
+            _laserEnd.transform.localPosition = new Vector2(0, transform.localScale.y + _laserEndBasePos);
         }
     }
 

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4409051570943762180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6990696921711767401}
@@ -83,9 +83,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.000114262104, y: 0.63499}
-      - {x: -0.061530754, y: -0.047062136}
-      - {x: 0.06386867, y: -0.04728382}
+    - - {x: -0.000114262104, y: 0.54245853}
+      - {x: -0.03773695, y: -0.21361876}
+      - {x: 0.05197177, y: -0.21384045}
 --- !u!114 &670026588578149590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe86a3907dc6dd43ab4267cb29d1fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 20
   _traverseTerrain: 1
   _traversePlayer: 1
   _whatTohit:
@@ -146,14 +147,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4490666116320044795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 0.20000002, y: 1, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4562792810861278242}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &8151396439241189241
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,10 +194,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -429742975
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.0036325455, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6095509edfd02d744b6c533427ec30b1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

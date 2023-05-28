@@ -1979,7 +1979,7 @@ PrefabInstance:
     - target: {fileID: 7596455132122773545, guid: bc58fd9c0d6d99e41a1c4b2e5bb2dadd, type: 3}
       propertyPath: _attackObject
       value: 
-      objectReference: {fileID: 4409051570943762180, guid: ac9ba29826fa41142a922182bf3dc3d0, type: 3}
+      objectReference: {fileID: 4409051570943762180, guid: 99a022ad58039bf41a75aa0c0380e531, type: 3}
     - target: {fileID: 7596455132122773545, guid: bc58fd9c0d6d99e41a1c4b2e5bb2dadd, type: 3}
       propertyPath: _speedOfAttack
       value: 15
