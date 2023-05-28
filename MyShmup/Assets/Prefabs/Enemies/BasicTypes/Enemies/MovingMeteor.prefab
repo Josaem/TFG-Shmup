@@ -477,6 +477,7 @@ MonoBehaviour:
   _nextPhase:
     _phaseObject: {fileID: 0}
     _entryPosDifferent: 0
+  _stuffToSpawnOnKill: []
   _stuffToSpawnOnDeath: []
   _stuffToSpawnOnSceneOnDeath: []
   _enemiesToKillOnDeath: []
@@ -488,6 +489,7 @@ MonoBehaviour:
   _exitDestination:
     _speed: 2
     _waypoint: {fileID: 2562751597471025874}
+  _explosionAnim: {fileID: 8362862734410541828, guid: 67a9e0643c2d9084493af826595db0f1, type: 3}
   _invincible: 0
   _attackPattern: []
   _shootOnSpawn: 0

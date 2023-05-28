@@ -350,7 +350,7 @@ MonoBehaviour:
   _exitDestination:
     _speed: 10
     _waypoint: {fileID: 0}
-  _explosionAnim: {fileID: 0}
+  _explosionAnim: {fileID: 8362862734410541828, guid: 67a9e0643c2d9084493af826595db0f1, type: 3}
   _invincible: 0
   _attackPattern:
   - _weapons:

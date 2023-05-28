@@ -7,7 +7,7 @@ public class PlayerBulletBehavior : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float _speed;
     [SerializeField] private float _maxDistance = 20;
-    public int _damage = 1;
+    public float _damage = 1;
     [SerializeField] private bool _isPrimary;
     [SerializeField] private GameObject _hitVisual;
 
@@ -37,6 +37,12 @@ public class PlayerBulletBehavior : MonoBehaviour
             {
                 enemy.TakeDamage(_damage, _isPrimary, collision.ClosestPoint(transform.position));
             }
+
+            if (collision.gameObject.TryGetComponent(out DPSChecker dps))
+            {
+                dps.TakeDamage(_damage);
+            }
+
             rb.angularVelocity = 0;
             _isDead = true;
             Instantiate(_hitVisual, collision.ClosestPoint(transform.position), transform.rotation);

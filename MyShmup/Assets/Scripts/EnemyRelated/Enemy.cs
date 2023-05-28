@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _explosionAnim;
 
-    protected int _currentHealth;
+    protected float _currentHealth;
     protected WaveObject _myWave;
     protected EnemyMovementState _movementState = EnemyMovementState.Unspawned;
     [SerializeField]
@@ -227,7 +227,7 @@ public class Enemy : MonoBehaviour
         return _willDieByExplosion;
     }
 
-    public void TakeDamage(int damage, bool shotIsPrimary, Vector3 bulletPos)
+    public void TakeDamage(float damage, bool shotIsPrimary, Vector3 bulletPos)
     {
         if (shotIsPrimary)
         {
@@ -290,7 +290,7 @@ public class Enemy : MonoBehaviour
                 {
                     _stuckBulletVisual.EnemyWillDieByExplosion();
                 }
-                _currentHealth -= (int) damage;
+                _currentHealth -= damage;
 
                 UpdateHealthVisuals();
             }
