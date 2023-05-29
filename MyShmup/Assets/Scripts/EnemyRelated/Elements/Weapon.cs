@@ -398,6 +398,8 @@ public class Weapon : MonoBehaviour
 
     private void OnDestroy()
     {
+        EndWeaponBehavior();
+
         if (_initWeapon != null)
             StopCoroutine(_initWeapon);
         if (_endWeapon != null)

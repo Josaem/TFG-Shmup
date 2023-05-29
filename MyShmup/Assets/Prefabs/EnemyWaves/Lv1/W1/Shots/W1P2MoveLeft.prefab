@@ -76,7 +76,7 @@ MonoBehaviour:
   _whatTohit:
     serializedVersion: 2
     m_Bits: 0
-  _rot: 100
+  _rot: 50
 --- !u!114 &670026588578149590
 MonoBehaviour:
   m_ObjectHideFlags: 0

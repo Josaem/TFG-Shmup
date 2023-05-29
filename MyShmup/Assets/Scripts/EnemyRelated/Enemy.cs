@@ -94,6 +94,12 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         _myWave = GetComponentInParent<WaveObject>();
+        if (_myWave != null)
+        {
+            _myWave.EnemySpawned();
+            if(_prioritary)
+                _myWave.PriorityEnemySpawned();
+        }
         _currentHealth = _maxHealth;
         UpdateHealthVisuals();
         _myGM = FindObjectOfType<GameManager>();
@@ -341,11 +347,6 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                if (_myWave != null && _prioritary && _movementState != EnemyMovementState.Dying)
-                {
-                    _myWave.SetPriorityEnemies();
-                }
-
                 if (_specialRequirementsIndex != 0)
                 {
                     GameProperties._extraLevelRequirements[GameProperties._currentLevel][_specialRequirementsIndex]--;
@@ -397,13 +398,11 @@ public class Enemy : MonoBehaviour
 
         if (_myWave != null)
         {
-            nextPhase = Instantiate(_nextPhase._phaseObject,
-                transform.position, Quaternion.identity, _myWave.transform);
+            nextPhase = Instantiate(_nextPhase._phaseObject, _myWave.transform);
         }
         else
         {
-            nextPhase = Instantiate(_nextPhase._phaseObject,
-                transform.position, Quaternion.identity);
+            nextPhase = Instantiate(_nextPhase._phaseObject);
         }
 
         Enemy[] enemies = nextPhase.GetComponentsInChildren<Enemy>();
@@ -489,5 +488,15 @@ public class Enemy : MonoBehaviour
     public void IsNotShielded()
     {
         _shielded = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (_myWave != null)
+        {
+            _myWave.EnemyDied();
+            if (_prioritary)
+                _myWave.PriorityEnemyDied();
+        }
     }
 }

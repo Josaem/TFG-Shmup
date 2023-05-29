@@ -134,7 +134,7 @@ MonoBehaviour:
   _speedOfAttack: 1.5
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: c2eea29b89a256346af46569d2aa0b41, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 43a82477eab5c5a4f9821661d4d10797, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -273,7 +273,7 @@ MonoBehaviour:
   _speedOfAttack: 1.5
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: c2eea29b89a256346af46569d2aa0b41, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 43a82477eab5c5a4f9821661d4d10797, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -436,7 +436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516549248}
   m_LocalRotation: {x: 0, y: 0, z: 0.2164396, w: 0.97629607}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -673,7 +673,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984337368}
   m_LocalRotation: {x: 0, y: 0, z: -0.21643952, w: 0.97629607}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -994,7 +994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971067650426547}
   m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
-  m_LocalPosition: {x: -3, y: 3, z: 0}
+  m_LocalPosition: {x: -2, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -1037,7 +1037,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971067678094064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,8 +1102,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971067830832146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 4, z: 1}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 99971067913139202}
@@ -1443,7 +1443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068090963810}
   m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -2.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -1486,7 +1486,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971068131891751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068401961958}
   m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
-  m_LocalPosition: {x: 4, y: 1, z: 0}
+  m_LocalPosition: {x: 3, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -1709,7 +1709,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971068430746379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +1735,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068430746379}
   m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 2.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1757,7 +1757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -1778,7 +1778,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971068456707297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1804,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068456707297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 3, z: 0}
+  m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1829,7 +1829,7 @@ MonoBehaviour:
   _speedOfAttack: 3
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 15c5e81ca33edd543a3bbc4c1542ce99, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1873,7 +1873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068492473287}
   m_LocalRotation: {x: 0, y: 0, z: -0.08715578, w: 0.9961947}
-  m_LocalPosition: {x: 3, y: 3, z: 0}
+  m_LocalPosition: {x: 2, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1895,7 +1895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -1916,7 +1916,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971068539076535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,7 +1943,7 @@ Transform:
   m_GameObject: {fileID: 99971068539076535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 99971069270265857}
@@ -2026,7 +2026,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971068716292477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 3, z: 0}
+  m_LocalPosition: {x: -1.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   _speedOfAttack: 3
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 15c5e81ca33edd543a3bbc4c1542ce99, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2180,7 +2180,7 @@ Transform:
   m_GameObject: {fileID: 99971068974934369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 99971068401961959}
@@ -2431,7 +2431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99971069270265856}
   m_LocalRotation: {x: 0, y: 0, z: 0.13052616, w: 0.9914449}
-  m_LocalPosition: {x: -4, y: 1, z: 0}
+  m_LocalPosition: {x: -3, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2453,7 +2453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startActive: 0
   _waitUntilShooting: 0
-  _speedOfAttack: 50
+  _speedOfAttack: 25
   _maxDistance: 20
   _useGeneralBulletPool: 0
   _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
@@ -2474,7 +2474,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _fireRate: 0.05
+  _fireRate: 0.07
 --- !u!1 &99971069385781021
 GameObject:
   m_ObjectHideFlags: 0
@@ -2680,8 +2680,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3716588414581347060}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1446151251717307720}
@@ -2861,7 +2861,7 @@ Transform:
   m_GameObject: {fileID: 6507392705217698064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3716588414581353739}
@@ -2953,9 +2953,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.3700218, y: 2.2395425}
-      - {x: -4.082532, y: -0.017178416}
-      - {x: 1.369389, y: -2.0485597}
+    - - {x: 0.93245125, y: 1.1182668}
+      - {x: -1.8673286, y: 0.010169774}
+      - {x: 0.9318185, y: -1.1734177}
 --- !u!1 &8040611439070704054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,11 +3046,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3910095889888282657, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3910095889888282657, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddda696a5f7af1b45902cceab6e103f5, type: 3}

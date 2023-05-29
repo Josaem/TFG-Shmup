@@ -283,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 4409051570943762180, guid: 7298164298c06b54bbeabc80ded13185, type: 3}
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _speedOfAttack
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _waitUntilShooting

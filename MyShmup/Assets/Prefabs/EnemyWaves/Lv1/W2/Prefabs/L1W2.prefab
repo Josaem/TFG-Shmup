@@ -589,7 +589,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -693,6 +693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 30
   _bulletPool: {fileID: 0}
+  _timer: 0
 --- !u!1 &2458118408045061537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,7 +1060,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1159,7 +1160,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1638,7 +1639,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1707,7 +1708,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1776,7 +1777,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2077,7 +2078,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2230,7 +2231,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2330,7 +2331,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2735,7 +2736,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2874,7 +2875,7 @@ MonoBehaviour:
   _speedOfAttack: 15
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2943,7 +2944,7 @@ MonoBehaviour:
   _speedOfAttack: 2
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 003d5a4ffa3fdde429af3a8c998acb85, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -4523,6 +4524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6610293112678204372, guid: f1508106f275db648a253daf73f035e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6610293112678204373, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5010,6 +5015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6610293112678204372, guid: f1508106f275db648a253daf73f035e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6610293112678204373, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5086,6 +5095,10 @@ PrefabInstance:
     - target: {fileID: 6610293112243239707, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_Name
       value: Weapon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610293112678204372, guid: f1508106f275db648a253daf73f035e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6610293112678204373, guid: f1508106f275db648a253daf73f035e3, type: 3}
       propertyPath: m_IsActive

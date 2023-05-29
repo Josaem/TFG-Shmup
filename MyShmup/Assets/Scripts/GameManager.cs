@@ -45,9 +45,8 @@ public class GameManager : MonoBehaviour
     private BGObject _previousBG = null;
     private int _previousBGIndex = 999;
     private IEnumerator _waitForWave;
-    private bool _priorityWave = false;
-    public int _priorityEnemiesLeft = 0;
-    private GameObject _currentWave;
+    private bool _waitingNextWave = true;
+    private WaveObject _currentWave;
 
     private void Start()
     {
@@ -57,14 +56,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_priorityWave)
+        if(!_waitingNextWave && _currentWave.IsPriorityWave())
         {
-            if (_priorityEnemiesLeft <= 0)
+            if (_currentWave.CheckPriorityEnemies() <= 0)
             {
                 if(_waitForWave != null)
                     StopCoroutine(_waitForWave);
-                _priorityWave = false;
-                _priorityEnemiesLeft = 0;
                 EndWave();
             }
         }
@@ -145,16 +142,14 @@ public class GameManager : MonoBehaviour
 
     private void SpawnWave()
     {
-        _priorityWave = false;
-        _priorityEnemiesLeft = 0;
-
         Debug.Log("Spawning wave: " + _sectionIndex + "/" + _waveIndex);
 
         //spawnea enemyWave si hay
         if (IsThereEnemyWave())
         {
-            _currentWave = Instantiate(_sections[_sectionIndex]._waves[_waveIndex]._enemyWave);
-            _sections[_sectionIndex]._waves[_waveIndex]._duration = _currentWave.GetComponent<WaveObject>()._duration;
+            _currentWave = Instantiate(_sections[_sectionIndex]._waves[_waveIndex]._enemyWave).GetComponent<WaveObject>();
+            _sections[_sectionIndex]._waves[_waveIndex]._duration = _currentWave._duration;
+            _waitingNextWave = false;
         }
 
         //if wave is not endless set timer
@@ -163,17 +158,6 @@ public class GameManager : MonoBehaviour
             //Set timer to forcibly end wave
             _waitForWave = WaitForWave(_sections[_sectionIndex]._waves[_waveIndex]._duration);
             StartCoroutine(_waitForWave);
-        }
-
-        if(IsThereEnemyWave())
-        {
-            _priorityEnemiesLeft = 0;
-            _currentWave.GetComponent<WaveObject>().SetBasePriorityEnemies();
-            if (_priorityEnemiesLeft > 0)
-            {
-                Debug.Log(_priorityEnemiesLeft);
-                _priorityWave = true;
-            }
         }
     }
 
@@ -186,8 +170,7 @@ public class GameManager : MonoBehaviour
 
     public void EndWave()
     {
-        _priorityWave = false;
-        _priorityEnemiesLeft = 0;
+        _waitingNextWave = true;
 
         if (IsThereEnemyWave())
         {
@@ -245,7 +228,7 @@ public class GameManager : MonoBehaviour
         if(IsThereEndWave())
         {
             Debug.Log("Spawning EndWave");
-            _currentWave = Instantiate(_sections[_sectionIndex-1]._endWave);
+            _currentWave = Instantiate(_sections[_sectionIndex-1]._endWave).GetComponent<WaveObject>();
         }
     }
 
@@ -254,7 +237,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Despawning Wave");
         if (_currentWave != null)
         {
-            _currentWave.GetComponent<WaveObject>().DespawnWave();
+            _currentWave.DespawnWave();
             _currentWave = null;
         }
     }
@@ -264,7 +247,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Despawning EndWave");
         if (_currentWave != null)
         {
-            _currentWave.GetComponent<WaveObject>().DespawnWave();
+            _currentWave.DespawnWave();
             _currentWave = null;
         }
     }

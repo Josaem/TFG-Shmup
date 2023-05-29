@@ -14,11 +14,15 @@ public class Generator : MonoBehaviour
     protected bool _enabled = false;
     private bool _isDying = false;
     protected GameManager _myGM;
+    protected WaveObject _myWave;
 
     // Start is called before the first frame update
     private void Start()
     {
         _myGM = FindObjectOfType<GameManager>();
+        _myWave = GetComponentInParent<WaveObject>();
+        if (_myWave != null)
+            _myWave.GeneratorSpawned();
         Invoke(nameof(EnableSpawn), _delayUntilSpawn);
     }
 
@@ -63,5 +67,11 @@ public class Generator : MonoBehaviour
     protected virtual void ManageSpawn()
     {
 
+    }
+
+    private void OnDestroy()
+    {
+        if (_myWave != null)
+            _myWave.GeneratorDied();
     }
 }

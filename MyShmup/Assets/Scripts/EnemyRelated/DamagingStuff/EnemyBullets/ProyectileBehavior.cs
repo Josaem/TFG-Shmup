@@ -25,6 +25,8 @@ public class ProyectileBehavior : MonoBehaviour
     private float _targetScaleY = 1f;
     private float _timeAlive;
 
+    private Collider2D _myCollider2D;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,7 +54,9 @@ public class ProyectileBehavior : MonoBehaviour
 
         StartCoroutine(GrowProjectile());
 
-        IgnoreSpawnerCollision();
+        _myCollider2D = GetComponent<Collider2D>();
+        if (_myCollider2D != null)
+            IgnoreSpawnerCollision();
     }
 
     private IEnumerator GrowProjectile()
@@ -63,6 +67,16 @@ public class ProyectileBehavior : MonoBehaviour
             Vector3 currentScale = transform.localScale;
             currentScale.x += growthRate;
             currentScale.y += growthRate;
+            if(currentScale.x > _targetScaleX)
+            {
+                currentScale.x = _targetScaleX;
+            }
+
+            if(currentScale.y > _targetScaleY)
+            {
+                currentScale.y = _targetScaleY;
+            }
+            
             transform.localScale = currentScale;
             yield return null;
         }       
@@ -74,9 +88,9 @@ public class ProyectileBehavior : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider != GetComponent<Collider2D>())
+            if (collider !=_myCollider2D)
             {
-                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collider);
+                Physics2D.IgnoreCollision(_myCollider2D, collider);
             }
         }
     }

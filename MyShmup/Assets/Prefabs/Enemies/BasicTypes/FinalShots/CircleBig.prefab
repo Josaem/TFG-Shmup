@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4409051570943762180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6990696921711767401}
@@ -91,7 +91,7 @@ MonoBehaviour:
   _traversePlayer: 1
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 32904
+    m_Bits: 136
 --- !u!114 &3043241080427379887
 MonoBehaviour:
   m_ObjectHideFlags: 0

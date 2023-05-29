@@ -4,69 +4,78 @@ using UnityEngine;
 
 public class WaveObject : MonoBehaviour
 {
-    private Enemy[] _enemies;
     public float _duration;
     [HideInInspector]
     public BulletPool _bulletPool;
-    private float _timer = 0;
+    public float _timer = 0;
+
+    private bool _isPriorityWave = false;
+    private int _totalEnemies = 0;
+    private int _totalPriorityEnemies = 0;
+    private int _totalGenerators = 0;
 
     private void Awake()
     {
         _bulletPool = GetComponentInChildren<BulletPool>();
     }
 
+    public bool IsPriorityWave()
+    {
+        return _isPriorityWave;
+    }
+
+    public int CheckPriorityEnemies()
+    {
+        return _totalPriorityEnemies;
+    }
+
     // Update is called once per frame
     void Update()
     {
         _timer += Time.deltaTime;
-        if(GetComponentsInChildren<Enemy>().Length == 0 && GetComponentsInChildren<Generator>().Length == 0 &&
-            _bulletPool.transform.childCount == 0)
+
+        if(_totalEnemies == 0 && _totalGenerators == 0 &&
+            _bulletPool.transform.childCount == 0 && _timer > 3)
         {
             Destroy(gameObject);
         }
     }
 
-    public int SetBasePriorityEnemies()
+    public void EnemySpawned()
     {
-        int _priorityEnemyCount = 0;
-
-        _enemies = GetComponentsInChildren<Enemy>(false);
-        foreach (Enemy enemy in _enemies)
-        {
-            if (enemy._prioritary)
-            {
-                _priorityEnemyCount++;
-            }
-        }
-
-        return _priorityEnemyCount;
+        _totalEnemies++;
     }
 
-    public void SetPriorityEnemies()
+    public void EnemyDied()
     {
-        int _priorityEnemyCount = 0;
+        _totalEnemies--;
+    }
 
-        _enemies = GetComponentsInChildren<Enemy>(false);
-        foreach (Enemy enemy in _enemies)
-        {
-            if (enemy._prioritary && !enemy._isDead)
-            {
-                _priorityEnemyCount++;
-            }
-        }
+    public void PriorityEnemySpawned()
+    {
+        _totalPriorityEnemies++;
+        _isPriorityWave = true;
+    }
 
-        if (FindObjectOfType<GameManager>() != null)
-        {
-            FindObjectOfType<GameManager>()._priorityEnemiesLeft = _priorityEnemyCount;
-        }
+    public void PriorityEnemyDied()
+    {
+        _totalPriorityEnemies--;
+    }
+
+    public void GeneratorSpawned()
+    {
+        _totalGenerators++;
+    }
+
+    public void GeneratorDied()
+    {
+        _totalGenerators--;
     }
 
     public void DespawnWave()
     {
-        _enemies = GetComponentsInChildren<Enemy>();
-
         //If alive kills them
-        foreach (Enemy enemy in _enemies)
+        foreach (Enemy enemy in GetComponentsInChildren<Enemy>())
         {
             if(enemy._dieByWave)
                 enemy.Kill();
@@ -80,8 +89,4 @@ public class WaveObject : MonoBehaviour
             generator.KillSpawner();
         }
     }
-
-    /*
-    TODO SpecialMovement    
-    */
 }
