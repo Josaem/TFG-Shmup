@@ -51,19 +51,33 @@ public class ProyectileBehavior : MonoBehaviour
         transform.localScale = initialScale;
 
         StartCoroutine(GrowProjectile());
+
+        IgnoreSpawnerCollision();
     }
 
     private IEnumerator GrowProjectile()
     {
-        float growthRate = _speed * Time.deltaTime;
-
         while (transform.localScale.x < _targetScaleX && transform.localScale.y < _targetScaleY)
         {
+            float growthRate = _speed * Time.deltaTime;
             Vector3 currentScale = transform.localScale;
             currentScale.x += growthRate;
             currentScale.y += growthRate;
             transform.localScale = currentScale;
             yield return null;
+        }       
+    }
+
+    private void IgnoreSpawnerCollision()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider != GetComponent<Collider2D>())
+            {
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collider);
+            }
         }
     }
 
@@ -106,21 +120,21 @@ public class ProyectileBehavior : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-        if (player != null)
-        {
-            collision.gameObject.GetComponent<PlayerController>().GetHurt();
-            if (!_traversePlayer)
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                collision.gameObject.GetComponent<PlayerController>().GetHurt();
+                if (!_traversePlayer)
+                    Destroy(gameObject);
+            }
+            else if (((1 << collision.gameObject.layer) & _whatTohit) != 0)
+            {
                 Destroy(gameObject);
-        }
-        else if (((1 << collision.gameObject.layer) & _whatTohit) != 0)
-        {
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject.layer == 7 && !_traverseTerrain)
-        {
-            Destroy(gameObject);
-        }
+            }
+            else if (collision.gameObject.layer == 7 && !_traverseTerrain)
+            {
+                Destroy(gameObject);
+            }
     }
 
     public virtual void SetDeath(float maxDistance)
