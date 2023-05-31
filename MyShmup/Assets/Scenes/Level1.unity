@@ -498,7 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _level: 1
   _sectionIndex: 1
-  _waveIndex: 7
+  _waveIndex: 9
   _sections:
   - _shipOrientation: 3
     _playerStartingPosition: {fileID: 607075186}

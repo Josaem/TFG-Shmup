@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         {
             if (_currentWave.CheckPriorityEnemies() <= 0)
             {
+                Debug.Log("No priorityEnemiesLeft");
                 if(_waitForWave != null)
                     StopCoroutine(_waitForWave);
                 EndWave();
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         //Waits for message from background saying the new bg can spawn
         if(_canStartNextSection)
         {
+            Debug.Log("canstartnextsection");
             if(IsThereEndWave())
             {
                 DespawnEndWave();

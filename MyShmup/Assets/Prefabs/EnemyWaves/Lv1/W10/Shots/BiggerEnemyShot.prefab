@@ -75,7 +75,7 @@ MonoBehaviour:
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 32904
 --- !u!114 &670026588578149590
 MonoBehaviour:
   m_ObjectHideFlags: 0

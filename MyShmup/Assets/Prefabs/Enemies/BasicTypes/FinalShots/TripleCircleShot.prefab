@@ -187,7 +187,7 @@ MonoBehaviour:
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   _useMaxDistance: 0
 --- !u!1 &1938224232713965734
 GameObject:
@@ -376,7 +376,7 @@ MonoBehaviour:
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   _useMaxDistance: 0
 --- !u!1 &4409051570943762180
 GameObject:
@@ -724,7 +724,7 @@ MonoBehaviour:
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   _useMaxDistance: 0
 --- !u!1 &6842018469518660867
 GameObject:

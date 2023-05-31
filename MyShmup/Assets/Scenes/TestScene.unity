@@ -699,10 +699,10 @@ PrefabInstance:
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _attackObject
       value: 
-      objectReference: {fileID: 193831060550270683, guid: 6bae4cb6326dd0346a262cd20d2e4a5f, type: 3}
+      objectReference: {fileID: 4409051570943762180, guid: 2713a2c78e886c848980b067d8e08a34, type: 3}
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _speedOfAttack
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1683824979885273396, guid: 09779a8bf28751b47b3cb371b2fa549d, type: 3}
       propertyPath: _waitUntilShooting
@@ -1419,7 +1419,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -568448467
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

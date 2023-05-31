@@ -55,7 +55,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1df6d74848dfa438e3f33a3990a538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistance: 20
+  _maxDistance: 0
   _traverseTerrain: 1
   _traversePlayer: 1
   _whatTohit:
@@ -194,7 +194,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -429742975
   m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 474068230, guid: 9853dce4c6c60464286861496f38e517, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

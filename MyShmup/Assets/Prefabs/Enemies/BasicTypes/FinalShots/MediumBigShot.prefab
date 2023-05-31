@@ -103,7 +103,7 @@ MonoBehaviour:
   _traversePlayer: 0
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0

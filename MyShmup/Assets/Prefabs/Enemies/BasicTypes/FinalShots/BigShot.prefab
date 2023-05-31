@@ -100,10 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxDistance: 20
   _traverseTerrain: 0
-  _traversePlayer: 0
+  _traversePlayer: 1
   _whatTohit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!1 &4490666116320044795
 GameObject:
   m_ObjectHideFlags: 0
