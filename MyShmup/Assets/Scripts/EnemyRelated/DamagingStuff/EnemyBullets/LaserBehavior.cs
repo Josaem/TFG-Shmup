@@ -43,6 +43,9 @@ public class LaserBehavior : MonoBehaviour
         {
             ShowLaser();
         }
+
+        if (_myCollider != null)
+            IgnoreSpawnerCollision();
     }
 
     private void ShowLaser()
@@ -65,19 +68,32 @@ public class LaserBehavior : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
+    private void IgnoreSpawnerCollision()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider != _myCollider)
+            {
+                Physics2D.IgnoreCollision(_myCollider, collider);
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_laserOn)
         {
-            Vector3 newScale = transform.lossyScale;
-            if (transform.lossyScale.y < _targetDistance)
+            Vector3 newScale = transform.localScale;
+            if (transform.localScale.y > _targetDistance)
             {
-                newScale.y += _laserSpeed * Time.deltaTime;
+                newScale.y = _targetDistance;
                 transform.localScale = newScale;
             }
             else
             {
-                newScale.y = _targetDistance;
+                newScale.y += _laserSpeed * Time.deltaTime;
                 transform.localScale = newScale;
             }
 
@@ -94,15 +110,12 @@ public class LaserBehavior : MonoBehaviour
 
             Vector2 contactPoint = other.ClosestPoint(transform.position);
 
-            Vector2 localContactPoint = transform.InverseTransformPoint(contactPoint);
-
             Vector3 toObject = contactPoint - (Vector2)transform.position;
             float yPosition = Vector3.Dot(toObject, transform.up);
 
             float contactDistance = yPosition; //localContactPoint.y;
 
-            if (contactDistance < _targetDistance)
-                _targetDistance = Mathf.Min(_targetDistance, contactDistance);
+            _targetDistance = Mathf.Min(_targetDistance, contactDistance);
         }
     }
 
@@ -112,15 +125,12 @@ public class LaserBehavior : MonoBehaviour
         {
             Vector2 contactPoint = other.ClosestPoint(transform.position);
 
-            Vector2 localContactPoint = transform.InverseTransformPoint(contactPoint);
-
             Vector3 toObject = contactPoint - (Vector2)transform.position;
             float yPosition = Vector3.Dot(toObject, transform.up);
 
             float contactDistance = yPosition; // localContactPoint.y;
 
-            if (contactDistance < _targetDistance)
-                _targetDistance = Mathf.Min(_targetDistance, contactDistance);
+            _targetDistance = Mathf.Min(_targetDistance, contactDistance);
         }
     }
 

@@ -1310,7 +1310,7 @@ MonoBehaviour:
   _speedOfAttack: 9
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 193831060550270683, guid: 6bae4cb6326dd0346a262cd20d2e4a5f, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 62bca06c0bd3e6045af57b848a9531e1, type: 3}
   _timeBetweenWaves: 6
 --- !u!114 &2805745996231750361
 MonoBehaviour:

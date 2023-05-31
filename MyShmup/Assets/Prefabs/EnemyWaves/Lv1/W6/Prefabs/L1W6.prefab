@@ -69,6 +69,37 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   _fireRate: 0.15
+--- !u!1 &693203928842834049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196110852167968406}
+  m_Layer: 8
+  m_Name: Waypoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196110852167968406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693203928842834049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6293536929092685413}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1369964516341217101
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +265,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -334,7 +365,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: 32a1d1b44f8d99245a7a7cfd5632f176, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -486,6 +517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 14
   _bulletPool: {fileID: 0}
+  _timer: 0
 --- !u!1 &7141644987549082154
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,11 +982,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _waypoints.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _exitDestination._speed
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _entryDestination._speed
@@ -973,9 +1005,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7344790791330929136}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _waypoints.Array.data[1]._speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _waypoints.Array.data[0]._waypoint
       value: 
       objectReference: {fileID: 6412394680206302799}
+    - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _waypoints.Array.data[1]._waypoint
+      value: 
+      objectReference: {fileID: 196110852167968406}
     - target: {fileID: 3048456472659548551, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _attackPattern.Array.data[1]._weapons.Array.size
       value: 1

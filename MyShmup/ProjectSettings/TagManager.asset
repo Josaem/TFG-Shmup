@@ -48,9 +48,6 @@ TagManager:
   - name: BackgroundVisuals
     uniqueID: 3728708771
     locked: 0
-  - name: BackgroundAttacks
-    uniqueID: 2991179707
-    locked: 0
   - name: StuckBullets
     uniqueID: 1693484233
     locked: 0
@@ -59,6 +56,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2173008767
+    locked: 0
+  - name: BackgroundAttacks
+    uniqueID: 2991179707
     locked: 0
   - name: Bullets
     uniqueID: 3865224321

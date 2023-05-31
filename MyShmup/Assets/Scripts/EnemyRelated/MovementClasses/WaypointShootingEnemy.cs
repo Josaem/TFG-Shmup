@@ -53,12 +53,5 @@ public class WaypointShootingEnemy : ShootingEnemy
                 
             }
         }
-
-        
-        /*
-        TODO
-        -behavior
-        -waypoints
-         */
     }
 }
