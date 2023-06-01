@@ -377,6 +377,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &604390308
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +584,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &1024323596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1084,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &3400551837492741920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1572,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &3400551838187383712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1660,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &3400551838339352817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,9 +1867,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingLayerID: -568448467
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 1482199128, guid: 47827e577da7dca41b97163315853c4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

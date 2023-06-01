@@ -1229,6 +1229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0
   _bulletPool: {fileID: 0}
+  _timer: 0
 --- !u!1 &3657119413493870720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,7 +1448,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1516,7 +1517,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -1850,14 +1851,14 @@ MonoBehaviour:
     _pointAtPlayer: 0
     _pointAtPlayerSpeed: 10
     _rotativeBehavior:
-      _rotateStart: 0
+      _rotateStart: 1
       _dontCenterAngleRotation: 0
       _resetRotTimer: 0
       _resetRot: 0
       _startRotationInCenter: 0
       _rotType: 0
-      _rotationAngle: 0
-      _rotationSpeed: 0
+      _rotationAngle: 10
+      _rotationSpeed: 10
       _rotCurve:
         serializedVersion: 2
         m_Curve: []
@@ -1865,6 +1866,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   _isEnabled: 0
+  _isUsedNext: 0
 --- !u!1 &6793063932684953484
 GameObject:
   m_ObjectHideFlags: 0
@@ -2296,7 +2298,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2365,7 +2367,7 @@ MonoBehaviour:
   _speedOfAttack: 20
   _maxDistance: 20
   _useGeneralBulletPool: 0
-  _attackObject: {fileID: 4409051570943762180, guid: f0529378c6f70c948ae8555756b99db7, type: 3}
+  _attackObject: {fileID: 4409051570943762180, guid: 2de527481773e5a40b2474679188ca70, type: 3}
   _pointAtPlayer: 0
   _pointAtPlayerSpeed: 10
   _rotativeBehavior:
@@ -2658,6 +2660,18 @@ PrefabInstance:
     - target: {fileID: 1832281848, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: _weaponBehavior.Array.data[0]._pointAtPlayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832281848, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._rotativeBehavior._rotateStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832281848, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._rotativeBehavior._rotationAngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832281848, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
+      propertyPath: _weaponBehavior.Array.data[0]._rotativeBehavior._rotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 486373569628396401, guid: 166dc8f5d07827147937a462db0d21c1, type: 3}
       propertyPath: m_Sprite
