@@ -339,7 +339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6954143850170903133, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: _invincibleTest
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6954143850450981557, guid: 0ba936e7201ac494294e26f69109dc78, type: 3}
       propertyPath: m_Camera
